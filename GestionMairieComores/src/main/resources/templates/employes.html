@@ -19,7 +19,7 @@
 		</div>
 		<div class="col-md-6">
 			 <div class="panel panel-primary">
-				<div class="panel-heading">Consultation d'un employé</div>
+				<div class="panel-heading" th:text="#{consultation.text}"></div>
 				<div class="panel-body">
 					<form th:action="@{/consultationEmployes}" method="get">
 						<label>Nom employé</label> <input type="text" name="motCle"
