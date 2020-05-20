@@ -19,10 +19,10 @@
 		</div>
 		<div class="col-md-6">
 			 <div class="panel panel-primary">
-				<div class="panel-heading" th:text="#{consultation.text}"></div>
+				<div class="panel-heading" th:text="#{consultation.titre}"></div>
 				<div class="panel-body">
 					<form th:action="@{/consultationEmployes}" method="get">
-						<label>Nom employé</label> <input type="text" name="motCle"
+						<label th:text="#{label.nom.employe.consult}"></label> <input type="text" name="motCle"
 							th:value="${motCle}" />
 						<button type="submit" class="btn btn-primary">Ok</button>
 						<div class="text-danger pull-right h4" th:if="${exception}" th:text="${exception.message}"></div>
@@ -32,7 +32,7 @@
 		</div>
 		<div class="col-md-6">
 			<div class="panel panel-primary" th:if="${listeEmployes}">
-				<div class="panel-heading">Ajout d'un nouveau employé</div>
+				<div class="panel-heading" th:text="#{ajout.titre}"></div>
 				<div class="panel-body">
 					<div class="container">
 						<form class="form-inline" action="/"
@@ -46,12 +46,12 @@
 								<input type="hidden"  name="page"           th:value="${page}" />
 								
 								<input 	type="radio"  name="nomDuSexe"       th:value="Monsieur" 	checked="checked" th:field="*{nomDuSexe}" /> 
-								 <label>Monsieur</label> 
+								 <label th:text="#{label.monsieur.employe.ajout}"></label> 
 								 <input type="radio" name="nomDuSexe"        th:value="Madame"       th:field="*{nomDuSexe}"/>
-								   <label>Madame</label>
+								   <label th:text="#{label.madame.employe.ajout}"></label>
 							</div>
 							     <div class="form-group">  
-								      <label  for="nomemp">Nom: </label>
+								      <label  for="nomemp" th:text="#{label.nom.employe.ajout}"> </label>
 								     <div>
 									    <input type="text" class="form-control" name="nomemp" placeholder="Entrer le nom" th:field="*{nomemp}" />
 									    <p class="text-danger" th:if="${#fields.hasErrors('nomemp')}" th:errors="*{nomemp}"></p>
@@ -59,7 +59,7 @@
 								</div>
 							   <div>
 								<div class="form-group"> 
-									<label for="prenemp">Pr&eacute;nom:</label>
+									<label for="prenemp" th:text="#{label.prenom.employe.ajout}"></label>
 									 <div>
 									   <input type="text" class="form-control" name="prenemp" placeholder="Entrer pr&eacute;nom" th:field="*{prenemp}" />
 									   <p class="text-danger" th:if="${#fields.hasErrors('prenemp')}" th:errors="*{prenemp}"></p>
@@ -68,7 +68,7 @@
 							</div>
 								
 							    <div class="form-group">
-									<label for="mail">Email:</label>
+									<label for="mail" th:text="#{label.mail.employe.ajout}"></label>
 								   <div>
 									  <input type="email" class="form-control" name="mail" placeholder="Entrer l'email"   th:field="*{mail}" />
 									   <p class="text-danger" th:if="${#fields.hasErrors('mail')}" th:errors="*{mail}"></p>
@@ -78,7 +78,7 @@
 								</div>	
 							<div>
 								<div class="form-group">
-									<label for="fonction">Fonction :</label>
+									<label for="fonction" th:text="#{label.fonction.employe.ajout}"></label>
 									  <div>
 									    <input type="text" class="form-control" name="fonction" placeholder="Entrer la fonction" th:field="*{fonction}" />
 									    <p class="text-danger" th:if="${#fields.hasErrors('fonction')}" th:errors="*{fonction}"></p>
@@ -87,7 +87,7 @@
 							 </div>
 							 
 							      <div class="form-group">
-								    <label for="dateNaissance">Date de naissance :</label>
+								    <label for="dateNaissance" th:text="#{label.datenaissance.employe.ajout}"></label>
 								    <div>
 									    <input type="text" class="form-control" name="dateNaissance" placeholder="JJ/MM/AAAA" 	th:field="*{dateNaissance}" />
 									    <p class="text-danger" th:if="${#fields.hasErrors('dateNaissance')}"  th:errors="*{dateNaissance}"></p>
@@ -95,7 +95,7 @@
 								 </div>
 							  <div>	 
 								 <div class="form-group">
-									  <label for="dateRecrutement">Date de recrutement :</label>
+									  <label for="dateRecrutement" th:text="#{label.daterecrutement.employe.ajout}"></label>
 									  <div>
 									     <input type="text" class="form-control" name="dateRecrutement" 	placeholder="JJ/MM/AAAA" th:field="*{dateRecrutement}" />
 									     <p  class="text-danger" th:if="${#fields.hasErrors('dateRecrutement')}" th:errors="*{dateRecrutement}"></p>
@@ -103,7 +103,7 @@
 							      </div>
 							  </div>
 							<div class="form-group">
-								    <label for="salaire">Salaire:</label>
+								    <label for="salaire" th:text="#{label.salaire.employe.ajout}"></label>
 								   <div> 
 									 <input type="text" class="form-control" name="salaire" placeholder="Entrer le salaire" th:field="*{salaire}" />
 									 <p  class="text-danger" th:if="${#fields.hasErrors('salaire')}" th:errors="*{salaire}"></p>
@@ -125,20 +125,20 @@
  </div>
  		<div class="col-md-6">
 			<div class="panel panel-primary" th:if="${listeEmployes}">
-				<div class="panel-heading">Information de l'employé</div>
+				<div class="panel-heading" th:text="#{information.titre}"></div>
 				<div class="panel-body">
 					<table class="table table-striped table-condensed table-hover">
 						<tr class="info">
-							<th>Sexe</th>
-							<th>Nom</th>
-							<th>Prenom</th>
-							<th>Email</th>
-							<th>Fonction</th>
-							<th>Date de Naissance</th>
-							<th>Date Recrutement</th>
-							<th>Salaire</th>
-							<th>Supp</th>
-							<th>Modif</th>
+							<th th:text="#{information.sexe}"></th>
+							<th th:text="#{information.nom}"></th>
+							<th th:text="#{information.prenom}"></th>
+							<th th:text="#{information.mail}">Email</th>
+							<th th:text="#{information.fonction}">Fonction</th>
+							<th th:text="#{information.datenaissance}">Date de Naissance</th>
+							<th th:text="#{information.daterecrutement}">Date Recrutement</th>
+							<th th:text="#{information.salaire}">Salaire</th>
+							<th th:text="#{information.supp}">Supp</th>
+							<th th:text="#{information.modif}">Modif</th>
 						</tr>
 						<tr th:each="employe: ${listeEmployes}">
 							<td th:text="${employe.nomDuSexe}" />
