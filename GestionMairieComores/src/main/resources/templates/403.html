@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator=~{template1}>
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css"
+	  href="../static/bootstrap-3.3.7-dist/Assets/css/bootstrap.min.css"
+	  th:href="@{/bootstrap-3.3.7-dist/Assets/css/bootstrap.min.css}"/>
+
+<link rel="stylesheet" type="text/css" 
+      href="../static/css/myStyle.css"
+	  th:href="@{/bootstrap-3.3.7-dist/Assets/css/myStyle.css}" />
+</head>
+<body>
+	<div layout:fragment="content">
+		<div class="text-center">
+			<h3 th:text="#{welcome.text}"></h3>
+		</div>
+		<div class="col-md-6 col-md-offset-3">
+			<div class="panel panel-primary">
+				<div class="panel-heading" th:text="#{problemeautorisation.titre}"></div>
+				<div class="panel-body  text-danger" th:text="#{droit.access.error}"></div>
+			</div>
+		</div>
+
+	</div>
+</body>
+</html>

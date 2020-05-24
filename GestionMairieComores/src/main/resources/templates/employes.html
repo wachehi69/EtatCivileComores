@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    xmlns:sec="http://www.thymeleaf.org/extras-extras-springsecurity5"
 	layout:decorator=~{template1}>
 <head>
 <meta charset="utf-8" />
@@ -31,7 +32,7 @@
 			</div>
 		</div>
 		<div class="col-md-6">
-			<div class="panel panel-primary" th:if="${listeEmployes}">
+			<div class="panel panel-primary" th:if="${listeEmployes}" sec:authorize="hasRole('ROLE_ADMIN')">
 				<div class="panel-heading" th:text="#{ajout.titre}"></div>
 				<div class="panel-body">
 					<div class="container">
@@ -44,11 +45,15 @@
 								<input type="hidden"  name="page"           th:value="${page}" />
 								<input type="hidden"  name="motCle"         th:value="${motCle}" /> 
 								<input type="hidden"  name="page"           th:value="${page}" />
-								
-								<input 	type="radio"  name="nomDuSexe"       th:value="Monsieur" 	checked="checked" th:field="*{nomDuSexe}" /> 
-								 <label th:text="#{label.monsieur.employe.ajout}"></label> 
-								 <input type="radio" name="nomDuSexe"        th:value="Madame"       th:field="*{nomDuSexe}"/>
-								   <label th:text="#{label.madame.employe.ajout}"></label>
+								<div class="form-group">
+								    <div>
+								      <input 	type="radio"  name="nomDuSexe"       th:value="Monsieur" 	 th:field="*{nomDuSexe}"  checked="checked" /> 
+								      <label for="nomDuSexe" th:text="#{label.monsieur.employe.ajout}"></label> 
+								      <input type="radio" name="nomDuSexe"        th:value="Madame"       th:field="*{nomDuSexe}"/>
+								      <label for="nomDuSexe" th:text="#{label.madame.employe.ajout}"></label>
+								        <p class="text-danger" th:if="${#fields.hasErrors('nomDuSexe')}" th:errors="*{nomDuSexe}"></p>
+								     </div>
+								 </div>
 							</div>
 							     <div class="form-group">  
 								      <label  for="nomemp" th:text="#{label.nom.employe.ajout}"> </label>
@@ -132,13 +137,13 @@
 							<th th:text="#{information.sexe}"></th>
 							<th th:text="#{information.nom}"></th>
 							<th th:text="#{information.prenom}"></th>
-							<th th:text="#{information.mail}">Email</th>
-							<th th:text="#{information.fonction}">Fonction</th>
-							<th th:text="#{information.datenaissance}">Date de Naissance</th>
-							<th th:text="#{information.daterecrutement}">Date Recrutement</th>
-							<th th:text="#{information.salaire}">Salaire</th>
-							<th th:text="#{information.supp}">Supp</th>
-							<th th:text="#{information.modif}">Modif</th>
+							<th th:text="#{information.mail}"></th>
+							<th th:text="#{information.fonction}"></th>
+							<th th:text="#{information.datenaissance}"></th>
+							<th th:text="#{information.daterecrutement}"></th>
+							<th th:text="#{information.salaire}"></th>
+							<th th:text="#{information.supp}"></th>
+							<th th:text="#{information.modif}"></th>
 						</tr>
 						<tr th:each="employe: ${listeEmployes}">
 							<td th:text="${employe.nomDuSexe}" />
@@ -160,7 +165,6 @@
 						</tr>
 					</table>
 					<div class="container">
-
 						<ul class="nav nav-pills">
 							<li th:each="p,status:${pages}"><a
 								th:href="@{/consultationEmployes(motCle=${motCle},page=${status.index})}"

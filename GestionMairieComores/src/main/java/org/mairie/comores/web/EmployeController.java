@@ -68,7 +68,6 @@ public class EmployeController {
 			}else{
 				model.addAttribute("etat", "annuler");
 			}
-			
 			chargerListeEmploye(model, motCle, employe, operation, page, size);
 			return "employes";
 		} else {

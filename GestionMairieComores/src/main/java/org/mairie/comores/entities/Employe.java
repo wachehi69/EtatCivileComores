@@ -25,6 +25,7 @@ public class Employe implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long idempl;
+	@NotEmpty(message="le nom du sexe doit être rensegné")
 	private String nomDuSexe;
 	@NotNull
 	@Size(min=3,max=25, message="le nom doit être entre 3 et 25 caracteres")

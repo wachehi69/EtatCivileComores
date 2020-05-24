@@ -44,7 +44,7 @@ public class EmployeMetierImpl implements IEmployeMetier{
 	@SuppressWarnings("deprecation")
 	@Override
 	public Page<Employe> listeEmployeParNom(String nomemp, int page, int size) {
-		Page<Employe> pageEmp = employeRepository.listeEmployeParNom(nomemp +"%", new PageRequest(page, size) );
+		Page<Employe> pageEmp = employeRepository.listeEmployeParNom("%"+nomemp +"%", new PageRequest(page, size) );
 		if(pageEmp == null || pageEmp.isEmpty()) throw new RuntimeException("Nom introuvable");
 		return pageEmp;
 	}
