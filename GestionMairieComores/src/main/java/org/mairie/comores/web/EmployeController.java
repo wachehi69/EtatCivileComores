@@ -98,7 +98,7 @@ public class EmployeController {
 	 * @return
 	 */
 
-	@PostMapping("/modificationEmployes")
+ /*	@PostMapping("/modificationEmployes")
 	public String modifier(@Valid Employe employe1, Errors errors, Model model, String motCle, int page) {
 		if (errors.hasErrors()) {
 			model.addAttribute("employe1", employe1);
@@ -107,7 +107,7 @@ public class EmployeController {
 			employeMetierImpl.modifierEmploye(employe1);
 			return "redirect:/consultationEmployes?motCle=" + motCle + "&page=" + page;
 		}
-	}
+	}*/
 
 	/**
 	 * Cette methode permet de supprimer un employé

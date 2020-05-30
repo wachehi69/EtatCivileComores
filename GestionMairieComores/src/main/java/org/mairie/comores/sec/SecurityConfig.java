@@ -20,12 +20,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 	
-	 /*   auth.inMemoryAuthentication()
+	    auth.inMemoryAuthentication()
 	    .withUser("admin").password("{noop}1234").roles("ADMIN","USER");
 	    auth.inMemoryAuthentication()
-	    .withUser("user").password("{noop}1234").roles("USER");*/
+	    .withUser("user").password("{noop}1234").roles("USER");
 		
-		auth.jdbcAuthentication()        // ici je dois indiquer la meme source de base de donnée que l'application
+	 /*	auth.jdbcAuthentication()        // ici je dois indiquer la meme source de base de donnée que l'application
 								         // pour ce faire il faut declarer un objet dataSource au debut
 		.dataSource(dataSource)  
 										// il faut indiquer au spring security 
@@ -37,7 +37,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		
 		.rolePrefix("ROLE_")           // on va indiquer à spring securité le prefixe qu'il faut ajouter 
 		
-		.passwordEncoder( new MessageDigestPasswordEncoder("MD5")); // on va lui indique d'utlisateur Encoder car les s de passes son codés 
+		.passwordEncoder( new MessageDigestPasswordEncoder("MD5")); // on va lui indique d'utlisateur Encoder car les s de passes son codés*/ 
 	}
 	
 	@Override
