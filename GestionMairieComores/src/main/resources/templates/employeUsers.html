@@ -112,7 +112,10 @@
 								      <label for="active" th:text="#{label.active.employe.ajout}"></label> 
 								      
 						 </fieldset>
-	                       <button   type="submit"      class="btn btn-primary">Création</button>
+						   <div style="color:red"   th:text="${#httpServletRequest.getParameter('error')}"></div>
+						   <div>
+	                           <button   type="submit"      class="btn btn-primary">Création</button>
+	                       </div>
 	               </form>
 	             
 	             </div>
@@ -134,6 +137,8 @@
 							<th>Mot de passe</th>
 							<th>Role </th>
 							<th>Active</th>
+							<th>Supp</th>
+							<th>Modif</th>
 						</tr>
 						
 				<tr th:each="user:${listUserEmpl}">
@@ -144,6 +149,12 @@
 				    <td th:text="${user.password}"></td>
 				    <td th:text="${user.roles}"></td>
 				    <td th:text="${user.active}"></td>
+				    <td> <a th:href="@{/suppressionUsers(username=${user.username},motCle=${motCle})}"
+								th:text="supp"></a></td>
+							<td><a
+								th:href="@{/consultationUsers(username=${user.username},motCle=${motCle})}"
+								th:text="modif"></a></td>
+				    
 				</tr>
 	         </table>
 	         

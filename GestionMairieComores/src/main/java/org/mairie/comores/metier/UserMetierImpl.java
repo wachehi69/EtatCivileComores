@@ -41,8 +41,8 @@ public class UserMetierImpl implements IUserMetier {
 
 	@Override
 	public void deleteUsers(String username) {
-		userRepository.deleteById(username);
-
+		Users user = userRepository.findByUsername(username);
+		userRepository.delete(user);
 	}
 
 	@Override
@@ -61,10 +61,8 @@ public class UserMetierImpl implements IUserMetier {
 
 	@Override
 	public Users getUsers(String username) {
-		Optional<Users> user = userRepository.findById(username);
-		if (user.get() == null)
-			throw new RuntimeException("username inexistant !!!!");
-		return user.get();
+		Users user = userRepository.findByUsername(username);
+		return user;
 	}
 
 	/**
@@ -94,6 +92,7 @@ public class UserMetierImpl implements IUserMetier {
 					employeUsers.setUsername(users.getUsername());
 					employeUsers.setPassword(users.getPassword());
 					employeUsers.setRoles(users.getRoles());
+					employeUsers.setActive(users.isActive());
 					listEmplUSers.add(employeUsers);
 				}
 			}
@@ -104,7 +103,11 @@ public class UserMetierImpl implements IUserMetier {
 
 	@Override
 	public List<Employe> listeEmployeParNom(String nom) {
-		return userRepository.listeEmployeParNom(nom);
+		
+		List<Employe> listEmploye = userRepository.listeEmployeParNom(nom);
+		if(listEmploye.isEmpty() || null== listEmploye) throw new RuntimeException("Employe inexistant");
+		
+		return listEmploye;
 	}
 
 }
