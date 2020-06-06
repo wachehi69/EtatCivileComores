@@ -86,7 +86,7 @@
 								<div class="form-group">
 									<label for="username" th:text="#{label.password.employe.ajout}"></label>
 									 <div>
-									   <input type="text" class="form-control" name="password" placeholder="Entrer votre password" th:field="*{password}"  />
+									   <input type="password" class="form-control" name="password" placeholder="Entrer votre password" th:field="*{password}"  />
 									   <p class="text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p> 
 									 </div>
 								</div>	
@@ -152,7 +152,7 @@
 				    <td> <a th:href="@{/suppressionUsers(username=${user.username},motCle=${motCle})}"
 								th:text="supp"></a></td>
 							<td><a
-								th:href="@{/consultationUsers(username=${user.username},motCle=${motCle})}"
+								th:href="@{/consulationUtilisateur(username=${user.username},motCle=${motCle})}"
 								th:text="modif"></a></td>
 				    
 				</tr>

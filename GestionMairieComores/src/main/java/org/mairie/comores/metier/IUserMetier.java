@@ -12,7 +12,6 @@ public interface IUserMetier {
 	public Users saveUsers(Users user);
 	public List<Users> listUsers();
 	public Users ConsultationUser(String nom, String prenom);
-	public Employe getEmploye(String username);
 	public Users getUsers(String username);
 	public Users UpdateUser(Users users);
 	public void deleteUsers(String username);
