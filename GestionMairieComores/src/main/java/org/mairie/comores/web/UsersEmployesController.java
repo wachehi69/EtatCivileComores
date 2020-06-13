@@ -85,7 +85,7 @@ public class UsersEmployesController {
 			 
 			 Employe empl = employeMetierimpl.chargerEmploye(user.getEmploye().getIdempl());
 			 
-			 user.setUsername(employeUsers.getUsername());
+			 //user.setUsername(employeUsers.getUsername());
 			 user.setPassword(employeUsers.getPassword());
 			 user.setActive(employeUsers.getActive());
 			 // pour affecter les roles
