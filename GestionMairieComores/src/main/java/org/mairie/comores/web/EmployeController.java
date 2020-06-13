@@ -65,8 +65,6 @@ public class EmployeController {
 		if (errors.hasErrors()) {
 			if(operation.equals("modif")){
 				model.addAttribute("etat", operation);
-			}else{
-				model.addAttribute("etat", "annuler");
 			}
 			chargerListeEmploye(model, motCle, employe, operation, page, size);
 			return "employes";

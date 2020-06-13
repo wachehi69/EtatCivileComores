@@ -44,6 +44,8 @@
 	                           <legend>Informations personnelles :</legend>   
 	                          
 	                            <input type="hidden"    name="motCle"    th:value="${motCle}" />
+	                             <input type="hidden"   name="etat"       th:value= "${etat}"/>
+	                          	 <input type="hidden"   name="operation"  th:value="${operation}" />  
 	                          	                            
 	                            	<div class="form-group">
 								    <div>
@@ -86,7 +88,7 @@
 								<div class="form-group">
 									<label for="username" th:text="#{label.password.employe.ajout}"></label>
 									 <div>
-									   <input type="password" class="form-control" name="password" placeholder="Entrer votre password" th:field="*{password}"  />
+									   <input type="text" class="form-control" name="password" placeholder="Entrer votre password" th:field="*{password}"  />
 									   <p class="text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p> 
 									 </div>
 								</div>	
@@ -114,7 +116,11 @@
 						 </fieldset>
 						   <div style="color:red"   th:text="${#httpServletRequest.getParameter('error')}"></div>
 						   <div>
-	                           <button   type="submit"      class="btn btn-primary">Création</button>
+						      <button   th:if="${etat}"      type="submit"      class="btn btn-primary">Modifier</button>
+						      <button   th:if="${etat}"      type="submit"      name="action"  th:value="annuler"  class="btn btn-primary">Annuler</button>
+						      
+	                            <button  th:unless="${etat}"  type="submit"      class="btn btn-primary">Création</button>
+	                            <button  th:unless="${etat}"  type="reset"      class="btn btn-primary">reset</button>
 	                       </div>
 	               </form>
 	             
@@ -152,7 +158,7 @@
 				    <td> <a th:href="@{/suppressionUsers(username=${user.username},motCle=${motCle})}"
 								th:text="supp"></a></td>
 							<td><a
-								th:href="@{/consulationUtilisateur(username=${user.username},motCle=${motCle})}"
+								th:href="@{/consulationUtilisateur(username=${user.username},motCle=${motCle},operation=modif)}"
 								th:text="modif"></a></td>
 				    
 				</tr>

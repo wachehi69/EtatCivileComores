@@ -1,8 +1,5 @@
 package org.mairie.comores.web;
 
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -31,14 +28,13 @@ public class UsersEmployesController {
 	@Autowired
 	private IEmployeMetier  employeMetierimpl;
 	
-
 	@RequestMapping("/gestionUtilisateur")
 	private String index(EmployeUsers employeUsers) {
 		return "employeUsers";
 	}
 
 	@RequestMapping(value = "/consulationUtilisateur", method = RequestMethod.GET)
-	public String consultationUsersEmploye(String motCle, EmployeUsers employeUsers, String username, Model model) {
+	public String consultationUsersEmploye(String motCle, EmployeUsers employeUsers, String operation, String username, Model model) {
 
 		try {
 			
@@ -54,6 +50,8 @@ public class UsersEmployesController {
 			List<EmployeUsers> listUserEmpl = userMetierImpl.listeUsersEmployeParNom("%" + motCle + "%");
 			model.addAttribute("listUserEmpl", listUserEmpl);
 			model.addAttribute("motCle", motCle);
+			model.addAttribute("operation", operation);
+			model.addAttribute("etat", operation);
 		} catch (Exception e) {
 			model.addAttribute("exception", e);
 		}
@@ -61,32 +59,62 @@ public class UsersEmployesController {
 	}
 
 		@RequestMapping(value = "/creationNouveauUtilisateur", method = RequestMethod.POST)
-	private String ajoutNouveauUSers(@Valid EmployeUsers employeUsers, Errors errors, Model model, String motCle) {
+	private String ajoutNouveauUSers(@Valid EmployeUsers employeUsers, Errors errors, String action, String operation, Model model, String motCle) {
 		model.addAttribute("motCle", motCle);
+		 if(null !=action && action.equalsIgnoreCase("annuler")){
+			  return "redirect:/consulationUtilisateur?motCle=" + motCle;  
+		  }
 		if (errors.hasErrors()) {
+			
+			if(operation.equals("modif")){
+				model.addAttribute("etat", operation);
+			}
+			
 			List<EmployeUsers> listUserEmpl = userMetierImpl.listeUsersEmployeParNom("%" + motCle + "%");
 			model.addAttribute("listUserEmpl", listUserEmpl);
-			model.addAttribute("motCle", motCle);
+			//model.addAttribute("motCle", motCle);
 			return "employeUsers";
 		}
 
 		try {
+			// Modification utilisateur
+			if(operation.equalsIgnoreCase("modif")){
+			 //avant de proceder à la modification verifons si le username existe	
+			 Users user = userMetierImpl.getUsers(employeUsers.getUsername());
+			 if (user==null) throw new RuntimeException("Le username est inexistant!!!!!");
+			 
+			 Employe empl = employeMetierimpl.chargerEmploye(user.getEmploye().getIdempl());
+			 
+			 user.setUsername(employeUsers.getUsername());
+			 user.setPassword(employeUsers.getPassword());
+			 user.setActive(employeUsers.getActive());
+			 // pour affecter les roles
+			  user.setRoles(employeUsers.getRoles());
+			 //modification de l'employé 
+			  empl.setNomDuSexe(employeUsers.getNomDuSexe());
+			  empl.setNomemp(employeUsers.getNomemp());
+			  empl.setPrenemp(employeUsers.getPrenemp());
+			  // validations des modifications
+			  userMetierImpl.UpdateUser(user);
+			  employeMetierimpl.modifierEmploye(empl);
+			}else{
+				
+				List<Employe> listUserEmpl = userMetierImpl.listeEmployeParNom("%" + employeUsers.getNomemp() + "%");
+				
+				boolean operationUtilisat = false;
 
-			List<Employe> listUserEmpl = userMetierImpl.listeEmployeParNom("%" + employeUsers.getNomemp() + "%");
-			
-			boolean operationUtilisat = false;
-
-			for (Employe employeUsers2 : listUserEmpl) {
-				operationUtilisat = AjouterNouveauUtilisateur(employeUsers, operationUtilisat, employeUsers2);
+				for (Employe employeUsers2 : listUserEmpl) {
+					operationUtilisat = AjouterNouveauUtilisateur(employeUsers, operationUtilisat, employeUsers2);
+				}
+				if (operationUtilisat== false) throw new RuntimeException("Verifiez bien le nom,prenom et le nom du sexe de l'employe !!!!!");
+				
 			}
-			if (operationUtilisat== false) throw new RuntimeException("Verifiez bien le nom,prenom et le nom du sexe de l'employe !!!!!");
 			
 		} catch (Exception e) {
 			return "redirect:/consulationUtilisateur?motCle=" + motCle + "&error=" + e.getMessage();
 		}
 		return "redirect:/consulationUtilisateur?motCle=" + motCle;
-	}
-	 @RequestMapping(value="/suppressionUsers")
+	}	 @RequestMapping(value="/suppressionUsers")
 	 private String  delete(String username, String motCle){
 		 
 		 userMetierImpl.deleteUsers(username);
@@ -109,7 +137,7 @@ public class UsersEmployesController {
 		if (employeUsers2.getNomDuSexe().equalsIgnoreCase(employeUsers.getNomDuSexe())
 				&& employeUsers2.getNomemp().equalsIgnoreCase(employeUsers.getNomemp())
 				&& employeUsers2.getPrenemp().equalsIgnoreCase(employeUsers.getPrenemp())) {
-			// On va chercher en base si le username n'est pas encours utilisation déjà
+			// On va chercher en base si le username n'est encours utilisation déjà
 			  List<Users> listUsers = userMetierImpl.listUsers();
 			  
 			  for (Users users : listUsers) {
@@ -126,40 +154,12 @@ public class UsersEmployesController {
 			// creation d'un objet role
 			Set<Roles> roles = new HashSet<>();
 			roles.addAll(employeUsers.getRoles());
-			
-			// Préparation de hash MD5
-			   String password = employeUsers.getPassword();
-		       String passMD5 =  transformationMotPassMD5(password);
-			
 			// création de l'utlisateur
-			Users user = userMetierImpl.saveUsers(new Users(employeUsers.getUsername(), passMD5,
+			Users user = userMetierImpl.saveUsers(new Users(employeUsers.getUsername(), employeUsers.getPassword(),
 					employeUsers.getActive(), roles, emp));
 			operationUtilisat =true;
 		}
 		return operationUtilisat;
-	}
-
-	/**
-	 * Cette methode permet de transformer le mot de passe en MD5
-	 * @param password
-	 */
-	private String  transformationMotPassMD5(String password) {
-		MessageDigest md;
-		 StringBuilder sb = new StringBuilder();
-		try {
-			md = MessageDigest.getInstance("MD5");
-		    byte[]hashInBytes = md.digest(password.getBytes(StandardCharsets.UTF_8));
-		   
-		    for (byte b : hashInBytes) {
-		        sb.append(String.format("%02x", b));
-		    }
-		    System.out.println(sb.toString());
-
-		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
-		}
-		return sb.toString();
-		
 	}
 	
 	/**

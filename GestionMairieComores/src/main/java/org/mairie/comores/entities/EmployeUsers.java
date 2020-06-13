@@ -23,7 +23,7 @@ public class EmployeUsers implements Serializable {
 	@Size(min=3,max=25, message="le prenom doit être entre 3 et 25 caracteres")
 	private String prenemp;
 	@NotNull
-	@Size(min=3,max=25, message="le nom de username doit être entre 3 et 25 caracteres")
+	@Size(min=3,max=25, message="le username doit être entre 3 et 25 caracteres")
 	private String username;
 	@NotNull
 	@Size(min=8,max=20, message="le mot de passe doit avoir un minimun 8 caracteres")
