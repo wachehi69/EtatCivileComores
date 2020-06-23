@@ -39,7 +39,7 @@ public class GestionMairieComoresApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 
-		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+	/*	SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
 		try {
 			AjoutEmploye(dateFormat);
@@ -82,7 +82,7 @@ public class GestionMairieComoresApplication implements CommandLineRunner {
 
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
-		}
+		}*/
 
 	}
 
@@ -206,7 +206,7 @@ public class GestionMairieComoresApplication implements CommandLineRunner {
 		roles4.add(role1);
 		// roles.add(role2);
 
-		Users user1 = userRepository.save(new Users("wachehi", "1234", true, roles1, emp1));
+		Users user1 = userRepository.save(new Users("wachehi", "81dc9bdb52d04dc20036dbd8313ed055", true, roles1, emp1));
 		Users user2 = userRepository.save(new Users("seimour", "4567", true, roles2, emp2));
 		Users user3 = userRepository.save(new Users("zahiya", "7890", true, roles2, emp3));
 

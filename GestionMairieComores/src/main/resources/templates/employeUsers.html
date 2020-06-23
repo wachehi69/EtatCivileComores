@@ -46,8 +46,8 @@
 	                             <input type="hidden"   name="motCle"     th:value="${motCle}" />
 	                             <input type="hidden"   name="etat"       th:value= "${etat}"/>
 	                          	 <input type="hidden"   name="operation"  th:value="${operation}" />  
-	                          	 <input type="hidden"   name="username"   th:value="${employeUsers.username}" /> 
-	                          	 
+	                          	 <!-- <input type="text"   name="username"   th:value="${employeUsers.username}" /> --> 
+	                          	  <!-- <input type="text" class="form-control" name="username"  th:field="*{username}"/> -->
 	                          	                            
 	                            	<div class="form-group">
 								    <div>
@@ -81,9 +81,10 @@
 								<div class="form-group">
 								   <div>
 									<label for="username" th:text="#{label.username.employe.ajout}"></label>
-									    <label th:if="${etat}" th:text="${employeUsers.username}"></label>
+									    <label th:if="${etat}"  th:text="${employeUsers.username}"></label>
+									    <input th:if="${etat}"  type="hidden" class="form-control" name="username"  th:field="*{username}"/>
 									 </div>   
-									 <div  th:unless="${etat}" >
+									 <div  th:unless="${etat}">
 									   <input type="text" class="form-control" name="username" placeholder="Entrer votre username" th:field="*{username}"  />
 									   <p class="text-danger" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></p> 
 									 </div>
@@ -91,7 +92,7 @@
 								</div>
 								<div>	
 								<div class="form-group">
-									<label for="username" th:text="#{label.password.employe.ajout}"></label>
+									<label for="password" th:text="#{label.password.employe.ajout}"></label>
 									 <div>
 									   <input type="text" class="form-control" name="password" placeholder="Entrer votre password" th:field="*{password}"  />
 									   <p class="text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p> 

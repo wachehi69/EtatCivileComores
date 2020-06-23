@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class SecurityController {
 
-	// c'est l'action d'identification du logiciel
+	// c'est l'action d'identification de l'application
 	@RequestMapping(value = "/login")
 	public String login() {
 		return "login";

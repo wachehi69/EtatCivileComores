@@ -20,12 +20,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 	
-	    auth.inMemoryAuthentication()
+	  /*  auth.inMemoryAuthentication()
 	    .withUser("admin").password("{noop}1234").roles("ADMIN","USER");
 	    auth.inMemoryAuthentication()
-	    .withUser("user").password("{noop}1234").roles("USER");
+	    .withUser("user").password("{noop}1234").roles("USER");*/
 		
-	 /*	auth.jdbcAuthentication()        // ici je dois indiquer la meme source de base de donnée que l'application
+	 	auth.jdbcAuthentication()        // ici je dois indiquer la meme source de base de donnée que l'application
 								         // pour ce faire il faut declarer un objet dataSource au debut
 		.dataSource(dataSource)  
 										// il faut indiquer au spring security 

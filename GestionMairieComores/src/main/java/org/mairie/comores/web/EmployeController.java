@@ -3,9 +3,12 @@ package org.mairie.comores.web;
 import javax.validation.Valid;
 
 import org.mairie.comores.entities.Employe;
+import org.mairie.comores.entities.Users;
 import org.mairie.comores.metier.IEmployeMetier;
+import org.mairie.comores.metier.UserMetierImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -19,8 +22,17 @@ public class EmployeController {
 	@Autowired
 	private IEmployeMetier employeMetierImpl;
 
+	@Autowired
+	private UserMetierImpl userMetierImpl;
+
 	@RequestMapping("/employes")
-	private String index(Employe employe) {
+	private String index(Employe employe, Model model) {
+		try {
+			// Recuperer l'utilisateur connecté
+			ChargerUserConnection(model, userMetierImpl, employeMetierImpl);
+		} catch (Exception e) {
+		}
+
 		return "employes";
 	}
 
@@ -40,6 +52,12 @@ public class EmployeController {
 			@RequestParam(name = "page", defaultValue = "0") int page,
 			@RequestParam(name = "size", defaultValue = "5") int size) {
 		chargerListeEmploye(model, motCle, employe, operation, page, size);
+		try {
+			// Recuperer l'utilisateur connecté
+			ChargerUserConnection(model, userMetierImpl, employeMetierImpl);
+		} catch (Exception e) {
+		}
+
 		model.addAttribute("exceptionMail", exceptionMail);
 		return "employes";
 	}
@@ -55,15 +73,21 @@ public class EmployeController {
 	 */
 
 	@PostMapping("/saveEmployes")
-	public String register(@Valid Employe employe, Errors errors, Model model, String motCle, String operation, String action,
-			@RequestParam(name = "page", defaultValue = "0") int page,
+	public String register(@Valid Employe employe, Errors errors, Model model, String motCle, String operation,
+			String action, @RequestParam(name = "page", defaultValue = "0") int page,
 			@RequestParam(name = "size", defaultValue = "5") int size) {
-		
-		if(action !=null && action.equals("annuler") ){
-			return "redirect:/consultationEmployes?motCle="+ motCle + "&page=" + page;	
+
+		try {
+			// Recuperer l'utilisateur connecté
+			ChargerUserConnection(model, userMetierImpl, employeMetierImpl);
+		} catch (Exception e) {
+		}
+
+		if (action != null && action.equals("annuler")) {
+			return "redirect:/consultationEmployes?motCle=" + motCle + "&page=" + page;
 		}
 		if (errors.hasErrors()) {
-			if(operation.equals("modif")){
+			if (operation.equals("modif")) {
 				model.addAttribute("etat", operation);
 			}
 			chargerListeEmploye(model, motCle, employe, operation, page, size);
@@ -72,7 +96,7 @@ public class EmployeController {
 
 			if (employe.getIdempl() != null) {
 				employeMetierImpl.modifierEmploye(employe);
-				return "redirect:/consultationEmployes?motCle="+ motCle + "&page=" + page;
+				return "redirect:/consultationEmployes?motCle=" + motCle + "&page=" + page;
 			}
 			// avant la validation cherchons si le mail de l'employé n'est
 			// pas encours d'utilisation
@@ -80,13 +104,12 @@ public class EmployeController {
 				employeMetierImpl.saveEmploye(employe);
 
 			} catch (Exception e) {
-				return "redirect:/consultationEmployes?motCle=" +motCle +"&exceptionMail=" + e.getMessage(); 
+				return "redirect:/consultationEmployes?motCle=" + motCle + "&exceptionMail=" + e.getMessage();
 			}
 		}
-		return "redirect:/consultationEmployes?motCle=" + motCle ;  
+		return "redirect:/consultationEmployes?motCle=" + motCle;
 	}
 
-	
 	/**
 	 * Cette methode permet de supprimer un employé
 	 * 
@@ -99,7 +122,7 @@ public class EmployeController {
 	private String suppressionEmploye(Long idempl, String motCle, int page) {
 
 		employeMetierImpl.supprimerEmployer(idempl);
-		return "redirect:/consultationEmployes?motCle=" +motCle+ "&page=" +page;
+		return "redirect:/consultationEmployes?motCle=" + motCle + "&page=" + page;
 
 	}
 
@@ -131,4 +154,21 @@ public class EmployeController {
 			model.addAttribute("exception", e);
 		}
 	}
+
+	/**
+	 * Cette methode permet de charger l'utilisateur connecté
+	 * 
+	 * @param model
+	 * @param username
+	 */
+	public static void ChargerUserConnection(Model model, UserMetierImpl userMetierImpl,
+			IEmployeMetier employeMetierImpl) {
+		String username = SecurityContextHolder.getContext().getAuthentication().getName();
+		if (null != username) {
+			Users user = userMetierImpl.getUsers(username);
+			Employe emp = employeMetierImpl.chargerEmploye(user.getEmploye().getIdempl());
+			model.addAttribute("empl", emp);
+		}
+	}
+
 }
