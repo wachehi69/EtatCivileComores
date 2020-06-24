@@ -39,13 +39,15 @@
         <li><a th:href="@{/login?logout}"><span class="glyphicon glyphicon-log-out"></span>Déconnecter</a></li>
                  
       </ul>
-      
+      <div>
         <ul class="nav navbar-nav navbar-right pagination">
 	        <li>Bonjour : <label class="seperationtitres" th:text="${empl.nomDuSexe}"></label></li>
 	        <li ><label class="seperationtitres" th:text="${empl.nomemp}"></label> </li>
-	        <li><label   th:text="${empl.prenemp}"></label></li>
+	        <li><label   th:text="${empl.prenemp}"></label></li><br>
+	        <li>Date du jour: <label class="seperationtitres" th:text="${datejours}"></label></li>
+	        
       </ul> 
-      
+      </div>
          </div>
      </div> 
   

@@ -37,7 +37,7 @@ public class UsersEmployesController {
 		try {
 			// Recuperer l'utilisateur connecté
 			EmployeController.ChargerUserConnection(model, userMetierImpl, employeMetierImpl);
-
+			EmployeController.dateDujours(model);
 		} catch (Exception e) {
 		}
 
@@ -51,7 +51,7 @@ public class UsersEmployesController {
 		try {
 			// Récuperation de l'utilisateur connecté
 			EmployeController.ChargerUserConnection(model, userMetierImpl, employeMetierImpl);
-
+			EmployeController.dateDujours(model);
 			// Consultation en vu d'une modification d'utilisateur
 			if (null != username) {
 				EmployeUsers emplUsers = new EmployeUsers();

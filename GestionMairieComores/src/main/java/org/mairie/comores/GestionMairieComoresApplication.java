@@ -1,11 +1,14 @@
 package org.mairie.comores;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.Set;
 
@@ -38,7 +41,8 @@ public class GestionMairieComoresApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-
+		
+          
 	/*	SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
 		try {

@@ -1,5 +1,10 @@
 package org.mairie.comores.web;
 
+import java.text.DateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+
 import javax.validation.Valid;
 
 import org.mairie.comores.entities.Employe;
@@ -30,11 +35,13 @@ public class EmployeController {
 		try {
 			// Recuperer l'utilisateur connecté
 			ChargerUserConnection(model, userMetierImpl, employeMetierImpl);
+			 dateDujours(model);
 		} catch (Exception e) {
 		}
 
 		return "employes";
 	}
+
 
 	/**
 	 * Cette fonction permet d'afficher les employes page par page
@@ -55,6 +62,7 @@ public class EmployeController {
 		try {
 			// Recuperer l'utilisateur connecté
 			ChargerUserConnection(model, userMetierImpl, employeMetierImpl);
+			dateDujours(model);
 		} catch (Exception e) {
 		}
 
@@ -169,6 +177,25 @@ public class EmployeController {
 			Employe emp = employeMetierImpl.chargerEmploye(user.getEmploye().getIdempl());
 			model.addAttribute("empl", emp);
 		}
+	}
+	
+	
+
+	/**
+	 * Cette methode permet d'afficher la date du jour
+	 * @param model
+	 */
+	public static void dateDujours(Model model) {
+		
+		Date date = new Date( );
+
+		  // définir un format personnalisé(France
+		  DateFormat format_fr =
+		          DateFormat.getDateInstance(DateFormat.FULL, Locale.FRENCH);
+		  // Appliquer le format à la date
+		  System.out.println(format_fr.format(date));
+		  
+		  model.addAttribute("datejours", format_fr.format(date));
 	}
 
 }
