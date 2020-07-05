@@ -28,9 +28,9 @@ public class EmployeUsers implements Serializable {
 	@NotNull
 	@Size(min=8, message="le mot de passe doit avoir un minimun 8 caracteres")
 	private String password;
-	
+	@NotNull
 	private boolean active;
-	@NotEmpty(message="choisir au moins un rôle le nom du sexe")
+	@NotEmpty(message="choisir au moins un rôle")
 	private Set<Roles> roles;
 
 	public EmployeUsers() {
@@ -124,6 +124,5 @@ public class EmployeUsers implements Serializable {
 		return nomDuSexe + " " + nomemp + " " + prenemp + " " + username + " " + password +
 				"" + roles; 
 	}
-
 
 }

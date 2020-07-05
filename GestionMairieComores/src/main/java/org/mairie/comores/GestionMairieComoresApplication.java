@@ -1,14 +1,11 @@
 package org.mairie.comores;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Locale;
 import java.util.Optional;
 import java.util.Set;
 
@@ -195,24 +192,24 @@ public class GestionMairieComoresApplication implements CommandLineRunner {
 		emp2.setIdempl(4L);
 		// creation d'un objet role
 		Roles role3 = new Roles("USER");
-		// Roles role2 = new Roles("ADMIN");
+		Roles role4 = new Roles("ADMIN");
 		Set<Roles> roles2 = new HashSet<>();
-		roles2.add(role1);
-		// roles.add(role2);
+		roles2.add(role3);
+		 roles2.add(role4);
 
 		// creation d'un objet employe 2
 		Employe emp3 = new Employe();
 		emp3.setIdempl(2L);
 		// creation d'un objet role
-		Roles role4 = new Roles("USER");
-		// Roles role2 = new Roles("ADMIN");
+		Roles role5 = new Roles("USER");
+		Roles role6 = new Roles("ADMIN");
 		Set<Roles> roles4 = new HashSet<>();
-		roles4.add(role1);
-		// roles.add(role2);
+		roles4.add(role5);
+		roles4.add(role6);
 
-		Users user1 = userRepository.save(new Users("wachehi", "81dc9bdb52d04dc20036dbd8313ed055", true, roles1, emp1));
-		Users user2 = userRepository.save(new Users("seimour", "4567", true, roles2, emp2));
-		Users user3 = userRepository.save(new Users("zahiya", "7890", true, roles2, emp3));
+		Users user1 = userRepository.save(new Users("wachehi", "9703d4cc78b774db9346c3d3231af9ac", true, roles1, emp1));
+		Users user2 = userRepository.save(new Users("seimour", "25d55ad283aa400af464c76d713c07ad", true, roles2, emp2));
+		Users user3 = userRepository.save(new Users("zahiya", "25d55ad283aa400af464c76d713c07ad", true, roles4, emp3));
 
 	}
 

@@ -151,10 +151,8 @@
 							<td th:text="${employe.prenemp}" />
 							<td th:text="${employe.mail}" />
 							<td th:text="${employe.fonction}" />
-							<td
-								th:text="${#dates.format(employe.dateNaissance,  'dd-MM-yyyy')}" />
-							<td
-								th:text="${#dates.format(employe.dateRecrutement,'dd-MM-yyyy')}" />
+							<td	th:text="${#dates.format(employe.dateNaissance,  'dd-MM-yyyy')}" />
+							<td	th:text="${#dates.format(employe.dateRecrutement,'dd-MM-yyyy')}" />
 							<td th:text="${employe.salaire}" />
 							<td><a
 								th:href="@{/suppressionEmploye(idempl=${employe.idempl},motCle=${motCle},page=${page})}"

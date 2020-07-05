@@ -169,14 +169,16 @@ public class EmployeController {
 	 * @param model
 	 * @param username
 	 */
-	public static void ChargerUserConnection(Model model, UserMetierImpl userMetierImpl,
+	public static Users ChargerUserConnection(Model model, UserMetierImpl userMetierImpl,
 			IEmployeMetier employeMetierImpl) {
+		Users user =null;
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
 		if (null != username) {
-			Users user = userMetierImpl.getUsers(username);
+			user = userMetierImpl.getUsers(username);
 			Employe emp = employeMetierImpl.chargerEmploye(user.getEmploye().getIdempl());
 			model.addAttribute("empl", emp);
 		}
+		return user;
 	}
 	
 	
