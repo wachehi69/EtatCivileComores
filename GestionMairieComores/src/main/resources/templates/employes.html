@@ -36,8 +36,7 @@
 				<div class="panel-heading" th:text="#{ajout.titre}"></div>
 				<div class="panel-body">
 					<div class="container">
-						<form class="form-inline" action="/"
-							th:action="@{/saveEmployes}" th:object="${employe}"  method="post">
+						<form class="form-inline" action="/" th:action="@{/saveEmployes}" th:object="${employe}"  method="post">
 							<div>
 							    <input type="hidden"  name="etat"           th:value="${etat}" />
 							    <input type="hidden"  name="operation"      th:value="${operation}" />

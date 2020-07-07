@@ -76,6 +76,13 @@ public class UsersEmployesController {
 	public String ajoutNouveauUSers(@Valid EmployeUsers employeUsers, Errors errors, String action, String operation,
 			Model model, String motCle) {
 		model.addAttribute("motCle", motCle);
+		try{
+			// Récuperation de l'utilisateur connecté
+			EmployeController.ChargerUserConnection(model, userMetierImpl, employeMetierImpl);
+			EmployeController.dateDujours(model);
+		}catch (Exception e) {
+		}
+		
 		if (null != action && action.equalsIgnoreCase("annuler")) {
 			return "redirect:/consulationUtilisateur?motCle=" + motCle;
 		}
