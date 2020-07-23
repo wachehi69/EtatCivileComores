@@ -105,12 +105,13 @@ public class UsersEmployesController {
 					throw new RuntimeException("Le username est inexistant!!!!!");
 
 				Employe empl = employeMetierImpl.chargerEmploye(user.getEmploye().getIdempl());
-
-				// Préparation de hashage MD5 pour le mot de passe
-				String password = employeUsers.getPassword();
-				String passMD5 = transformationMotPassMD5(password);
-
-				user.setPassword(passMD5);
+                // Ici on test si le mot de passe de l'utilisateur a été modifié ou pas
+				if(!employeUsers.getPassword().equals(user.getPassword())){
+					// Préparation de hashage MD5 pour le mot de passe
+					String password = employeUsers.getPassword();
+					String passMD5 = transformationMotPassMD5(password);
+					user.setPassword(passMD5);	
+				}
 				user.setActive(employeUsers.getActive());
 				// pour affecter les roles
 				user.setRoles(employeUsers.getRoles());

@@ -71,6 +71,7 @@ public class ExtraitNaissancePersonne implements Serializable{
 	private String declarationRecueParnous;
 	private String numRegistre;
 	private Date dateCreation;
+	private Date dateModification;
 	@ManyToOne
 	@JoinColumn(name="user_name")
 	private Users  user;
@@ -325,4 +326,15 @@ public class ExtraitNaissancePersonne implements Serializable{
 		this.minuteNaissanceMere = minuteNaissanceMere;
 	}
 
+
+	public Date getDateModification() {
+		return dateModification;
+	}
+
+
+	public void setDateModification(Date dateModification) {
+		this.dateModification = dateModification;
+	}
+	
+	
 }
