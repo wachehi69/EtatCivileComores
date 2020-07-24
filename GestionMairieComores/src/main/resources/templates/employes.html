@@ -141,8 +141,8 @@
 							<th th:text="#{information.datenaissance}"></th>
 							<th th:text="#{information.daterecrutement}"></th>
 							<th th:text="#{information.salaire}"></th>
-							<th th:text="#{information.supp}"></th>
-							<th th:text="#{information.modif}"></th>
+							<th th:text="#{information.supp}"  sec:authorize="hasRole('ROLE_ADMIN')"></th>
+							<th th:text="#{information.modif}" sec:authorize="hasRole('ROLE_ADMIN')"></th>
 						</tr>
 						<tr th:each="employe: ${listeEmployes}">
 							<td th:text="${employe.nomDuSexe}" />
@@ -153,10 +153,10 @@
 							<td	th:text="${#dates.format(employe.dateNaissance,  'dd-MM-yyyy')}" />
 							<td	th:text="${#dates.format(employe.dateRecrutement,'dd-MM-yyyy')}" />
 							<td th:text="${employe.salaire}" />
-							<td><a
+							<td sec:authorize="hasRole('ROLE_ADMIN')"><a
 								th:href="@{/suppressionEmploye(idempl=${employe.idempl},motCle=${motCle},page=${page})}"
 								th:text="supp"></a></td>
-							<td><a
+							<td sec:authorize="hasRole('ROLE_ADMIN')"><a
 								th:href="@{/consultationEmployes(idempl=${employe.idempl},motCle=${motCle},operation=modif,page=${page})}"
 								th:text="modif"></a></td>
 						</tr>

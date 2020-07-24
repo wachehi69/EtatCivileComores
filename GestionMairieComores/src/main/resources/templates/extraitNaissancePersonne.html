@@ -46,7 +46,7 @@
 					<form class="form-inline" th:action="@{/saveExtraitNaissance}" 	th:object="${extraitNaissancePersonne}" method="post">
 
 						<fieldset>
-							<legend id="infNaiss1" >Informations de naissance :</legend>
+							<legend id="infNaiss1" class="pointer">Informations de naissance :</legend>
 							
 						<div style="display: none"  id="infNaiss01">	
 							<div>
@@ -171,7 +171,7 @@
 				</fieldset>
 						
 				 <fieldset>
-							<legend id="infPere2">Informations du père :</legend>
+							<legend id="infPere2" class="pointer">Informations du père :</legend>
 							<div style="display: none" id="infPere02">
 								<div class="form-group">
 									<label for="nomDuPere"
@@ -275,7 +275,7 @@
 							</div>
                             </fieldset>
 						<fieldset>
-							<legend id="infMere3">Informations du mère :</legend>
+							<legend id="infMere3" class="pointer">Informations du mère :</legend>
 							<div style="display: none" id="infMere03">
 								<div class="form-group">
 									<label for="nomDuMere" 	th:text="#{label.nomdumere.extrait.ajout}"> </label>
@@ -372,7 +372,7 @@
 							</div>
 						</fieldset>
 						<fieldset>
-							<legend id="infDecla4">Déclaration fait par :</legend>
+							<legend id="infDecla4" class="pointer">Déclaration fait par :</legend>
 							<div style="display: none" id="infDecla04">
 								<div>
 									<div class="form-group">
@@ -433,8 +433,8 @@
 							<th th:text="#{information.extrait.datecreation}"></th>
 							<th th:text="#{information.extrait.datemodification}"></th>
 							<th th:text="#{information.extrait.nomutilisateur}"></th>
-							<th th:text="#{information.supp}"></th>
-							<th th:text="#{information.modif}"></th>
+							<th th:text="#{information.supp}"  sec:authorize="hasRole('ROLE_ADMIN')"></th>
+							<th th:text="#{information.modif}" sec:authorize="hasRole('ROLE_ADMIN')"></th>
 							<th th:text="#{information.edit}"></th>
 							<th th:text="#{information.export}"></th>
 						</tr>
@@ -449,10 +449,10 @@
 							<td	th:text="${#dates.format(extraitP.dateCreation,'dd-MM-yyyy')}" /> 
 							<td	th:text="${#dates.format(extraitP.dateModification,'dd-MM-yyyy')}" />
 							<td th:text="${extraitP.user.employe}" />
-							<td><a
+							<td sec:authorize="hasRole('ROLE_ADMIN')"><a
 								th:href="@{/suppressionExtrait(numExtrait=${extraitP.numExtrait},motCle=${motCle},page=${page})}"
 								th:text="supp"></a></td>
-							 <td><a
+							 <td sec:authorize="hasRole('ROLE_ADMIN')"><a
 								th:href="@{/consulationExtraitNaissance(numExtrait=${extraitP.numExtrait},motCle=${motCle}, operation=modif, page=${page})}"
 								th:text="modif"></a></td> 
 								<td><a
