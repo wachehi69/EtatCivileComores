@@ -12,6 +12,7 @@
 
 <link rel="stylesheet" type="text/css" href="../static/css/myStyle.css"
 	th:href="@{/css/myStyle.css}" />
+	<script type="text/javascript" src="/js/monFichierJs.js"></script>
 </head>
 <body>
 	<div layout:fragment="content">
@@ -163,11 +164,13 @@
 					</table>
 					<div class="container">
 						<ul class="nav nav-pills">
-							<li th:each="p,status:${pages}"><a
+							<li th:each="p,status:${pages}"    class="${active:status.index==0}" ><a
 								th:href="@{/consultationEmployes(motCle=${motCle},page=${status.index})}"
-								th:text="${status.index}"></a></li>
+								th:text="${status.index}" ></a></li>
 						</ul>
 					</div>
+					
+				
 				</div>
 			</div>
 		</div>

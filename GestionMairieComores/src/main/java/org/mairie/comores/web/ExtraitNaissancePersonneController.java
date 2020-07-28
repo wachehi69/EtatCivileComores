@@ -189,7 +189,7 @@ public class ExtraitNaissancePersonneController {
 			document.add(paragraph);
 
 			/* inserer l'image */
-			Image image = Image.getInstance("c:/mairie.png");
+			Image image = Image.getInstance("mairie.png");
 			
 			//image.setAbsolutePosition(220f, 550f);
 			document.add(image);
@@ -203,10 +203,15 @@ public class ExtraitNaissancePersonneController {
 			String dat = dateFormat.format(extraitNPersonne.getDateCreation());
 			Font fonteDatesys = fonte2;
 			fonteDatesys.setStyle(Font.BOLD);
-			paragraph = new Paragraph("N°: " + extraitNPersonne.getNumExtrait() + " Du " + dat ,fonteDatesys);
+			paragraph = new Paragraph("Acte N°: " + extraitNPersonne.getNumExtrait() + " Du " + dat ,fonteDatesys);
 			//paragraph = new Paragraph( dat, fonteDatesys);
 			paragraph.setAlignment(Element.ALIGN_CENTER);
 
+			document.add(paragraph);
+			
+			paragraph = new Paragraph("Registre N°: " + extraitNPersonne.getNumRegistre());
+			paragraph.setAlignment(Element.ALIGN_CENTER);
+			paragraph.setFont(fonte2);
 			document.add(paragraph);
 
 			/* contenu de l'extrait de naissance */
@@ -237,21 +242,28 @@ public class ExtraitNaissancePersonneController {
 
 			document.add(new Paragraph(""));
 
-			phrase = new Phrase("Est né (e) à: ");
-			phrase.add(new Chunk("                      "
-					+ extraitNPersonne.getCommuneNaissance(), fonte2));
-			document.add(phrase);
+			if(extraitNPersonne.getNomDuSexe().equalsIgnoreCase("masculin")){
+				phrase = new Phrase("Est né  à: ");
+				phrase.add(new Chunk("                          "
+						+ extraitNPersonne.getCommuneNaissance(), fonte2));
+				document.add(phrase);	
+			}else {
+				phrase = new Phrase("Est née  à:  ");
+				phrase.add(new Chunk("                       "
+						+ extraitNPersonne.getCommuneNaissance(), fonte2));
+				document.add(phrase);	
+			}
 
 			document.add(new Paragraph(""));
 
 			phrase = new Phrase("Dans la commune de : ");
-			phrase.add(new Chunk("      " + extraitNPersonne.getCommuneNaissance(), fonte2));
+			phrase.add(new Chunk("     " + extraitNPersonne.getCommuneNaissance(), fonte2));
 			document.add(phrase);
 
 			document.add(new Paragraph(""));
 
 			phrase = new Phrase("De sexe : ");
-			phrase.add(new Chunk("                           "
+			phrase.add(new Chunk("                          "
 					+ extraitNPersonne.getNomDuSexe(), fonte2));
 			document.add(phrase);
 
@@ -266,10 +278,17 @@ public class ExtraitNaissancePersonneController {
 			document.add(new Paragraph(""));
 
 			phrase = new Phrase("Né  : ");
-			phrase.add(new Chunk("           "
-					+ extraitNPersonne.getDateJoursetMoisNaissancePere() + "  " + extraitNPersonne.getDateAnneedeNaissancePere() + extraitNPersonne.getHeureNaissancePere() +  "  heures  " + extraitNPersonne.getMinuteNaissancePere() + "  minutes")); 
+			phrase.add(new Chunk("                                  "
+					+ extraitNPersonne.getDateJoursetMoisNaissancePere() + "  " + extraitNPersonne.getDateAnneedeNaissancePere())); 
 			document.add(phrase);
 
+			document.add(new Paragraph(""));
+			
+			phrase = new Phrase("à : ");
+			phrase.add(new Chunk("                                     "
+					+ extraitNPersonne.getHeureNaissancePere() + "  heures  " + extraitNPersonne.getMinuteNaissance() + "  minutes"));
+			document.add(phrase);
+			
 			document.add(new Paragraph(""));
 			
 			phrase = new Phrase("Demeurant à: ");
@@ -296,17 +315,27 @@ public class ExtraitNaissancePersonneController {
 			document.add(new Paragraph(""));
 
 			phrase = new Phrase("Née : ");
-			phrase.add(new Chunk("          "
-					+ extraitNPersonne.getDateJoursetMoisNaissanceMere() + "  " + extraitNPersonne.getDateAnneedeNaissanceMere() + extraitNPersonne.getHeureNaissanceMere() +  "  heures  " + extraitNPersonne.getMinuteNaissanceMere() + "  minutes")); 
+			phrase.add(new Chunk("                                "
+					+ extraitNPersonne.getDateJoursetMoisNaissanceMere() + "  " + extraitNPersonne.getDateAnneedeNaissanceMere())); 
 			document.add(phrase);
 
 			document.add(new Paragraph(""));
+			
+			phrase = new Phrase("à : ");
+			phrase.add(new Chunk("                                    "
+					+ extraitNPersonne.getHeureNaissanceMere() + "  heures  " + extraitNPersonne.getMinuteNaissanceMere() + "  minutes"));
+			document.add(phrase);
+			
+			document.add(new Paragraph(""));
+			
 			phrase = new Phrase("à : ");
 			phrase.add(new Chunk("                                    "
 					+ extraitNPersonne.getCommuneNaissanceMere()));
 			document.add(phrase);
 			
 			document.add(new Paragraph(""));
+			
+			
 
 			phrase = new Phrase("Profession : ");
 			phrase.add(new Chunk("                     "
@@ -317,7 +346,7 @@ public class ExtraitNaissancePersonneController {
 
 			document.add(new Paragraph(""));
 			phrase = new Phrase("Dressé le : ");
-			phrase.add(new Chunk("                         "
+			phrase.add(new Chunk("                       "
 					+ dat ));
 			document.add(phrase);
 
