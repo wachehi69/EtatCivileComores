@@ -222,7 +222,7 @@ public class ExtraitNaissancePersonneController {
 			document.add(paragraph);
 
 			phrase = new Phrase("Le   ");
-			phrase.add(new Chunk("                                    "
+			phrase.add(new Chunk("                                   "
 					+ extraitNPersonne.getDateJoursetMoisNaissance(), fonte2));
 			document.add(phrase);
 
@@ -234,12 +234,21 @@ public class ExtraitNaissancePersonneController {
 			document.add(phrase);
 			
 			document.add(new Paragraph(""));
-
-			phrase = new Phrase("à : ");
-			phrase.add(new Chunk("                                     "
-					+ extraitNPersonne.getHeureNaissance() + "  heures  " + extraitNPersonne.getMinuteNaissance() + "  minutes" , fonte2));
-			document.add(phrase);
-
+			
+			if(extraitNPersonne.getMinuteNaissance().isEmpty()){
+				phrase = new Phrase("à : ");
+				phrase.add(new Chunk("                                     "
+						+ extraitNPersonne.getHeureNaissance() + "  heures  " , fonte2));
+				document.add(phrase);
+				
+			}else{
+				
+				phrase = new Phrase("à : ");
+				phrase.add(new Chunk("                                     "
+						+ extraitNPersonne.getHeureNaissance() + "  heures  " + extraitNPersonne.getMinuteNaissance() + "  minutes" , fonte2));
+				document.add(phrase);
+			}
+			
 			document.add(new Paragraph(""));
 
 			if(extraitNPersonne.getNomDuSexe().equalsIgnoreCase("masculin")){
@@ -284,11 +293,19 @@ public class ExtraitNaissancePersonneController {
 
 			document.add(new Paragraph(""));
 			
-			phrase = new Phrase("à : ");
-			phrase.add(new Chunk("                                     "
-					+ extraitNPersonne.getHeureNaissancePere() + "  heures  " + extraitNPersonne.getMinuteNaissance() + "  minutes"));
-			document.add(phrase);
-			
+			if(extraitNPersonne.getMinuteNaissancePere().isEmpty()){
+				phrase = new Phrase("à : ");
+				phrase.add(new Chunk("                                     "
+						+ extraitNPersonne.getHeureNaissancePere() + "  heures  "));
+				document.add(phrase);
+				
+			}else{
+				
+				phrase = new Phrase("à : ");
+				phrase.add(new Chunk("                                     "
+						+ extraitNPersonne.getHeureNaissancePere() + "  heures  " + extraitNPersonne.getMinuteNaissancePere() + "  minutes"));
+				document.add(phrase);
+			}			
 			document.add(new Paragraph(""));
 			
 			phrase = new Phrase("Demeurant à: ");
@@ -321,10 +338,19 @@ public class ExtraitNaissancePersonneController {
 
 			document.add(new Paragraph(""));
 			
-			phrase = new Phrase("à : ");
-			phrase.add(new Chunk("                                    "
-					+ extraitNPersonne.getHeureNaissanceMere() + "  heures  " + extraitNPersonne.getMinuteNaissanceMere() + "  minutes"));
-			document.add(phrase);
+			if(extraitNPersonne.getMinuteNaissanceMere().isEmpty()){
+				phrase = new Phrase("à : ");
+				phrase.add(new Chunk("                                     "
+						+ extraitNPersonne.getHeureNaissanceMere() + "  heures  " ));
+				document.add(phrase);
+				
+			}else{
+				
+				phrase = new Phrase("à : ");
+				phrase.add(new Chunk("                                     "
+						+ extraitNPersonne.getHeureNaissanceMere() + "  heures  " + extraitNPersonne.getMinuteNaissanceMere() + "  minutes"));
+				document.add(phrase);
+			}
 			
 			document.add(new Paragraph(""));
 			
@@ -334,7 +360,6 @@ public class ExtraitNaissancePersonneController {
 			document.add(phrase);
 			
 			document.add(new Paragraph(""));
-			
 			
 
 			phrase = new Phrase("Profession : ");
@@ -355,7 +380,7 @@ public class ExtraitNaissancePersonneController {
 			phrase.add(new Chunk(" "
 									+ extraitNPersonne.getDeclarationFaitePar()));
 			document.add(phrase);
-			document.add(new Paragraph(" "));
+			//document.add(new Paragraph(" "));
 			phrase = new Phrase("Déclaration reçue par nous: ");
 			phrase.add(new Chunk(" "
 									+ extraitNPersonne.getDeclarationRecueParnous()));

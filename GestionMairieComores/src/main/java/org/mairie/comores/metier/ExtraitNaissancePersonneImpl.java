@@ -59,4 +59,15 @@ public class ExtraitNaissancePersonneImpl implements IExtraitNaissancePersonne {
 		return extraitNaissancePersonneRepository.findAll();
 	}
 
+	@Override
+	public Page<ExtraitNaissancePersonne> listeParPageExtraitParNumExtrait(Long numExtrait, int page, int size) {
+		
+		Page<ExtraitNaissancePersonne> extraitPage = extraitNaissancePersonneRepository
+				.listeExtraitNaissanceParNumExtrait( numExtrait, new PageRequest(page, size));
+
+		if (extraitPage == null || extraitPage.isEmpty())
+			throw new RuntimeException("Nom est inexistant !!!");
+		return extraitPage;
+	}
+
 }

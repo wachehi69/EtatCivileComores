@@ -11,5 +11,8 @@ public interface ExtraitNaissancePersonneRepository  extends JpaRepository<Extra
 	
 	@Query("select e from ExtraitNaissancePersonne e where e.nom like :X order by e.nom asc")
 	public Page<ExtraitNaissancePersonne>listeExtraitNaissanceParNom(@Param("X")String nom, Pageable pageable);
+	
+	@Query("select e from ExtraitNaissancePersonne e where e.numExtrait =:X order by e.numExtrait asc")
+	public Page<ExtraitNaissancePersonne>listeExtraitNaissanceParNumExtrait(@Param("X")Long numExtrait, Pageable pageable);
 
 }

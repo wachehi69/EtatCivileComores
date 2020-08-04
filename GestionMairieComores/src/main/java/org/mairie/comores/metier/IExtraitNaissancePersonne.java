@@ -12,6 +12,7 @@ public interface IExtraitNaissancePersonne {
 	public void updateExtraitNaissance(ExtraitNaissancePersonne extrait);
 	public void deleteExtraitNaissance(Long numExtrait);
 	public Page<ExtraitNaissancePersonne> listeParPageExtrait(String nom, int page, int size);
+	public Page<ExtraitNaissancePersonne> listeParPageExtraitParNumExtrait(Long numExtrait, int page, int size);
 	public List<ExtraitNaissancePersonne> listeExtraitNaissance(); 
 	
 	
