@@ -2,7 +2,7 @@ package org.mairie.comores.web;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
+
 import javax.servlet.ServletContext;
 
 import org.mairie.comores.entities.ExtraitNaissancePersonne;
@@ -56,6 +56,5 @@ public class PDFExtraitNaissanceExport {
 			model.addAttribute("error", e.getMessage());
 		}
 		return null;
-
 	}
 }
