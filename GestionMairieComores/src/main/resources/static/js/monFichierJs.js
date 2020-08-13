@@ -8,6 +8,25 @@ $(document).ready(function(){
     	$('#infNaiss01').hide();
        }
      })
+     
+     $('#infMar1').on({
+        click: function(){
+       	 $('#infMar01').show();
+       },
+       dblclick: function(){
+    	$('#infMar01').hide();
+       }
+     })
+     
+      $('#infMar2').on({
+        click: function(){
+       	 $('#infMar02').show();
+       },
+       dblclick: function(){
+    	$('#infMar02').hide();
+       }
+     })
+
 	
 	$('#infPere2').on({
         click: function(){
