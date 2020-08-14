@@ -37,6 +37,15 @@ $(document).ready(function(){
        }
      });
 	
+	$('#infPereMari2').on({
+        click: function(){
+       	 $('#infPereMari02').show();
+       },
+       dblclick: function(){
+    	$('#infPereMari02').hide();
+       }
+     });
+	
 	$('#infMere3').on({
         click: function(){
        	 $('#infMere03').show();
