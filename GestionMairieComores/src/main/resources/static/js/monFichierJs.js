@@ -46,6 +46,16 @@ $(document).ready(function(){
        }
      });
 	
+	
+	$('#infPereMarie2').on({
+        click: function(){
+       	 $('#infPereMarie02').show();
+       },
+       dblclick: function(){
+    	$('#infPereMarie02').hide();
+       }
+     });
+	
 	$('#infMere3').on({
         click: function(){
        	 $('#infMere03').show();
@@ -54,6 +64,34 @@ $(document).ready(function(){
     	$('#infMere03').hide();
        }
      });
+	
+	$('#infMeremari3').on({
+        click: function(){
+       	 $('#infMeremari03').show();
+       },
+       dblclick: function(){
+    	$('#infMeremari03').hide();
+       }
+     });
+	
+	$('#infMeremarie3').on({
+        click: function(){
+       	 $('#infMeremarie03').show();
+       },
+       dblclick: function(){
+    	$('#infMeremarie03').hide();
+       }
+     });
+	
+	$('#infMarTem2').on({
+        click: function(){
+       	 $('#infMarTem02').show();
+       },
+       dblclick: function(){
+    	$('#infMarTem02').hide();
+       }
+     });
+	
 	$('#infDecla4').on({
         click: function(){
        	 $('#infDecla04').show();
