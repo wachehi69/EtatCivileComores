@@ -25,7 +25,7 @@ public class PDFExtraitNaissanceExport {
 	@Autowired
 	private IExtraitNaissancePersonne extraitNaissancePersonneImpl;
 
-	private static final String DIRECTORY = "C:/RepertoirExtrait";
+	private static final String DIRECTORY = "C:/RepertoirExtraitNaissance";
 
 	@RequestMapping("/PDFExportExtraitNaissance")
 	public ResponseEntity<InputStreamResource> downloadFile1(Long numExtrait, Model model) {

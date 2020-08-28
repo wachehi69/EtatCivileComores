@@ -52,7 +52,7 @@ public class ExtraitNaissancePersonneController {
 	@Autowired
 	private UserMetierImpl userMetierImpl;
 
-	String nomFichierSource = "c:\\extrait\\extraitNaissace.pdf";
+	String nomFichierSource = "c:\\extraitNaissance\\extraitNaissace.pdf";
 	Paragraph paragraph;
 	Phrase phrase;
 	Path source;
@@ -118,7 +118,8 @@ public class ExtraitNaissancePersonneController {
 
 	@RequestMapping(value = "/saveExtraitNaissance", method = RequestMethod.POST)
 	public String enregistrer(@Valid ExtraitNaissancePersonne extraitNaissancePersonne, Errors errors, Model model,
-			String operation, String motCle, String action, @RequestParam(name = "page", defaultValue = "0") int page,
+			String operation, String motCle, String action, 
+			@RequestParam(name = "page", defaultValue = "0") int page,
 			@RequestParam(name = "size", defaultValue = "5") int size) {
 
 		try {
@@ -166,7 +167,7 @@ public class ExtraitNaissancePersonneController {
 
 		ExtraitNaissancePersonne extraitNPersonne = extraitNaissancePersonneImpl.getExtraitNaissance(numExtrait);
 		/* Creation du repertoir extrait */
-		Path repertoir = Paths.get("c:\\extrait\\");
+		Path repertoir = Paths.get("c:\\extraitNaissance\\");
 		try {
 			Files.createDirectories(repertoir);
 		} catch (IOException e1) {
@@ -435,7 +436,7 @@ public class ExtraitNaissancePersonneController {
 			 * creation du repertoire de stockage des extraits de naissances et
 			 * instanciation de fichier
 			 */
-			Path dossierRepertoir = Paths.get("c:\\RepertoirExtrait");
+			Path dossierRepertoir = Paths.get("c:\\RepertoirExtraitNaissance");
 			// pour creer un repertoire s'il existe pas
 			if (!Files.exists(dossierRepertoir)) {
 				Files.createDirectory(dossierRepertoir);
@@ -454,7 +455,7 @@ public class ExtraitNaissancePersonneController {
 
 			// Le repertoire de stockage des extraits de naissances et nom final
 			// de l'extrait
-			File destina = new File("c:\\RepertoirExtrait\\" + nomFichierDest);
+			File destina = new File("c:\\RepertoirExtraitNaissance\\" + nomFichierDest);
 			// copie le fichier source créée vers le repertoire RepertoirExtrait
 			copyFile(source, destina);
 

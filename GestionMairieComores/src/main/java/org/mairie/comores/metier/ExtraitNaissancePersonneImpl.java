@@ -49,8 +49,7 @@ public class ExtraitNaissancePersonneImpl implements IExtraitNaissancePersonne {
 				.listeExtraitNaissanceParNom("%"+nom +"%", new PageRequest(page, size));
 		// Pageable sortedByPriceDesc = PageRequest.of(page, size,
 		// Sort.by("name").descending());
-		if (extraitPage == null || extraitPage.isEmpty())
-			throw new RuntimeException("Nom est inexistant !!!");
+		if (extraitPage == null || extraitPage.isEmpty()) throw new RuntimeException("Nom est inexistant !!!");
 		return extraitPage;
 	}
 

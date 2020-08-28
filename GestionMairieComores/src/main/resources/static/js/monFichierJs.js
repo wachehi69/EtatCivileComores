@@ -26,8 +26,6 @@ $(document).ready(function(){
     	$('#infMar02').hide();
        }
      })
-
-	
 	$('#infPere2').on({
         click: function(){
        	 $('#infPere02').show();
@@ -74,6 +72,15 @@ $(document).ready(function(){
        }
      });
 	
+	$('#infMarTemMarie2').on({
+        click: function(){
+       	 $('#infMarTemMarie02').show();
+       },
+       dblclick: function(){
+    	$('#infMarTemMarie02').hide();
+       }
+     });
+	
 	$('#infMeremarie3').on({
         click: function(){
        	 $('#infMeremarie03').show();
@@ -101,6 +108,23 @@ $(document).ready(function(){
        }
      });
 	
+	$('#infDeclaMariage1').on({
+        click: function(){
+       	 $('#infDeclaMariage01').show();
+       },
+       dblclick: function(){
+    	$('#infDeclaMariage01').hide();
+       }
+     });
+	
+	$('#infIscMar1').on({
+        click: function(){
+       	 $('#infIscMar01').show();
+       },
+       dblclick: function(){
+    	$('#infIscMar01').hide();
+       }
+     });
 }); 
 
 

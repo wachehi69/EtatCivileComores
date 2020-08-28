@@ -50,7 +50,7 @@ public class ExtraitMariagePersonneImpl implements IExtraitMariagePersonne{
 	@SuppressWarnings("deprecation")
 	@Override
 	public Page<ExtraitMariagePersonne> listeExtraitMariageParNom(String nomMari, int page, int size) {
-		Page<ExtraitMariagePersonne> listeExtraitMariage = mariagePersonneRepository.listeExtraitMariageParNom(nomMari, new PageRequest(page, size));
+		Page<ExtraitMariagePersonne> listeExtraitMariage = mariagePersonneRepository.listeExtraitMariageParNom("%"+nomMari+"%", new PageRequest(page, size));
 		   if(null==listeExtraitMariage || listeExtraitMariage.isEmpty()) throw new RuntimeException("Aucun extrait existe sur ce nom") ;
 		
 		return listeExtraitMariage ;

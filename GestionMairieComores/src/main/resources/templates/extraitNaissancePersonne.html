@@ -424,12 +424,9 @@
 					<table class="table table-striped table-condensed table-hover">
 						<tr class="info">
 						    <th th:text="#{information.extrait.numextrait}"></th>
-							<!-- <th th:text="#{information.sexe}"></th> -->
 							<th th:text="#{information.extrait.nom}"></th>
-							<!-- <th th:text="#{information.extrait.prenom}"></th> -->
 							<th th:text="#{information.extrait.datenaissance}"></th>
 							<th th:text="#{information.extrait.dateannenaissance}"></th>
-							<!-- <th th:text="#{information.extrait.nomdupere}"></th> -->
 							<th th:text="#{information.extrait.datecreation}"></th>
 							<th th:text="#{information.extrait.datemodification}"></th>
 							<th th:text="#{information.extrait.nomutilisateur}"></th>
@@ -440,12 +437,9 @@
 						</tr>
 						<tr th:each="extraitP:${listextraitPage}">
 						    <td th:text="${extraitP.numExtrait}" />
-							<!-- <td th:text="${extraitP.nomDuSexe}" /> -->
 							<td th:text="${extraitP.nom}" /> 
-							<!-- <td th:text="${extraitP.prenom}" /> -->
 							<td th:text="${extraitP.dateJoursetMoisNaissance}" />
 							<td th:text="${extraitP.dateAnneedeNaissance}" />
-							<!-- <td th:text="${extraitP.nomDuPere}" /> -->
 							<td	th:text="${#dates.format(extraitP.dateCreation,'dd-MM-yyyy')}" /> 
 							<td	th:text="${#dates.format(extraitP.dateModification,'dd-MM-yyyy')}" />
 							<td th:text="${extraitP.user.employe}" />
