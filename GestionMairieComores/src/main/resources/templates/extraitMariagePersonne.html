@@ -66,7 +66,7 @@
 													name="dateJoursetMoisIscriptionMariage"
 													placeholder="Entrer le jour et le mois d'inscription de mariage"
 													th:field="*{dateJoursetMoisIscriptionMariage}" />
-												<p class="text-danger"
+												<p class="alert alert-danger"
 													th:if="${#fields.hasErrors('dateJoursetMoisIscriptionMariage')}"
 													th:errors="*{dateJoursetMoisIscriptionMariage}"></p>
 											</div>
@@ -81,7 +81,7 @@
 												name="dateAnneedeInscriptionMariage"
 												placeholder="Entrer l'année d'inscription du mariage"
 												th:field="*{dateAnneedeInscriptionMariage}" />
-											<p class="text-danger"
+											<p class="alert alert-danger"
 												th:if="${#fields.hasErrors('dateAnneedeInscriptionMariage')}"
 												th:errors="*{dateAnneedeInscriptionMariage}"></p>
 										</div>
@@ -95,7 +95,7 @@
 													name="heureInscriptionMariage"
 													placeholder="Entrer heure d'inscription de mariage"
 													th:field="*{heureInscriptionMariage}" />
-												<p class="text-danger"
+												<p class="alert alert-danger"
 													th:if="${#fields.hasErrors('heureInscriptionMariage')}"
 													th:errors="*{heureInscriptionMariage}"></p>
 											</div>
@@ -109,7 +109,7 @@
 														name="minuteInscriptionMariage"
 														placeholder="Entrer les minutes"
 														th:field="*{minuteInscriptionMariage}" />
-													<p class="text-danger"
+													<p class="alert alert-danger"
 														th:if="${#fields.hasErrors('minuteInscriptionMariage')}"
 														th:errors="*{minuteInscriptionMariage}"></p>
 												</div>
@@ -124,7 +124,7 @@
 												name="communeInscriptionMariage"
 												placeholder="Entrer commune d'inscription du mariage"
 												th:field="*{communeInscriptionMariage}" />
-											<p class="text-danger"
+											<p class="alert alert-danger"
 												th:if="${#fields.hasErrors('communeInscriptionMariage')}"
 												th:errors="*{communeInscriptionMariage}"></p>
 										</div>
@@ -138,7 +138,7 @@
 												name="ileInscriptionMariage"
 												placeholder="Entrer 'île d'inscription du mariage"
 												th:field="*{ileInscriptionMariage}" />
-											<p class="text-danger"
+											<p class="alert alert-danger"
 												th:if="${#fields.hasErrors('ileInscriptionMariage')}"
 												th:errors="*{ileInscriptionMariage}"></p>
 										</div>
@@ -158,7 +158,7 @@
 											<input type="text" class="form-control" name="numRegistre"
 												placeholder="Entrer le numero du registre"
 												th:field="*{numRegistre}" />
-											<p class="text-danger"
+											<p class="alert alert-danger"
 												th:if="${#fields.hasErrors('numRegistre')}"
 												th:errors="*{numRegistre}"></p>
 										</div>
@@ -170,7 +170,7 @@
 									<div>
 										<input type="text" class="form-control" name="nomMari"
 											placeholder="Entrer le nom" th:field="*{nomMari}" />
-										<p class="text-danger" th:if="${#fields.hasErrors('nomMari')}"
+										<p class="alert alert-danger" th:if="${#fields.hasErrors('nomMari')}"
 											th:errors="*{nomMari}"></p>
 									</div>
 								</div>
@@ -183,7 +183,7 @@
 											<div>
 												<input type="text" class="form-control" name="prenomMari"
 													placeholder="Entrer pr&eacute;nom" th:field="*{prenomMari}" />
-												<p class="text-danger"
+												<p class="alert alert-danger"
 													th:if="${#fields.hasErrors('prenomMari')}"
 													th:errors="*{prenomMari}"></p>
 											</div>
@@ -199,7 +199,7 @@
 													name="dateJoursetMoisNaissanceMari"
 													placeholder="Entrer le jour et le mois de naissance"
 													th:field="*{dateJoursetMoisNaissanceMari}" />
-												<p class="text-danger"
+												<p class="alert alert-danger"
 													th:if="${#fields.hasErrors('dateJoursetMoisNaissanceMari')}"
 													th:errors="*{dateJoursetMoisNaissanceMari}"></p>
 											</div>
@@ -214,7 +214,7 @@
 												name="dateAnneedeNaissanceMari"
 												placeholder="Entrer l'année de naissance"
 												th:field="*{dateAnneedeNaissanceMari}" />
-											<p class="text-danger"
+											<p class="alert alert-danger"
 												th:if="${#fields.hasErrors('dateAnneedeNaissanceMari')}"
 												th:errors="*{dateAnneedeNaissanceMari}"></p>
 										</div>
@@ -228,7 +228,7 @@
 												name="communeNaissanceMari"
 												placeholder="Entrer commune de naissance"
 												th:field="*{communeNaissanceMari}" />
-											<p class="text-danger"
+											<p class="alert alert-danger"
 												th:if="${#fields.hasErrors('communeNaissanceMari')}"
 												th:errors="*{communeNaissanceMari}"></p>
 										</div>
@@ -243,7 +243,7 @@
 												name="professionMari"
 												placeholder="Entrer la profession du mari"
 												th:field="*{professionMari}" />
-											<p class="text-danger"
+											<p class="alert alert-danger"
 												th:if="${#fields.hasErrors('professionMari')}"
 												th:errors="*{professionMari}"></p>
 										</div>
@@ -258,7 +258,7 @@
 												name="adressMari"
 												placeholder="Entrer l'adresse du mari"
 												th:field="*{adressMari}" />
-											<p class="text-danger"
+											<p class="alert alert-danger"
 												th:if="${#fields.hasErrors('adressMari')}"
 												th:errors="*{adressMari}"></p>
 									  </div>	
@@ -278,7 +278,7 @@
 											<div>
 												<input type="text" class="form-control" name="nomMarie"
 													placeholder="Entrer le nom" th:field="*{nomMarie}" />
-												<p class="text-danger"
+												<p class="alert alert-danger"
 													th:if="${#fields.hasErrors('nomMarie')}"
 													th:errors="*{nomMarie}"></p>
 											</div>
@@ -291,7 +291,7 @@
 											<div>
 												<input type="text" class="form-control" name="prenomMarie"
 													placeholder="Entrer pr&eacute;nom" th:field="*{prenomMarie}" />
-												<p class="text-danger"
+												<p class="alert alert-danger"
 													th:if="${#fields.hasErrors('prenomMarie')}"
 													th:errors="*{prenomMarie}"></p>
 											</div>
@@ -307,7 +307,7 @@
 													name="dateJoursetMoisNaissanceMarie"
 													placeholder="Entrer le jour et le mois de naissance"
 													th:field="*{dateJoursetMoisNaissanceMarie}" />
-												<p class="text-danger"
+												<p class="alert alert-danger"
 													th:if="${#fields.hasErrors('dateJoursetMoisNaissanceMarie')}"
 													th:errors="*{dateJoursetMoisNaissanceMarie}"></p>
 											</div>
@@ -322,7 +322,7 @@
 												name="dateAnneedeNaissanceMarie"
 												placeholder="Entrer l'année de naissance"
 												th:field="*{dateAnneedeNaissanceMarie}" />
-											<p class="text-danger"
+											<p class="alert alert-danger"
 												th:if="${#fields.hasErrors('dateAnneedeNaissanceMarie')}"
 												th:errors="*{dateAnneedeNaissanceMarie}"></p>
 										</div>
@@ -336,7 +336,7 @@
 												name="communeNaissanceMarie"
 												placeholder="Entrer commune de naissance"
 												th:field="*{communeNaissanceMarie}" />
-											<p class="text-danger"
+											<p class="alert alert-danger"
 												th:if="${#fields.hasErrors('communeNaissanceMarie')}"
 												th:errors="*{communeNaissanceMarie}"></p>
 										</div>
@@ -351,7 +351,7 @@
 												name="professionMarie"
 												placeholder="Entrer commune de naissance"
 												th:field="*{professionMarie}" />
-											<p class="text-danger"
+											<p class="alert alert-danger"
 												th:if="${#fields.hasErrors('professionMarie')}"
 												th:errors="*{professionMarie}"></p>
 										</div>
@@ -366,7 +366,7 @@
 												name="adressMarie"
 												placeholder="Entrer l'adresse du mari"
 												th:field="*{adressMarie}" />
-											<p class="text-danger"
+											<p class="alert alert-danger"
 												th:if="${#fields.hasErrors('adressMarie')}"
 												th:errors="*{adressMarie}"></p>
 										
@@ -386,7 +386,7 @@
 											<input type="text" class="form-control" name="nomDuPereMari"
 												placeholder="Entrer le nom du père"
 												th:field="*{nomDuPereMari}" />
-											<p class="text-danger"
+											<p class="alert alert-danger"
 												th:if="${#fields.hasErrors('nomDuPereMari')}"
 												th:errors="*{nomDuPereMari}"></p>
 										</div>
@@ -399,7 +399,7 @@
 											<input type="text" class="form-control" name="prenomDuPereMari"
 												placeholder="Entrer le nom du père"
 												th:field="*{prenomDuPereMari}" />
-											<p class="text-danger"
+											<p class="alert alert-danger"
 												th:if="${#fields.hasErrors('prenomDuPereMari')}"
 												th:errors="*{prenomDuPereMari}"></p>
 										</div>
@@ -419,7 +419,7 @@
 											<input type="text" class="form-control" name="nomDuPereMarie"
 												placeholder="Entrer le nom du père"
 												th:field="*{nomDuPereMarie}" />
-											<p class="text-danger"
+											<p class="alert alert-danger"
 												th:if="${#fields.hasErrors('nomDuPereMarie')}"
 												th:errors="*{nomDuPereMarie}"></p>
 										</div>
@@ -433,7 +433,7 @@
 													name="prenomDuPereMarie"
 													placeholder="Entrer pr&eacute;nom du père"
 													th:field="*{prenomDuPereMarie}" />
-												<p class="text-danger"
+												<p class="alert alert-danger"
 													th:if="${#fields.hasErrors('prenomDuPereMarie')}"
 													th:errors="*{prenomDuPereMarie}"></p>
 											</div>
@@ -452,7 +452,7 @@
 											<input type="text" class="form-control" name="nomDuMereMari"
 												placeholder="Entrer le nom du mère"
 												th:field="*{nomDuMereMari}" />
-											<p class="text-danger"
+											<p class="alert alert-danger"
 												th:if="${#fields.hasErrors('nomDuMereMari')}"
 												th:errors="*{nomDuMereMari}"></p>
 										</div>
@@ -466,7 +466,7 @@
 													name="prenomDuMereMari"
 													placeholder="Entrer pr&eacute;nom du mère"
 													th:field="*{prenomDuMereMari}" />
-												<p class="text-danger"
+												<p class="alert alert-danger"
 													th:if="${#fields.hasErrors('prenomDuMereMari')}"
 													th:errors="*{prenomDuMereMari}"></p>
 											</div>
@@ -485,7 +485,7 @@
 											<input type="text" class="form-control" name="nomDuMereMarie"
 												placeholder="Entrer le nom du mère"
 												th:field="*{nomDuMereMarie}" />
-											<p class="text-danger"
+											<p class="alert alert-danger"
 												th:if="${#fields.hasErrors('nomDuMereMarie')}"
 												th:errors="*{nomDuMereMarie}"></p>
 										</div>
@@ -499,7 +499,7 @@
 													name="prenomDuMereMarie"
 													placeholder="Entrer pr&eacute;nom du mère"
 													th:field="*{prenomDuMereMarie}" />
-												<p class="text-danger"
+												<p class="alert alert-danger"
 													th:if="${#fields.hasErrors('prenomDuMereMarie')}"
 													th:errors="*{prenomDuMereMarie}"></p>
 											</div>
@@ -519,7 +519,7 @@
 											<div>
 												<input type="text" class="form-control" name="nomTemoinMari"
 													placeholder="Entrer le nom du témoin" th:field="*{nomTemoinMari}" />
-												<p class="text-danger"
+												<p class="alert alert-danger"
 													th:if="${#fields.hasErrors('nomTemoinMari')}"
 													th:errors="*{nomTemoinMari}"></p>
 											</div>
@@ -533,7 +533,7 @@
 												<input type="text" class="form-control"
 													name="prenomTemoinMari" placeholder="Entrer pr&eacute;nom"
 													th:field="*{prenomTemoinMari}" />
-												<p class="text-danger"
+												<p class="alert alert-danger"
 													th:if="${#fields.hasErrors('prenomTemoinMari')}"
 													th:errors="*{prenomTemoinMari}"></p>
 											</div>
@@ -547,9 +547,9 @@
 											<div>
 												<input type="text" class="form-control"
 													name="ageTemoinMari"
-													placeholder="Entrer l'âge du témoin du mari"
+													placeholder="Entrer l'âge du témoin de la marié"
 													th:field="*{ageTemoinMari}" />
-												<p class="text-danger"
+												<p class="alert alert-danger"
 													th:if="${#fields.hasErrors('ageTemoinMari')}"
 													th:errors="*{ageTemoinMari}"></p>
 											</div>
@@ -563,7 +563,7 @@
 												name="professionTemoinMari"
 												placeholder="Entrer la profession du témoin"
 												th:field="*{professionTemoinMari}" />
-											<p class="text-danger"
+											<p class="alert alert-danger"
 												th:if="${#fields.hasErrors('professionTemoinMari')}"
 												th:errors="*{professionTemoinMari}"></p>
 										</div>
@@ -577,7 +577,7 @@
 													name="adresseTemoinMari"
 													placeholder="Entrer l'adresse du témoin"
 													th:field="*{adresseTemoinMari}" />
-												<p class="text-danger"
+												<p class="alert alert-danger"
 													th:if="${#fields.hasErrors('adresseTemoinMari')}"
 													th:errors="*{adresseTemoinMari}"></p>
 											</div>
@@ -597,7 +597,7 @@
 											<div>
 												<input type="text" class="form-control" name="nomTemoinMarie"
 													placeholder="Entrer le nom du témoin" th:field="*{nomTemoinMarie}" />
-												<p class="text-danger"
+												<p class="alert alert-danger"
 													th:if="${#fields.hasErrors('nomTemoinMarie')}"
 													th:errors="*{nomTemoinMarie}"></p>
 											</div>
@@ -611,7 +611,7 @@
 												<input type="text" class="form-control"
 													name="prenomTemoinMarie" placeholder="Entrer pr&eacute;nom"
 													th:field="*{prenomTemoinMarie}" />
-												<p class="text-danger"
+												<p class="alert alert-danger"
 													th:if="${#fields.hasErrors('prenomTemoinMarie')}"
 													th:errors="*{prenomTemoinMarie}"></p>
 											</div>
@@ -627,7 +627,7 @@
 													name="ageTemoinMarie"
 													placeholder="Entrer l'âge du témoin de la marié"
 													th:field="*{ageTemoinMarie}" />
-												<p class="text-danger"
+												<p class="alert alert-danger"
 													th:if="${#fields.hasErrors('ageTemoinMarie')}"
 													th:errors="*{ageTemoinMarie}"></p>
 											</div>
@@ -641,7 +641,7 @@
 												name="professionTemoinMarie"
 												placeholder="Entrer la profession du témoin"
 												th:field="*{professionTemoinMarie}" />
-											<p class="text-danger"
+											<p class="alert alert-danger"
 												th:if="${#fields.hasErrors('professionTemoinMarie')}"
 												th:errors="*{professionTemoinMarie}"></p>
 										</div>
@@ -655,7 +655,7 @@
 													name="adresseTemoinMarie"
 													placeholder="Entrer l'adresse du témoin"
 													th:field="*{adresseTemoinMarie}" />
-												<p class="text-danger"
+												<p class="alert alert-danger"
 													th:if="${#fields.hasErrors('adresseTemoinMarie')}"
 													th:errors="*{adresseTemoinMarie}"></p>
 											</div>
@@ -676,7 +676,7 @@
 											class="form-control"
 											placeholder="Entrer la déclaration"
 											th:field="*{declarationFaitePar}"></textarea>
-											<p class="text-danger"
+											<p class="alert alert-danger"
 													th:if="${#fields.hasErrors('declarationFaitePar')}"
 													th:errors="*{declarationFaitePar}"></p>
 									</div>
@@ -691,7 +691,7 @@
 											class="form-control"
 											placeholder="Entrer la déclaration reçue par nous"
 											th:field="*{declarationRecueParnous}"></textarea>
-											<p class="text-danger"
+											<p class="alert alert-danger"
 													th:if="${#fields.hasErrors('declarationRecueParnous')}"
 													th:errors="*{declarationRecueParnous}"></p>
 									</div>
@@ -727,8 +727,8 @@
 							<th th:text="#{information.extrait.datecreation}"></th>
 							<th th:text="#{information.extraitmariage.datemodification}"></th>
 							<th th:text="#{information.extraitmariage.nomutilisateur}"></th>
-							<th th:text="#{information.supp}" ></th>
-							<th th:text="#{information.modif}"></th>
+							<th th:text="#{information.supp}"  sec:authorize="hasRole('ROLE_ADMIN')"></th>
+							<th th:text="#{information.modif}" sec:authorize="hasRole('ROLE_ADMIN')"></th>
 							<th th:text="#{information.edit}"></th>
 							<th th:text="#{information.export}"></th>
 						</tr>

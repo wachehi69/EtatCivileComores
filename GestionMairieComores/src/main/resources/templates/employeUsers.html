@@ -46,8 +46,6 @@
 	                             <input type="hidden"   name="motCle"     th:value="${motCle}" />
 	                             <input type="hidden"   name="etat"       th:value= "${etat}"/>
 	                          	 <input type="hidden"   name="operation"  th:value="${operation}" />  
-	                          	 <!-- <input type="text"   name="username"   th:value="${employeUsers.username}" /> --> 
-	                          	  <!-- <input type="text" class="form-control" name="username"  th:field="*{username}"/> -->
 	                          	                            
 	                            	<div class="form-group">
 								    <div>
@@ -55,7 +53,7 @@
 								      <label for="nomDuSexe" th:text="#{label.monsieur.employe.ajout}"></label> 
 								      <input type="radio" name="nomDuSexe"        th:value="Madame"       th:field="*{nomDuSexe}"/>
 								      <label for="nomDuSexe" th:text="#{label.madame.employe.ajout}"></label>
-								        <p class="text-danger" th:if="${#fields.hasErrors('nomDuSexe')}" th:errors="*{nomDuSexe}"></p>
+								        <p class="alert alert-danger" th:if="${#fields.hasErrors('nomDuSexe')}" th:errors="*{nomDuSexe}"></p>
 								     </div>
 								 </div>
 								<div> 
@@ -63,7 +61,7 @@
 								      <label  for="nomemp" th:text="#{label.nom.employe.ajout}"> </label>
 								     <div>
 									    <input type="text" class="form-control" name="nomemp" placeholder="Entrer le nom" th:field="*{nomemp}" />
-									    <p class="text-danger" th:if="${#fields.hasErrors('nomemp')}" th:errors="*{nomemp}"></p>
+									    <p class="alert alert-danger" th:if="${#fields.hasErrors('nomemp')}" th:errors="*{nomemp}"></p>
 									</div>
 								</div>
 								</div>
@@ -71,7 +69,7 @@
 									<label for="prenemp" th:text="#{label.prenom.employe.ajout}"></label>
 									 <div>
 									   <input type="text" class="form-control" name="prenemp" placeholder="Entrer pr&eacute;nom" th:field="*{prenemp}"  />
-									   <p class="text-danger" th:if="${#fields.hasErrors('prenemp')}" th:errors="*{prenemp}"></p> 
+									   <p class="alert alert-danger" th:if="${#fields.hasErrors('prenemp')}" th:errors="*{prenemp}"></p> 
 									 </div>
 								</div>
 						</fieldset>   
@@ -86,7 +84,7 @@
 									 </div>   
 									 <div  th:unless="${etat}">
 									   <input type="text" class="form-control" name="username" placeholder="Entrer votre username" th:field="*{username}"  />
-									   <p class="text-danger" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></p> 
+									   <p class="alert alert-danger" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></p> 
 									 </div>
 								</div>	
 								</div>
@@ -95,7 +93,7 @@
 									<label for="password" th:text="#{label.password.employe.ajout}"></label>
 									 <div>
 									   <input type="text" class="form-control" name="password" placeholder="Entrer votre password" th:field="*{password}"  />
-									   <p class="text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p> 
+									   <p class="alert alert-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p> 
 									 </div>
 								</div>	
 							</div>
@@ -109,7 +107,7 @@
 								      
 								      <input type="checkbox" name="user"        th:value="USER"       th:field="*{roles}"/>
 								      <label for="user" th:text="#{label.user.employe.ajout}"></label>
-								        <p class="text-danger" th:if="${#fields.hasErrors('roles')}" th:errors="*{roles}"></p>
+								        <p class="alert alert-danger" th:if="${#fields.hasErrors('roles')}" th:errors="*{roles}"></p>
 								     </div>
 								 </div>
 						 </fieldset>

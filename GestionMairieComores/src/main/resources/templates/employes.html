@@ -51,7 +51,7 @@
 								      <label for="nomDuSexe" th:text="#{label.monsieur.employe.ajout}"></label> 
 								      <input type="radio" name="nomDuSexe"        th:value="Madame"       th:field="*{nomDuSexe}"/>
 								      <label for="nomDuSexe" th:text="#{label.madame.employe.ajout}"></label>
-								        <p class="text-danger" th:if="${#fields.hasErrors('nomDuSexe')}" th:errors="*{nomDuSexe}"></p>
+								        <p class="alert alert-danger" th:if="${#fields.hasErrors('nomDuSexe')}" th:errors="*{nomDuSexe}"></p>
 								     </div>
 								 </div>
 							</div>
@@ -59,7 +59,7 @@
 								      <label  for="nomemp" th:text="#{label.nom.employe.ajout}"> </label>
 								     <div>
 									    <input type="text" class="form-control" name="nomemp" placeholder="Entrer le nom" th:field="*{nomemp}" />
-									    <p class="text-danger" th:if="${#fields.hasErrors('nomemp')}" th:errors="*{nomemp}"></p>
+									    <p class="alert alert-danger" th:if="${#fields.hasErrors('nomemp')}" th:errors="*{nomemp}"></p>
 									</div>
 								</div>
 							   <div>
@@ -67,7 +67,7 @@
 									<label for="prenemp" th:text="#{label.prenom.employe.ajout}"></label>
 									 <div>
 									   <input type="text" class="form-control" name="prenemp" placeholder="Entrer pr&eacute;nom" th:field="*{prenemp}" />
-									   <p class="text-danger" th:if="${#fields.hasErrors('prenemp')}" th:errors="*{prenemp}"></p>
+									   <p class="alert alert-danger" th:if="${#fields.hasErrors('prenemp')}" th:errors="*{prenemp}"></p>
 									 </div>
 								</div>	
 							</div>
@@ -76,8 +76,8 @@
 									<label for="mail" th:text="#{label.mail.employe.ajout}"></label>
 								   <div>
 									  <input type="email" class="form-control" name="mail" placeholder="Entrer l'email"   th:field="*{mail}" />
-									   <p class="text-danger" th:if="${#fields.hasErrors('mail')}" th:errors="*{mail}"></p>
-									   <p class="text-danger" th:if="${exceptionMail}" th:text="${exceptionMail}"></p>
+									   <p class="alert alert-danger" th:if="${#fields.hasErrors('mail')}" th:errors="*{mail}"></p>
+									   <p class="alert alert-danger" th:if="${exceptionMail}" th:text="${exceptionMail}"></p>
 								    </div>
 								    
 								</div>	
@@ -86,7 +86,7 @@
 									<label for="fonction" th:text="#{label.fonction.employe.ajout}"></label>
 									  <div>
 									    <input type="text" class="form-control" name="fonction" placeholder="Entrer la fonction" th:field="*{fonction}" />
-									    <p class="text-danger" th:if="${#fields.hasErrors('fonction')}" th:errors="*{fonction}"></p>
+									    <p class="alert alert-danger" th:if="${#fields.hasErrors('fonction')}" th:errors="*{fonction}"></p>
 									  </div>  
 							    </div>
 							 </div>
@@ -95,7 +95,7 @@
 								    <label for="dateNaissance" th:text="#{label.datenaissance.employe.ajout}"></label>
 								    <div>
 									    <input type="text" class="form-control" name="dateNaissance" placeholder="JJ/MM/AAAA" 	th:field="*{dateNaissance}" />
-									    <p class="text-danger" th:if="${#fields.hasErrors('dateNaissance')}"  th:errors="*{dateNaissance}"></p>
+									    <p class="alert alert-danger" th:if="${#fields.hasErrors('dateNaissance')}"  th:errors="*{dateNaissance}"></p>
 									</div>
 								 </div>
 							  <div>	 
@@ -103,7 +103,7 @@
 									  <label for="dateRecrutement" th:text="#{label.daterecrutement.employe.ajout}"></label>
 									  <div>
 									     <input type="text" class="form-control" name="dateRecrutement" 	placeholder="JJ/MM/AAAA" th:field="*{dateRecrutement}" />
-									     <p  class="text-danger" th:if="${#fields.hasErrors('dateRecrutement')}" th:errors="*{dateRecrutement}"></p>
+									     <p  class="alert alert-danger" th:if="${#fields.hasErrors('dateRecrutement')}" th:errors="*{dateRecrutement}"></p>
 									</div>
 							      </div>
 							  </div>
@@ -162,7 +162,7 @@
 								th:text="modif"></a></td>
 						</tr>
 					</table>
-					<div class="container">
+					<div class="container" >
 						<ul class="nav nav-pills">
 							<li th:each="p,status:${pages}"    class="${active:status.index==0}" ><a
 								th:href="@{/consultationEmployes(motCle=${motCle},page=${status.index})}"

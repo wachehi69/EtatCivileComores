@@ -57,7 +57,7 @@ public class ExtraitNaissancePersonneController {
 	Phrase phrase;
 	Path source;
 	Path destination;
-	String NomExtrait = "EXTRAIT D'ACTE NAISSANCE";
+	String NomExtrait = "EXTRAIT D'ACTE DE NAISSANCE";
 
 	@RequestMapping("/extraitNaissance")
 	private String index(ExtraitNaissancePersonne extraitNPersonne, Model model) {

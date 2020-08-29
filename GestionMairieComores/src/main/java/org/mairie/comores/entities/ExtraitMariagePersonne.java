@@ -109,7 +109,7 @@ public class ExtraitMariagePersonne implements Serializable {
 	private String prenomTemoinMari;
 	@NotEmpty(message="la profession du témoin doit être renseignée")
 	private String professionTemoinMari;
-	@NotNull
+	@NotEmpty(message= "l'âge doit être renseigné sur deux chiffres")
 	@Size(max=2 , message= "l'âge doit être renseigné sur deux chiffres")
 	private String ageTemoinMari;
 	@NotEmpty(message="l'adresse doit être renseignée")
@@ -123,7 +123,7 @@ public class ExtraitMariagePersonne implements Serializable {
 	private String prenomTemoinMarie;
 	@NotEmpty(message="la prefession doit être renseignée")
 	private String professionTemoinMarie;
-	@NotNull
+	@NotEmpty(message= "l'âge doit être renseigné sur deux chiffres")
 	@Size(max=2, message= "l'âge doit être renseigné sur deux chiffres")
 	private String ageTemoinMarie;
 	@NotEmpty(message="l'adresse doit être renseignée")

@@ -1,5 +1,14 @@
 package org.mairie.comores.web;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.validation.Valid;
@@ -19,6 +28,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.lowagie.text.Chunk;
+import com.lowagie.text.Document;
+import com.lowagie.text.Element;
+import com.lowagie.text.Font;
+import com.lowagie.text.FontFactory;
+import com.lowagie.text.Image;
+import com.lowagie.text.PageSize;
+import com.lowagie.text.Paragraph;
+import com.lowagie.text.Phrase;
+import com.lowagie.text.pdf.BaseFont;
+import com.lowagie.text.pdf.PdfWriter;
+
 @Controller
 public class ExtraitMariagePersonneController {
 	
@@ -31,6 +52,14 @@ public class ExtraitMariagePersonneController {
 	
 	@Autowired
 	private IEmployeMetier employeMetierImpl;
+	
+	String nomFichierSource = "c:\\extraitMariage\\extraitMariage.pdf";
+	Paragraph paragraph;
+	Phrase phrase;
+	Path source;
+	Path destination;
+	String NomExtrait = "EXTRAIT D'ACTE DE MARIAGE";
+
 	
 	
 	
@@ -124,6 +153,315 @@ public class ExtraitMariagePersonneController {
 		}
 		return "redirect:/consulationExtraitMariage?motCle=" + motCle + "&page=" + page;
 	}
+	
+	
+	@RequestMapping("/generationExtraitMariage")
+	private String creationExtraitMariage(Long numExtMariage, Model model, String motCle, int page) {
+
+		Document document = new Document(PageSize.A4);
+
+		ExtraitMariagePersonne extraitMPersonne = extraitMariagePersonneImpl.getExtraitMariage(numExtMariage);
+		/* Creation du repertoir extrait de mariage */
+		Path repertoir = Paths.get("c:\\extraitMariage\\");
+		try {
+			Files.createDirectories(repertoir);
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+
+		File fichier = new File(nomFichierSource);
+
+		try (FileOutputStream fileoutp = new FileOutputStream(fichier)) {
+
+			/* creation du fichier extrait de mariage */
+			if (!fichier.exists())
+				fichier.createNewFile(); // creation du fichier s'il n'existe pas
+
+			// Création d'une instance de fichier PDF
+			PdfWriter.getInstance(document, new FileOutputStream(fichier));
+			System.out.print("Le fichier est créee : " + fichier.getAbsolutePath());
+			/* ouverture du fichier en ecriture */
+			document.open();
+			com.lowagie.text.Font fonte = FontFactory.getFont("timesroman", BaseFont.TIMES_ROMAN, 8);
+			com.lowagie.text.Font fonte1 = FontFactory.getFont("timesroman", BaseFont.TIMES_ROMAN, 6);
+			com.lowagie.text.Font fonte2 = FontFactory.getFont("timesroman", BaseFont.TIMES_ROMAN, 12);
+			// com.lowagie.text.Font fonte3 =
+			// FontFactory.getFont("timesroman",BaseFont.TIMES_ROMAN, 14);
+			// com.lowagie.text.Font fonte4 =
+			// FontFactory.getFont("timesroman",BaseFont.TIMES_ROMAN, 16);
+
+			/* l'entete de l'extrait de mariage */
+			document.add(new Paragraph("UNION DES COMORES", fonte));
+			document.add(new Paragraph("Unité- Solidarité-Développement", fonte));
+			document.add(new Paragraph("MINISTERE DE L'INTERIEUR", fonte));
+
+			fonte2.setStyle(Font.BOLD); // mettre le style en gras
+			paragraph = new Paragraph(NomExtrait, fonte2);
+			paragraph.setAlignment(Element.ALIGN_RIGHT); // alignement à droite
+			paragraph.setLeading(5f); // espacement entre deux lignes
+			document.add(paragraph);
+
+			/* inserer l'image */
+			Image image = Image.getInstance("mairie.png");
+			// image.setAbsolutePosition(220f, 550f);
+			document.add(image);
+
+			document.add(new Paragraph("PREFECTURE DE MUTSAMUDU", fonte));
+			document.add(new Paragraph("         service état civil", fonte1));
+
+			/* Affichage de la date systeme */
+
+			DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+			String dat = dateFormat.format(extraitMPersonne.getDateCreation());
+			Font fonteDatesys = fonte2;
+			fonteDatesys.setStyle(Font.BOLD);
+			paragraph = new Paragraph("Acte N°: " + extraitMPersonne.getNumExtMariage() + " Du " + dat, fonteDatesys);
+			// paragraph = new Paragraph( dat, fonteDatesys);
+			paragraph.setAlignment(Element.ALIGN_CENTER);
+
+			document.add(paragraph);
+
+			paragraph = new Paragraph("Registre N°: " + extraitMPersonne.getNumRegistre());
+			paragraph.setAlignment(Element.ALIGN_CENTER);
+			paragraph.setFont(fonte2);
+			document.add(paragraph);
+			
+			phrase = new Phrase("Le  : ");
+			phrase.add(new Chunk("                " + extraitMPersonne.getDateJoursetMoisIscriptionMariage(),fonte2));
+			document.add(phrase);
+
+			document.add(new Paragraph(""));
+			
+			phrase = new Phrase("de l'an :   ");
+			phrase.add(new Chunk("         " + extraitMPersonne.getDateAnneedeInscriptionMariage(),fonte2));
+			document.add(phrase);
+
+			document.add(new Paragraph(""));
+			
+			phrase = new Phrase("à :   ");
+			phrase.add(new Chunk("                 " + extraitMPersonne.getCommuneInscriptionMariage() + '-' + extraitMPersonne.getIleInscriptionMariage() ,fonte2));
+			document.add(phrase);
+
+			document.add(new Paragraph(""));
+			
+			if(null != extraitMPersonne.getMinuteInscriptionMariage()){
+			phrase = new Phrase("à :  ");
+			phrase.add(new Chunk("                  " + extraitMPersonne.getHeureInscriptionMariage() + "  heures " + extraitMPersonne.getMinuteInscriptionMariage() + "  minutes" ,fonte2));
+			document.add(phrase);
+			}else{
+				
+			phrase = new Phrase("  ");
+			phrase.add(new Chunk("                     " + extraitMPersonne.getHeureInscriptionMariage() + "heures" ,fonte2));
+			document.add(phrase);	
+				
+			}
+			paragraph = new Paragraph("a été inscrit le mariage de  : ".concat(extraitMPersonne.getNomMari().toUpperCase()) + "  " + extraitMPersonne.getPrenomMari());
+			paragraph.setFont(fonte2);
+			document.add(paragraph);
+
+			phrase = new Phrase("né le :  ");
+			phrase.add(new Chunk("            " + extraitMPersonne.getDateJoursetMoisNaissanceMari() + " " +  extraitMPersonne.getDateAnneedeNaissanceMari() ,fonte2));
+			document.add(phrase);
+
+			document.add(new Paragraph(""));
+
+			phrase = new Phrase("à    ");
+			phrase.add(new Chunk("                  " + extraitMPersonne.getCommuneNaissanceMari() + "-" + extraitMPersonne.getIleInscriptionMariage(), fonte2));
+			document.add(phrase);
+
+			document.add(new Paragraph(""));
+
+			phrase = new Phrase("profession ");
+			phrase.add(new Chunk("      " + extraitMPersonne.getProfessionMari(), fonte2));
+			document.add(phrase);
+
+			document.add(new Paragraph(""));
+
+			phrase = new Phrase("demeurant à  ");
+			phrase.add(new Chunk(" " + extraitMPersonne.getAdressMari(), fonte2));
+			document.add(phrase);
+
+			document.add(new Paragraph(""));
+
+			phrase = new Phrase("Fils de : ");
+			phrase.add(new Chunk("             " + extraitMPersonne.getNomDuPereMari().toUpperCase() + extraitMPersonne.getPrenomDuPereMari() + " et de "
+					+ extraitMPersonne.getNomDuMereMari() + extraitMPersonne.getPrenomDuMereMari(), fonte2));
+			document.add(phrase);
+
+			document.add(new Paragraph(""));
+
+			phrase = new Phrase("avec : ");
+			phrase.add(
+					new Chunk("                " + extraitMPersonne.getNomMarie().toUpperCase() + extraitMPersonne.getPrenomMarie()));
+			document.add(phrase);
+
+			document.add(new Paragraph(""));
+
+			phrase = new Phrase("née le ");
+			phrase.add(new Chunk("              " + extraitMPersonne.getDateJoursetMoisNaissanceMarie() + " " + extraitMPersonne.getDateAnneedeNaissanceMarie()));
+			document.add(phrase);
+
+			document.add(new Paragraph(""));
+			
+			phrase = new Phrase("à  ");
+			phrase.add(new Chunk("              " + extraitMPersonne.getCommuneNaissanceMarie() ));
+			document.add(phrase);
+
+			document.add(new Paragraph(""));
+
+
+			phrase = new Phrase("Profession  ");
+			phrase.add(new Chunk("             " + extraitMPersonne.getProfessionMarie()));
+			document.add(phrase);
+
+			document.add(new Paragraph(""));
+
+			phrase = new Phrase("demeurant à :");
+			phrase.add(new Chunk("             " + extraitMPersonne.getCommuneNaissanceMarie() + " - "
+					+ extraitMPersonne.getIleInscriptionMariage()));
+			document.add(phrase);
+
+			document.add(new Paragraph(""));
+
+			phrase = new Phrase("fille de ");
+			phrase.add(new Chunk("              " + extraitMPersonne.getNomDuPereMarie() + " " + extraitMPersonne.getPrenomDuPereMarie()));
+			document.add(phrase);
+
+			document.add(new Paragraph(""));
+			
+			phrase = new Phrase("et de ");
+			phrase.add(new Chunk("              " + extraitMPersonne.getNomDuMereMarie() + " " + extraitMPersonne.getPrenomDuMereMarie()));
+			document.add(phrase);
+
+			document.add(new Paragraph(""));
+
+			phrase = new Phrase("Mariage célébré le : ");
+			phrase.add(new Chunk("              " + extraitMPersonne.getDateJoursetMoisIscriptionMariage() + " à " 
+			 + extraitMPersonne.getCommuneInscriptionMariage()));
+			document.add(phrase);
+
+			document.add(new Paragraph(""));
+
+			phrase = new Phrase("En presence de : ");
+			phrase.add(new Chunk("              " + extraitMPersonne.getNomTemoinMari() + "  " + extraitMPersonne.getPrenomTemoinMari()));
+			document.add(phrase);
+			
+			document.add(new Paragraph(""));
+
+			phrase = new Phrase("âgée de : ");
+			phrase.add(new Chunk("              " + extraitMPersonne.getAgeTemoinMari() + " ans, profession " + extraitMPersonne.getProfessionTemoinMari()));
+			document.add(phrase);
+			
+			document.add(new Paragraph(""));
+
+			phrase = new Phrase("demeurant à  ");
+			phrase.add(new Chunk("               " + extraitMPersonne.getAdresseTemoinMari() + " ans, profession " + extraitMPersonne.getProfessionTemoinMari()));
+			document.add(phrase);
+			
+			document.add(new Paragraph(""));
+			
+			phrase = new Phrase("et de: ");
+			phrase.add(new Chunk("                     " + extraitMPersonne.getNomTemoinMarie() + "  " + extraitMPersonne.getPrenomTemoinMarie()));
+			document.add(phrase);
+			
+			document.add(new Paragraph(""));
+
+			phrase = new Phrase("âgée de : ");
+			phrase.add(new Chunk("                     " + extraitMPersonne.getAgeTemoinMarie() + " ans, profession de " + extraitMPersonne.getProfessionTemoinMarie()));
+			document.add(phrase);
+			
+			document.add(new Paragraph(""));
+
+			phrase = new Phrase("demeurant à  ");
+			phrase.add(new Chunk("                     " + extraitMPersonne.getAdresseTemoinMarie() + " ans, profession de " + extraitMPersonne.getProfessionTemoinMari()));
+			document.add(phrase);
+
+		/*	document.add(new Paragraph(""));
+			phrase = new Phrase("Dressé le : ");
+			phrase.add(new Chunk("                       " + dat));
+			document.add(phrase);*/
+
+			document.add(new Paragraph(" "));
+			phrase = new Phrase("Déclaration faite par: ");
+			phrase.add(new Chunk(" " + extraitMPersonne.getDeclarationFaitePar()));
+			document.add(phrase);
+			// document.add(new Paragraph(" "));
+			phrase = new Phrase("Déclaration reçue par nous: ");
+			phrase.add(new Chunk(" " + extraitMPersonne.getDeclarationRecueParnous()));
+			document.add(phrase);
+
+			document.add(new Paragraph(" "));
+
+			document.add(new Paragraph("MENTIONS MARGINALES", fonte2));
+
+			/* pied de page */
+			//document.add(new Paragraph("       "));
+			document.add(new Paragraph("       "));
+			paragraph = new Paragraph("Pour copie d'acte certifiée conforme");
+			paragraph.setAlignment(Element.ALIGN_RIGHT);
+			paragraph.setFont(fonte);
+			document.add(paragraph);
+			
+			document.add(new Paragraph("Délivrée à       "));
+			paragraph = new Paragraph(	extraitMPersonne.getCommuneInscriptionMariage() + ", le :  " + dateFormat.format(new Date()));
+			paragraph.setAlignment(Element.ALIGN_RIGHT);
+			paragraph.setFont(fonte);
+			document.add(paragraph);
+
+			
+
+			paragraph = new Paragraph(
+					"                                                                                                             Le Maire",
+					fonte2);
+			paragraph.setAlignment(Element.ALIGN_CENTER);
+			fonteDatesys = fonte2;
+			fonteDatesys.setStyle(Font.BOLD);
+			paragraph.setFont(fonteDatesys);
+			document.add(paragraph);
+
+			paragraph = new Paragraph(
+					"                                                                                                            Officier de l’Etat Civil");
+			paragraph.setAlignment(Element.ALIGN_CENTER);
+			paragraph.setFont(fonteDatesys);
+			document.add(paragraph);
+			/*
+			 * Image image1 = Image.getInstance("/images/cachetcomores.png");
+			 * document.add(image1);
+			 */
+
+			document.close(); // fermeture avant de copier le fichier
+
+			/*
+			 * creation du repertoire de stockage des extraits de naissances et
+			 * instanciation de fichier
+			 */
+			Path dossierRepertoir = Paths.get("c:\\RepertoirExtraitMariage\\");
+			// pour creer un repertoire s'il existe pas
+			if (!Files.exists(dossierRepertoir)) {
+				Files.createDirectory(dossierRepertoir);
+			} else {
+				System.out.println("Le dossier RepertoirExtrait existe");
+			}
+
+			File source = new File(nomFichierSource);
+			// le nom de fichier extrait de mariage fini aura le nom suivant
+			String nomFichierDest = "Ext_" + extraitMPersonne.getNomMari() + extraitMPersonne.getPrenomMari() + "_"
+					+ extraitMPersonne.getNumExtMariage() + ".pdf";
+
+			nomFichierDest = nomFichierDest.replaceAll(" ", ""); 
+
+			// Le repertoire de stockage des extraits de mariages et nom final de l'extrait
+			File destina = new File("c:\\RepertoirExtraitMariage\\" + nomFichierDest);
+			// copie le fichier source créée vers le repertoire RepertoirExtrait
+			copyFile(source, destina);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return "redirect:/consulationExtraitMariage?motCle=" + motCle + "&page=" + page;
+	}
+
 
 	
 	
@@ -169,9 +507,48 @@ public class ExtraitMariagePersonneController {
 			model.addAttribute("exception", e);
 
 		}
+	}
 
-		
+		/**
+		 * Cette methode permet de copier un fichier d'un repertoir à un autre
+		 * 
+		 * @param source
+		 * @param destina
+		 * @return
+		 */
+
+		public static boolean copyFile(File source, File destina) {
+
+			FileOutputStream destinationFile = null;
+			FileInputStream sourceFile;
+
+			try {
+				// Declaration et ouverture des flux
+				sourceFile = new FileInputStream(source);
+
+				try {
+					destinationFile = new FileOutputStream(destina);
+
+					// Lecture par segment de 0.5Mo
+					byte buffer[] = new byte[512 * 1024];
+					int nbLecture;
+
+					while ((nbLecture = sourceFile.read(buffer)) != -1) {
+						destinationFile.write(buffer, 0, nbLecture);
+					}
+
+				} finally {
+					sourceFile.close();
+					destinationFile.close();
+				}
+
+			} catch (IOException e) {
+				e.printStackTrace();
+				return false; // Erreur
+			}
+
+			return true; // Résultat OK
+		}
+
 	}
 	
-
-}

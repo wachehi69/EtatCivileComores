@@ -64,8 +64,9 @@ public class ExtraitNaissancePersonne implements Serializable{
 	private String dateAnneedeNaissanceMere;
 	private String heureNaissanceMere;
 	private String minuteNaissanceMere;
+	@NotEmpty(message="la commune de naissance du mère doit être rensegnée")
 	private String communeNaissanceMere;
-	@NotEmpty(message="la prefession du mère doit être rensegnée")
+	@NotEmpty(message="la profession du mère doit être rensegnée")
 	private String professionMere;
 	private String declarationFaitePar;
 	private String declarationRecueParnous;
