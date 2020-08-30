@@ -265,13 +265,13 @@ public class ExtraitMariagePersonneController {
 
 			document.add(new Paragraph(""));
 
-			phrase = new Phrase("à    ");
+			phrase = new Phrase("à :   ");
 			phrase.add(new Chunk("                  " + extraitMPersonne.getCommuneNaissanceMari() + "-" + extraitMPersonne.getIleInscriptionMariage(), fonte2));
 			document.add(phrase);
 
 			document.add(new Paragraph(""));
 
-			phrase = new Phrase("profession ");
+			phrase = new Phrase("profession :");
 			phrase.add(new Chunk("      " + extraitMPersonne.getProfessionMari(), fonte2));
 			document.add(phrase);
 
@@ -284,47 +284,47 @@ public class ExtraitMariagePersonneController {
 			document.add(new Paragraph(""));
 
 			phrase = new Phrase("Fils de : ");
-			phrase.add(new Chunk("             " + extraitMPersonne.getNomDuPereMari().toUpperCase() + extraitMPersonne.getPrenomDuPereMari() + " et de "
-					+ extraitMPersonne.getNomDuMereMari() + extraitMPersonne.getPrenomDuMereMari(), fonte2));
+			phrase.add(new Chunk("           " + extraitMPersonne.getPrenomDuPereMari().toUpperCase() + " " + extraitMPersonne.getNomDuPereMari() + " et de "
+					+ extraitMPersonne.getPrenomDuMereMari() + " " +  extraitMPersonne.getNomDuMereMari(), fonte2));
 			document.add(phrase);
 
 			document.add(new Paragraph(""));
 
 			phrase = new Phrase("avec : ");
 			phrase.add(
-					new Chunk("                " + extraitMPersonne.getNomMarie().toUpperCase() + extraitMPersonne.getPrenomMarie()));
+					new Chunk("              " + extraitMPersonne.getPrenomMarie().toUpperCase() + " " +  extraitMPersonne.getNomMarie()));
 			document.add(phrase);
 
 			document.add(new Paragraph(""));
 
 			phrase = new Phrase("née le ");
-			phrase.add(new Chunk("              " + extraitMPersonne.getDateJoursetMoisNaissanceMarie() + " " + extraitMPersonne.getDateAnneedeNaissanceMarie()));
+			phrase.add(new Chunk("             " + extraitMPersonne.getDateJoursetMoisNaissanceMarie() + " " + extraitMPersonne.getDateAnneedeNaissanceMarie()));
 			document.add(phrase);
 
 			document.add(new Paragraph(""));
 			
 			phrase = new Phrase("à  ");
-			phrase.add(new Chunk("              " + extraitMPersonne.getCommuneNaissanceMarie() ));
+			phrase.add(new Chunk("                    " + extraitMPersonne.getCommuneNaissanceMarie() ));
 			document.add(phrase);
 
 			document.add(new Paragraph(""));
 
 
 			phrase = new Phrase("Profession  ");
-			phrase.add(new Chunk("             " + extraitMPersonne.getProfessionMarie()));
+			phrase.add(new Chunk("     " + extraitMPersonne.getProfessionMarie()));
 			document.add(phrase);
 
 			document.add(new Paragraph(""));
 
 			phrase = new Phrase("demeurant à :");
-			phrase.add(new Chunk("             " + extraitMPersonne.getCommuneNaissanceMarie() + " - "
+			phrase.add(new Chunk("   " + extraitMPersonne.getCommuneNaissanceMarie() + " - "
 					+ extraitMPersonne.getIleInscriptionMariage()));
 			document.add(phrase);
 
 			document.add(new Paragraph(""));
 
 			phrase = new Phrase("fille de ");
-			phrase.add(new Chunk("              " + extraitMPersonne.getNomDuPereMarie() + " " + extraitMPersonne.getPrenomDuPereMarie()));
+			phrase.add(new Chunk("            " + extraitMPersonne.getNomDuPereMarie() + " " + extraitMPersonne.getPrenomDuPereMarie()));
 			document.add(phrase);
 
 			document.add(new Paragraph(""));
@@ -336,61 +336,61 @@ public class ExtraitMariagePersonneController {
 			document.add(new Paragraph(""));
 
 			phrase = new Phrase("Mariage célébré le : ");
-			phrase.add(new Chunk("              " + extraitMPersonne.getDateJoursetMoisIscriptionMariage() + " à " 
+			phrase.add(new Chunk("   " + extraitMPersonne.getDateJoursetMoisIscriptionMariage() + " à " 
 			 + extraitMPersonne.getCommuneInscriptionMariage()));
 			document.add(phrase);
 
 			document.add(new Paragraph(""));
 
 			phrase = new Phrase("En presence de : ");
-			phrase.add(new Chunk("              " + extraitMPersonne.getNomTemoinMari() + "  " + extraitMPersonne.getPrenomTemoinMari()));
+			phrase.add(new Chunk("        " + extraitMPersonne.getNomTemoinMari() + "  " + extraitMPersonne.getPrenomTemoinMari()));
 			document.add(phrase);
 			
 			document.add(new Paragraph(""));
 
 			phrase = new Phrase("âgée de : ");
-			phrase.add(new Chunk("              " + extraitMPersonne.getAgeTemoinMari() + " ans, profession " + extraitMPersonne.getProfessionTemoinMari()));
+			phrase.add(new Chunk("                    " + extraitMPersonne.getAgeTemoinMari() + " ans, profession " + extraitMPersonne.getProfessionTemoinMari()));
 			document.add(phrase);
 			
 			document.add(new Paragraph(""));
 
 			phrase = new Phrase("demeurant à  ");
-			phrase.add(new Chunk("               " + extraitMPersonne.getAdresseTemoinMari() + " ans, profession " + extraitMPersonne.getProfessionTemoinMari()));
+			phrase.add(new Chunk("             " + extraitMPersonne.getAdresseTemoinMari() + " ans, profession " + extraitMPersonne.getProfessionTemoinMari()));
 			document.add(phrase);
 			
 			document.add(new Paragraph(""));
 			
 			phrase = new Phrase("et de: ");
-			phrase.add(new Chunk("                     " + extraitMPersonne.getNomTemoinMarie() + "  " + extraitMPersonne.getPrenomTemoinMarie()));
+			phrase.add(new Chunk("                         " + extraitMPersonne.getNomTemoinMarie() + "  " + extraitMPersonne.getPrenomTemoinMarie()));
 			document.add(phrase);
 			
 			document.add(new Paragraph(""));
 
 			phrase = new Phrase("âgée de : ");
-			phrase.add(new Chunk("                     " + extraitMPersonne.getAgeTemoinMarie() + " ans, profession de " + extraitMPersonne.getProfessionTemoinMarie()));
+			phrase.add(new Chunk("                   " + extraitMPersonne.getAgeTemoinMarie() + " ans, profession de " + extraitMPersonne.getProfessionTemoinMarie()));
 			document.add(phrase);
 			
 			document.add(new Paragraph(""));
 
 			phrase = new Phrase("demeurant à  ");
-			phrase.add(new Chunk("                     " + extraitMPersonne.getAdresseTemoinMarie() + " ans, profession de " + extraitMPersonne.getProfessionTemoinMari()));
+			phrase.add(new Chunk("             " + extraitMPersonne.getAdresseTemoinMarie() + ", profession de " + extraitMPersonne.getProfessionTemoinMari()));
 			document.add(phrase);
 
-		/*	document.add(new Paragraph(""));
-			phrase = new Phrase("Dressé le : ");
-			phrase.add(new Chunk("                       " + dat));
-			document.add(phrase);*/
-
-			document.add(new Paragraph(" "));
-			phrase = new Phrase("Déclaration faite par: ");
+			Paragraph para = new Paragraph("Déclaration faite par: ", fonte2);
+			para.setAlignment(Element.ALIGN_CENTER);
+			document.add(new Paragraph(para));
+			
+			phrase = new Phrase(" ");
 			phrase.add(new Chunk(" " + extraitMPersonne.getDeclarationFaitePar()));
 			document.add(phrase);
-			// document.add(new Paragraph(" "));
-			phrase = new Phrase("Déclaration reçue par nous: ");
+			
+			Paragraph para1 = new Paragraph("Déclaration reçue par nous: ", fonte2);
+			para1.setAlignment(Element.ALIGN_CENTER);
+			document.add(new Paragraph(para1));
+			
+			phrase = new Phrase(" ");
 			phrase.add(new Chunk(" " + extraitMPersonne.getDeclarationRecueParnous()));
 			document.add(phrase);
-
-			document.add(new Paragraph(" "));
 
 			document.add(new Paragraph("MENTIONS MARGINALES", fonte2));
 
@@ -403,7 +403,7 @@ public class ExtraitMariagePersonneController {
 			document.add(paragraph);
 			
 			document.add(new Paragraph("Délivrée à       "));
-			paragraph = new Paragraph(	extraitMPersonne.getCommuneInscriptionMariage() + ", le :  " + dateFormat.format(new Date()));
+			paragraph = new Paragraph(extraitMPersonne.getCommuneInscriptionMariage() + ", le :  " + dateFormat.format(new Date()));
 			paragraph.setAlignment(Element.ALIGN_RIGHT);
 			paragraph.setFont(fonte);
 			document.add(paragraph);
@@ -445,7 +445,7 @@ public class ExtraitMariagePersonneController {
 
 			File source = new File(nomFichierSource);
 			// le nom de fichier extrait de mariage fini aura le nom suivant
-			String nomFichierDest = "Ext_" + extraitMPersonne.getNomMari() + extraitMPersonne.getPrenomMari() + "_"
+			String nomFichierDest = "Ext_Mariage_" + extraitMPersonne.getNomMari() + extraitMPersonne.getPrenomMari() + "_"
 					+ extraitMPersonne.getNumExtMariage() + ".pdf";
 
 			nomFichierDest = nomFichierDest.replaceAll(" ", ""); 
