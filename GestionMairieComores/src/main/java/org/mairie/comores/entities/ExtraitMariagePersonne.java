@@ -13,6 +13,8 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 @Entity
 public class ExtraitMariagePersonne implements Serializable {
 
@@ -36,6 +38,9 @@ public class ExtraitMariagePersonne implements Serializable {
 	private String communeInscriptionMariage;
 	@NotEmpty(message = "le nom de l'île doit être rensegné")
 	private String ileInscriptionMariage;
+	
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    private Date dateCelebration;
 	
 	
 	/* Information du mari */
@@ -502,6 +507,15 @@ public class ExtraitMariagePersonne implements Serializable {
 
 	public void setIleInscriptionMariage(String ileInscriptionMariage) {
 		this.ileInscriptionMariage = ileInscriptionMariage;
+	}
+	
+
+	public Date getDateCelebration() {
+		return dateCelebration;
+	}
+
+	public void setDateCelebration(Date dateCelebration) {
+		this.dateCelebration = dateCelebration;
 	}
 
 	public Users getUser() {

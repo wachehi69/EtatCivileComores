@@ -8,11 +8,16 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 import javax.validation.Valid;
 
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import org.mairie.comores.entities.ExtraitMariagePersonne;
 import org.mairie.comores.entities.Users;
 import org.mairie.comores.metier.IEmployeMetier;
@@ -81,7 +86,7 @@ public class ExtraitMariagePersonneController {
 			@RequestParam(name = "size", defaultValue = "5") int size) {
 		try {
 			// Recuperer l'utilisateur connecté
-			EmployeController.ChargerUserConnection(model, userMetierImpl, employeMetierImpl);
+  			EmployeController.ChargerUserConnection(model, userMetierImpl, employeMetierImpl);
 			EmployeController.dateDujours(model);
 			
 			if (operation.equals("modif")) {
@@ -115,6 +120,8 @@ public class ExtraitMariagePersonneController {
 		if (null != action && action.equalsIgnoreCase("annuler")) {
 			return "redirect:/consulationExtraitMariage?motCle=" + motCle + "&page=" + page;
 		}
+		
+		
 		if (errors.hasErrors()) {
 			Page<ExtraitMariagePersonne> listExtraitPage = extraitMariagePersonneImpl.listeExtraitMariageParNom(motCle, page, size);
 			model.addAttribute("listextraitPage", listExtraitPage.getContent());
@@ -212,6 +219,14 @@ public class ExtraitMariagePersonneController {
 			/* Affichage de la date systeme */
 
 			DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+			DateFormat dateFormatCelebre = new SimpleDateFormat("dd/MM/yyyy");
+			DateFormat formater = new SimpleDateFormat("EEEE, d MMM yyyy");
+
+			
+			DateFormat fullDateFormat = DateFormat.getDateTimeInstance(DateFormat.FULL, DateFormat.FULL);
+
+			 //System.out.println(fullDateFormat.format(aujourdhui));	
+			
 			String dat = dateFormat.format(extraitMPersonne.getDateCreation());
 			Font fonteDatesys = fonte2;
 			fonteDatesys.setStyle(Font.BOLD);
@@ -277,7 +292,7 @@ public class ExtraitMariagePersonneController {
 
 			document.add(new Paragraph(""));
 
-			phrase = new Phrase("demeurant à  ");
+			phrase = new Phrase("demeurant à  :");
 			phrase.add(new Chunk(" " + extraitMPersonne.getAdressMari(), fonte2));
 			document.add(phrase);
 
@@ -297,20 +312,18 @@ public class ExtraitMariagePersonneController {
 
 			document.add(new Paragraph(""));
 
-			phrase = new Phrase("née le ");
+			phrase = new Phrase("née le :");
 			phrase.add(new Chunk("             " + extraitMPersonne.getDateJoursetMoisNaissanceMarie() + " " + extraitMPersonne.getDateAnneedeNaissanceMarie()));
 			document.add(phrase);
 
-			document.add(new Paragraph(""));
-			
-			phrase = new Phrase("à  ");
-			phrase.add(new Chunk("                    " + extraitMPersonne.getCommuneNaissanceMarie() ));
+			phrase = new Phrase("  à  :");
+			phrase.add(new Chunk(" " + extraitMPersonne.getCommuneNaissanceMarie() ));
 			document.add(phrase);
 
 			document.add(new Paragraph(""));
 
 
-			phrase = new Phrase("Profession  ");
+			phrase = new Phrase("Profession  :");
 			phrase.add(new Chunk("     " + extraitMPersonne.getProfessionMarie()));
 			document.add(phrase);
 
@@ -323,20 +336,19 @@ public class ExtraitMariagePersonneController {
 
 			document.add(new Paragraph(""));
 
-			phrase = new Phrase("fille de ");
+			phrase = new Phrase("fille de :");
 			phrase.add(new Chunk("            " + extraitMPersonne.getNomDuPereMarie() + " " + extraitMPersonne.getPrenomDuPereMarie()));
+			document.add(phrase);
+
+			phrase = new Phrase("  et de :");
+			phrase.add(new Chunk(" " + extraitMPersonne.getNomDuMereMarie() + " " + extraitMPersonne.getPrenomDuMereMarie()));
 			document.add(phrase);
 
 			document.add(new Paragraph(""));
 			
-			phrase = new Phrase("et de ");
-			phrase.add(new Chunk("              " + extraitMPersonne.getNomDuMereMarie() + " " + extraitMPersonne.getPrenomDuMereMarie()));
-			document.add(phrase);
-
-			document.add(new Paragraph(""));
 
 			phrase = new Phrase("Mariage célébré le : ");
-			phrase.add(new Chunk("   " + extraitMPersonne.getDateJoursetMoisIscriptionMariage() + " à " 
+			phrase.add(new Chunk("   " + formater.format(extraitMPersonne.getDateCelebration()) + "  à  " 
 			 + extraitMPersonne.getCommuneInscriptionMariage()));
 			document.add(phrase);
 
@@ -354,13 +366,13 @@ public class ExtraitMariagePersonneController {
 			
 			document.add(new Paragraph(""));
 
-			phrase = new Phrase("demeurant à  ");
+			phrase = new Phrase("demeurant à  :");
 			phrase.add(new Chunk("             " + extraitMPersonne.getAdresseTemoinMari() + " ans, profession " + extraitMPersonne.getProfessionTemoinMari()));
 			document.add(phrase);
 			
 			document.add(new Paragraph(""));
 			
-			phrase = new Phrase("et de: ");
+			phrase = new Phrase("et de :");
 			phrase.add(new Chunk("                         " + extraitMPersonne.getNomTemoinMarie() + "  " + extraitMPersonne.getPrenomTemoinMarie()));
 			document.add(phrase);
 			
@@ -372,7 +384,7 @@ public class ExtraitMariagePersonneController {
 			
 			document.add(new Paragraph(""));
 
-			phrase = new Phrase("demeurant à  ");
+			phrase = new Phrase("demeurant à  :");
 			phrase.add(new Chunk("             " + extraitMPersonne.getAdresseTemoinMarie() + ", profession de " + extraitMPersonne.getProfessionTemoinMari()));
 			document.add(phrase);
 
@@ -395,20 +407,13 @@ public class ExtraitMariagePersonneController {
 			document.add(new Paragraph("MENTIONS MARGINALES", fonte2));
 
 			/* pied de page */
-			//document.add(new Paragraph("       "));
-			document.add(new Paragraph("       "));
 			paragraph = new Paragraph("Pour copie d'acte certifiée conforme");
 			paragraph.setAlignment(Element.ALIGN_RIGHT);
 			paragraph.setFont(fonte);
 			document.add(paragraph);
 			
-			document.add(new Paragraph("Délivrée à       "));
-			paragraph = new Paragraph(extraitMPersonne.getCommuneInscriptionMariage() + ", le :  " + dateFormat.format(new Date()));
-			paragraph.setAlignment(Element.ALIGN_RIGHT);
-			paragraph.setFont(fonte);
-			document.add(paragraph);
-
-			
+			document.add(new Paragraph("                                                                      Délivrée à             "
+					+ " " + extraitMPersonne.getCommuneInscriptionMariage() + ", le :  " + dateFormat.format(new Date())));
 
 			paragraph = new Paragraph(
 					"                                                                                                             Le Maire",
@@ -548,6 +553,19 @@ public class ExtraitMariagePersonneController {
 			}
 
 			return true; // Résultat OK
+		}
+		
+		public static boolean isValid(String text) {
+		    if (text == null || !text.matches("\\d{4}-[01]\\d-[0-3]\\d"))
+		        return false;
+		    SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+		    df.setLenient(false);
+		    try {
+		        df.parse(text);
+		        return true;
+		    } catch (Exception ex) {
+		        return false;
+		    }
 		}
 
 	}
