@@ -219,19 +219,14 @@ public class ExtraitMariagePersonneController {
 			/* Affichage de la date systeme */
 
 			DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-			DateFormat dateFormatCelebre = new SimpleDateFormat("dd/MM/yyyy");
-			DateFormat formater = new SimpleDateFormat("EEEE, d MMM yyyy");
+			DateFormat formater = new SimpleDateFormat("EEEE d MMM yyyy");
 
 			
-			DateFormat fullDateFormat = DateFormat.getDateTimeInstance(DateFormat.FULL, DateFormat.FULL);
-
-			 //System.out.println(fullDateFormat.format(aujourdhui));	
 			
 			String dat = dateFormat.format(extraitMPersonne.getDateCreation());
 			Font fonteDatesys = fonte2;
 			fonteDatesys.setStyle(Font.BOLD);
 			paragraph = new Paragraph("Acte N°: " + extraitMPersonne.getNumExtMariage() + " Du " + dat, fonteDatesys);
-			// paragraph = new Paragraph( dat, fonteDatesys);
 			paragraph.setAlignment(Element.ALIGN_CENTER);
 
 			document.add(paragraph);
@@ -242,26 +237,26 @@ public class ExtraitMariagePersonneController {
 			document.add(paragraph);
 			
 			phrase = new Phrase("Le  : ");
-			phrase.add(new Chunk("                " + extraitMPersonne.getDateJoursetMoisIscriptionMariage(),fonte2));
+			phrase.add(new Chunk("                " + extraitMPersonne.getDateJoursetMoisIscriptionMariage()));
 			document.add(phrase);
 
 			document.add(new Paragraph(""));
 			
 			phrase = new Phrase("de l'an :   ");
-			phrase.add(new Chunk("         " + extraitMPersonne.getDateAnneedeInscriptionMariage(),fonte2));
+			phrase.add(new Chunk("         " + extraitMPersonne.getDateAnneedeInscriptionMariage()));
 			document.add(phrase);
 
 			document.add(new Paragraph(""));
 			
 			phrase = new Phrase("à :   ");
-			phrase.add(new Chunk("                 " + extraitMPersonne.getCommuneInscriptionMariage() + '-' + extraitMPersonne.getIleInscriptionMariage() ,fonte2));
+			phrase.add(new Chunk("                 " + extraitMPersonne.getCommuneInscriptionMariage() + '-' + extraitMPersonne.getIleInscriptionMariage()));
 			document.add(phrase);
 
 			document.add(new Paragraph(""));
 			
 			if(null != extraitMPersonne.getMinuteInscriptionMariage()){
 			phrase = new Phrase("à :  ");
-			phrase.add(new Chunk("                  " + extraitMPersonne.getHeureInscriptionMariage() + "  heures " + extraitMPersonne.getMinuteInscriptionMariage() + "  minutes" ,fonte2));
+			phrase.add(new Chunk("                  " + extraitMPersonne.getHeureInscriptionMariage() + "  heures " + extraitMPersonne.getMinuteInscriptionMariage() + "  minutes"));
 			document.add(phrase);
 			}else{
 				
@@ -275,32 +270,32 @@ public class ExtraitMariagePersonneController {
 			document.add(paragraph);
 
 			phrase = new Phrase("né le :  ");
-			phrase.add(new Chunk("            " + extraitMPersonne.getDateJoursetMoisNaissanceMari() + " " +  extraitMPersonne.getDateAnneedeNaissanceMari() ,fonte2));
+			phrase.add(new Chunk("            " + extraitMPersonne.getDateJoursetMoisNaissanceMari() + " " +  extraitMPersonne.getDateAnneedeNaissanceMari()));
 			document.add(phrase);
 
 			document.add(new Paragraph(""));
 
 			phrase = new Phrase("à :   ");
-			phrase.add(new Chunk("                  " + extraitMPersonne.getCommuneNaissanceMari() + "-" + extraitMPersonne.getIleInscriptionMariage(), fonte2));
+			phrase.add(new Chunk("                  " + extraitMPersonne.getCommuneNaissanceMari() + "-" + extraitMPersonne.getIleInscriptionMariage()));
 			document.add(phrase);
 
 			document.add(new Paragraph(""));
 
 			phrase = new Phrase("profession :");
-			phrase.add(new Chunk("      " + extraitMPersonne.getProfessionMari(), fonte2));
+			phrase.add(new Chunk("      " + extraitMPersonne.getProfessionMari()));
 			document.add(phrase);
 
 			document.add(new Paragraph(""));
 
 			phrase = new Phrase("demeurant à  :");
-			phrase.add(new Chunk(" " + extraitMPersonne.getAdressMari(), fonte2));
+			phrase.add(new Chunk(" " + extraitMPersonne.getAdressMari()));
 			document.add(phrase);
 
 			document.add(new Paragraph(""));
 
 			phrase = new Phrase("Fils de : ");
 			phrase.add(new Chunk("           " + extraitMPersonne.getPrenomDuPereMari().toUpperCase() + " " + extraitMPersonne.getNomDuPereMari() + " et de "
-					+ extraitMPersonne.getPrenomDuMereMari() + " " +  extraitMPersonne.getNomDuMereMari(), fonte2));
+					+ extraitMPersonne.getPrenomDuMereMari() + " " +  extraitMPersonne.getNomDuMereMari()));
 			document.add(phrase);
 
 			document.add(new Paragraph(""));
@@ -349,7 +344,7 @@ public class ExtraitMariagePersonneController {
 
 			phrase = new Phrase("Mariage célébré le : ");
 			phrase.add(new Chunk("   " + formater.format(extraitMPersonne.getDateCelebration()) + "  à  " 
-			 + extraitMPersonne.getCommuneInscriptionMariage()));
+			 + extraitMPersonne.getCommuneInscriptionMariage(), fonte2));
 			document.add(phrase);
 
 			document.add(new Paragraph(""));
