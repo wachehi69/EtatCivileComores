@@ -57,5 +57,7 @@ $(document).ready(function() {
 	$('#infIscMar1').click(function() {
 		$('#infIscMar01').slideToggle(500);
 	});
+	
+	$("a.disabled").css({'pointer-events':'none', 'cursor':'default'});
 
 });

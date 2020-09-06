@@ -153,6 +153,10 @@
 						                     name="dateCelebration"
 						                     placeholder="JJ/MM/AAAA"
 						                     id="dateCelebration"  th:field="*{dateCelebration}"/>
+						                     <p class="alert alert-danger"
+												th:if="${#fields.hasErrors('dateCelebration')}"
+												th:errors="*{dateCelebration}"></p>
+						                     
 						                    <!-- <div class="input-group-append">
 						                        <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
 						                    </div> -->
@@ -781,18 +785,6 @@
 
 	</div>
 	
-		<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
-		<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
-		<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
-		<script th:src="@{assets/bootstrap-datepicker/js/bootstrap-datepicker.js}"></script>
-		
-		<script>
-		    $('.input-group.date').datepicker({
-		        autoclose: true,
-		        todayHighlight: true
-		    });
-		</script>
 	
-
 </body>
 </html>

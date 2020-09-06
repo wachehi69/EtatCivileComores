@@ -11,6 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -38,8 +39,9 @@ public class ExtraitMariagePersonne implements Serializable {
 	private String communeInscriptionMariage;
 	@NotEmpty(message = "le nom de l'île doit être rensegné")
 	private String ileInscriptionMariage;
-	
+	@Past(message="la date doit être anterieure")
     @DateTimeFormat(pattern = "dd/MM/yyyy")
+    @NotNull(message="la date de célébration du mariage est obligatoire")
     private Date dateCelebration;
 	
 	

@@ -26,7 +26,9 @@ public class ExtraitMariagePersonneImpl implements IExtraitMariagePersonne{
 
 	@Override
 	public ExtraitMariagePersonne getExtraitMariage(Long numExtMariage) {
-		if(null == numExtMariage) throw new RuntimeException("numéro extrait incorrecte");
+		
+		
+		if(null == numExtMariage ) throw new RuntimeException("numéro extrait incorrecte");
 		return mariagePersonneRepository.findById(numExtMariage).get();
 	}
 
@@ -60,8 +62,9 @@ public class ExtraitMariagePersonneImpl implements IExtraitMariagePersonne{
 	@Override
 	public Page<ExtraitMariagePersonne> listeExtraitMariageParNumExtrait(Long numExtrait, int page, int size) {
 		
+		 
 		Page<ExtraitMariagePersonne> listeExtraitMariage = mariagePersonneRepository.listeExtraitMariageParNumExtrait(numExtrait, new PageRequest(page, size));
-		   if(null==listeExtraitMariage || listeExtraitMariage.isEmpty()) throw new RuntimeException("Aucun extrait existe sur ce nom") ;
+		   if(null==listeExtraitMariage || listeExtraitMariage.isEmpty()) throw new RuntimeException("Aucun extrait existe sur ce numéro") ;
 		
 		return listeExtraitMariage;
 	}

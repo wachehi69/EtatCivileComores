@@ -8,16 +8,11 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Locale;
 
 import javax.validation.Valid;
 
-import org.joda.time.DateTime;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
 import org.mairie.comores.entities.ExtraitMariagePersonne;
 import org.mairie.comores.entities.Users;
 import org.mairie.comores.metier.IEmployeMetier;
@@ -103,6 +98,7 @@ public class ExtraitMariagePersonneController {
 		return "extraitMariagePersonne";
 	}
 	
+
 	@RequestMapping(value = "/saveExtraitMariage", method = RequestMethod.POST)
 	public String enregistrer(@Valid ExtraitMariagePersonne extraitMariagePersonne, Errors errors, Model model,
 			String operation, String motCle, String action, 
@@ -147,6 +143,8 @@ public class ExtraitMariagePersonneController {
 				
 		return "redirect:/consulationExtraitMariage?motCle=" + motCle + "&page=" + page;
 	}
+	
+	
 	
 	@RequestMapping("/suppressionExtraitMariage")
 	private String supprimerExtraitMariage(Long numExtMariage, Model model, String motCle, int page) {
@@ -311,7 +309,7 @@ public class ExtraitMariagePersonneController {
 			phrase.add(new Chunk("             " + extraitMPersonne.getDateJoursetMoisNaissanceMarie() + " " + extraitMPersonne.getDateAnneedeNaissanceMarie()));
 			document.add(phrase);
 
-			phrase = new Phrase("  à  :");
+			phrase = new Phrase("  à  ");
 			phrase.add(new Chunk(" " + extraitMPersonne.getCommuneNaissanceMarie() ));
 			document.add(phrase);
 
@@ -335,7 +333,7 @@ public class ExtraitMariagePersonneController {
 			phrase.add(new Chunk("            " + extraitMPersonne.getNomDuPereMarie() + " " + extraitMPersonne.getPrenomDuPereMarie()));
 			document.add(phrase);
 
-			phrase = new Phrase("  et de :");
+			phrase = new Phrase("  et de ");
 			phrase.add(new Chunk(" " + extraitMPersonne.getNomDuMereMarie() + " " + extraitMPersonne.getPrenomDuMereMarie()));
 			document.add(phrase);
 
@@ -502,13 +500,13 @@ public class ExtraitMariagePersonneController {
 			model.addAttribute("pages", pages);
 			model.addAttribute("page", page);
 			model.addAttribute("numExtMariage ", numExtMariage);
-
+            model.addAttribute("motCle", motCle);
 		} catch (Exception e) {
 			model.addAttribute("exception", e);
 
 		}
 	}
-
+	
 		/**
 		 * Cette methode permet de copier un fichier d'un repertoir à un autre
 		 * 
@@ -550,7 +548,7 @@ public class ExtraitMariagePersonneController {
 			return true; // Résultat OK
 		}
 		
-		public static boolean isValid(String text) {
+		/*public static boolean isValid(String text) {
 		    if (text == null || !text.matches("\\d{4}-[01]\\d-[0-3]\\d"))
 		        return false;
 		    SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
@@ -561,7 +559,7 @@ public class ExtraitMariagePersonneController {
 		    } catch (Exception ex) {
 		        return false;
 		    }
-		}
+		}*/
 
 	}
 	
