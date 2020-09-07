@@ -41,7 +41,7 @@ import com.lowagie.text.pdf.BaseFont;
 import com.lowagie.text.pdf.PdfWriter;
 
 @Controller
-public class ExtraitNaissancePersonneController {
+public class ExtraitNaissanceParNumeroExtraitPersonneController {
 
 	@Autowired
 	private IExtraitNaissancePersonne extraitNaissancePersonneImpl;
@@ -59,7 +59,7 @@ public class ExtraitNaissancePersonneController {
 	Path destination;
 	String NomExtrait = "EXTRAIT D'ACTE DE NAISSANCE";
 
-	@RequestMapping("/extraitNaissance")
+	@RequestMapping("/extraitNaissanceParNumeroExtrait")
 	private String index(ExtraitNaissancePersonne extraitNPersonne, Model model) {
 		try {
 			// Recuperer l'utilisateur connecté
@@ -67,13 +67,30 @@ public class ExtraitNaissancePersonneController {
 			EmployeController.dateDujours(model);
 		} catch (Exception e) {
 		}
-		return "extraitNaissancePersonne";
+		return "extraitNaissancePersonneParNumExtrait";
 	}
 
-	@GetMapping("/consulationExtraitNaissance")
-	public String showForm(Model model, String motCle, ExtraitNaissancePersonne extraitNaissance, String operation,
-			Long numExtrait, @RequestParam(name = "page", defaultValue = "0") int page,
+		
+	@GetMapping("/consulationExtraitNaissanceNumExtrait")
+	public String showForm(Model model, ExtraitNaissancePersonne extraitNaissance, String operation, 
+			Long numExtrait, String numExtraitext,
+			@RequestParam(name = "page", defaultValue = "0") int page,
 			@RequestParam(name = "size", defaultValue = "5") int size) {
+		
+		if (null != numExtraitext) {
+			try {
+				// Recuperer l'utilisateur connecté
+				EmployeController.ChargerUserConnection(model, userMetierImpl, employeMetierImpl);
+				EmployeController.dateDujours(model);
+				// on veut tester si numExtMariage est un chiffre
+				numExtrait = Long.valueOf(numExtraitext);
+
+			} catch (NumberFormatException nfe) {
+				model.addAttribute("message", "Veuillez donnez un nombre !!!!");
+				return "extraitNaissancePersonneParNumExtrait";
+			}
+		}
+		
 		try {
 			// Recuperer l'utilisateur connecté
 			EmployeController.ChargerUserConnection(model, userMetierImpl, employeMetierImpl);
@@ -89,14 +106,13 @@ public class ExtraitNaissancePersonneController {
 		} catch (Exception e) {
 			model.addAttribute("exception", e);
 		}
-		ChargerExtraitNaissance(model, motCle, page, size);
-		return "extraitNaissancePersonne";
+		ChargerExtraitNaissanceParNumExtrait(model, numExtrait, page, size);
+		return "extraitNaissancePersonneParNumExtrait";
 	}
 
-
-	@RequestMapping(value = "/saveExtraitNaissance", method = RequestMethod.POST)
+	@RequestMapping(value = "/saveExtraitNaissanceParNumeroExtrait", method = RequestMethod.POST)
 	public String enregistrer(@Valid ExtraitNaissancePersonne extraitNaissancePersonne, Errors errors, Model model,
-			String operation, String motCle, String action, 
+			String operation,  String action, Long numExtrait,
 			@RequestParam(name = "page", defaultValue = "0") int page,
 			@RequestParam(name = "size", defaultValue = "5") int size) {
 
@@ -110,18 +126,17 @@ public class ExtraitNaissancePersonneController {
 		}
 
 		if (null != action && action.equalsIgnoreCase("annuler")) {
-			return "redirect:/consulationExtraitNaissance?motCle=" + motCle + "&page=" + page;
+			return "redirect:/saveExtraitNaissanceParNumeroExtrait?numExtrait=" + numExtrait + "&page=" + page;
 		}
 
 		if (errors.hasErrors()) {
-			Page<ExtraitNaissancePersonne> listExtraitPage = extraitNaissancePersonneImpl.listeParPageExtrait(motCle,
-					page, size);
+			Page<ExtraitNaissancePersonne> listExtraitPage = extraitNaissancePersonneImpl.listeParPageExtraitParNumExtrait(numExtrait, page, size);
 			model.addAttribute("listextraitPage", listExtraitPage.getContent());
-			model.addAttribute("motCle", motCle);
+			model.addAttribute("numExtrait", numExtrait);
 			model.addAttribute("operation", "modif");
 			model.addAttribute("etat", "modif");
 
-			return "extraitNaissancePersonne";
+			return "extraitNaissancePersonneParNumExtrait";
 		}
 		Users user = EmployeController.ChargerUserConnection(model, userMetierImpl, employeMetierImpl);
 		if (operation.equals("modif")) {
@@ -134,11 +149,11 @@ public class ExtraitNaissancePersonneController {
 			extraitNaissancePersonneImpl.saveExtraitNaissance(extraitNaissancePersonne);
 		}
 
-		return "redirect:/consulationExtraitNaissance?motCle=" + motCle + "&page=" + page;
+		return "redirect:/consulationExtraitNaissanceNumExtrait?numExtrait=" + numExtrait + "&page=" + page;
 
 	}
 
-	@RequestMapping("/generationExtraitNaissace")
+	@RequestMapping("/generationExtraitNaissaceParNumeroExtrait")
 	private String creationExtraitNaissance(Long numExtrait, Model model, String motCle, int page) {
 
 		Document document = new Document(PageSize.A4);
@@ -441,10 +456,10 @@ public class ExtraitNaissancePersonneController {
 			e.printStackTrace();
 		}
 
-		return "redirect:/consulationExtraitNaissance?motCle=" + motCle + "&page=" + page;
+		return "redirect:/consulationExtraitNaissanceNumExtrait?numExtrait=" + numExtrait + "&page=" + page;
 	}
 
-	@RequestMapping("/suppressionExtrait")
+	@RequestMapping("/suppressionExtraitParNumExtrait")
 	private String supprimerExtraitNaissance(Long numExtrait, Model model, String motCle, int page) {
 		try {
 			// Recuperer l'utilisateur connecté
@@ -454,34 +469,28 @@ public class ExtraitNaissancePersonneController {
 		} catch (Exception e) {
 
 		}
-		return "redirect:/consulationExtraitNaissance?motCle=" + motCle + "&page=" + page;
+		return "redirect:/consulationExtraitNaissanceNumExtrait?numExtrait=" + numExtrait + "&page=" + page;
 	}
 
-	/**
-	 * Cette methode permet de charger les extraits de naissances
-	 * 
-	 * @param model
-	 * @param motCle
-	 * @param page
-	 * @param size
-	 */
-	private void ChargerExtraitNaissance(Model model, String motCle, int page, int size) {
+	
+	private void ChargerExtraitNaissanceParNumExtrait(Model model, Long numExtrait, int page, int size) {
+
 		try {
 
-			Page<ExtraitNaissancePersonne> listExtraitPage = extraitNaissancePersonneImpl.listeParPageExtrait(motCle,
-					page, size);
+			Page<ExtraitNaissancePersonne> listExtraitPage = extraitNaissancePersonneImpl
+					.listeParPageExtraitParNumExtrait(numExtrait, page, size);
 			model.addAttribute("listextraitPage", listExtraitPage.getContent());
 			int[] pages = new int[listExtraitPage.getTotalPages()];
 			model.addAttribute("pages", pages);
 			model.addAttribute("page", page);
-			model.addAttribute("motCle", motCle);
+			model.addAttribute("numExtrait", numExtrait);
 
 		} catch (Exception e) {
 			model.addAttribute("exception", e);
 
 		}
-	}
 
+	}
 
 	/**
 	 * Cette methode permet de mettre à jour les extraits de naissances

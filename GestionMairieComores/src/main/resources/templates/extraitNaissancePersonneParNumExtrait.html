@@ -29,10 +29,14 @@
 				<div class="panel-body">
 					<form th:action="@{/consulationExtraitNaissanceNumExtrait}" method="get">
 						<label th:text="#{label.numero.consult}"></label> <input type="text"
-							name="numExtrait" th:value="${numExtrait}" />
+							name="numExtraitext" th:value="${numExtrait}" />
 						<button type="submit" class="btn btn-primary">Ok</button>
 						<div class="text-danger pull-right h4" th:if="${exception}"
 							th:text="${exception.message}"></div>
+						<div class="text-danger pull-right h4" th:if="${message}"
+							th:text="${message}"></div>
+							
+						
 					</form>
 				</div>
 			</div>
@@ -43,7 +47,7 @@
 				<div class="panel-body">
 					<div class="container" >
 
-					<form class="form-inline" th:action="@{/saveExtraitNaissance}" 	th:object="${extraitNaissancePersonne}" method="post">
+					<form class="form-inline" th:action="@{/saveExtraitNaissanceParNumeroExtrait}" 	th:object="${extraitNaissancePersonne}" method="post">
 
 						<fieldset>
 							<legend id="infNaiss1" class="pointer">Informations de naissance :</legend>
@@ -447,10 +451,10 @@
 								th:href="@{/suppressionExtrait(numExtrait=${extraitP.numExtrait},motCle=${motCle},page=${page})}"
 								th:text="supp"></a></td>
 							 <td sec:authorize="hasRole('ROLE_ADMIN')"><a
-								th:href="@{/consulationExtraitNaissance(numExtrait=${extraitP.numExtrait},motCle=${motCle}, operation=modif, page=${page})}"
+								th:href="@{/consulationExtraitNaissanceNumExtrait(numExtrait=${extraitP.numExtrait},operation=modif, page=${page})}"
 								th:text="modif"></a></td> 
 								<td><a
-								th:href="@{/generationExtraitNaissace(numExtrait=${extraitP.numExtrait},motCle=${motCle}, page=${page})}"
+								th:href="@{/generationExtraitNaissaceParNumeroExtrait(numExtrait=${extraitP.numExtrait},page=${page})}"
 								th:text="générer"></a></td> 
 								<td><a
 								th:href="@{/PDFExportExtraitNaissance(numExtrait=${extraitP.numExtrait})}"
@@ -458,13 +462,7 @@
 								
  						</tr>
 					</table>
-					<div class="container">
-						<ul class="nav nav-pills">
-							<li th:each="p,status:${pages}"><a
-								th:href="@{/consulationExtraitNaissance(motCle=${motCle},page=${status.index})}"
-								th:text="${status.index}"></a></li>
-						</ul>
-					</div> 
+					
 				</div>
 			</div>
 		</div>
