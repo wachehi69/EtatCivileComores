@@ -155,7 +155,7 @@
 							<td	th:text="${#dates.format(employe.dateRecrutement,'dd-MM-yyyy')}" />
 							<td th:text="${employe.salaire}" />
 							<td sec:authorize="hasRole('ROLE_ADMIN')"><a
-								th:href="@{/suppressionEmploye(idempl=${employe.idempl},motCle=${motCle},page=${page})}"
+								th:href="@{/suppressionEmploye(idempl=${employe.idempl},motCle=${motCle},page=${page})}" onclick="return(confirm('Etes-vous sûr de vouloir supprimer cet employé ?'));"
 								th:text="supp"></a></td>
 							<td sec:authorize="hasRole('ROLE_ADMIN')"><a
 								th:href="@{/consultationEmployes(idempl=${employe.idempl},motCle=${motCle},operation=modif,page=${page})}"

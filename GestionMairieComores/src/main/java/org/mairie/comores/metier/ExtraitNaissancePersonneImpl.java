@@ -65,7 +65,7 @@ public class ExtraitNaissancePersonneImpl implements IExtraitNaissancePersonne {
 				.listeExtraitNaissanceParNumExtrait( numExtrait, new PageRequest(page, size));
 
 		if (extraitPage == null || extraitPage.isEmpty())
-			throw new RuntimeException("Nom est inexistant !!!");
+			throw new RuntimeException("Numéro est inexistant !!!");
 		return extraitPage;
 	}
 

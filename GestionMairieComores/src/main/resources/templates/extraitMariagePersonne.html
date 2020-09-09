@@ -759,7 +759,7 @@
 							<td	th:text="${#dates.format(extraitM.dateModification,'dd-MM-yyyy')}" />
 							<td th:text="${extraitM.user.employe}" />
 							<td sec:authorize="hasRole('ROLE_ADMIN')"><a
-								th:href="@{/suppressionExtraitMariage(numExtMariage=${extraitM.numExtMariage},motCle=${motCle},page=${page})}"
+								th:href="@{/suppressionExtraitMariage(numExtMariage=${extraitM.numExtMariage},motCle=${motCle},page=${page})}" onclick="return(confirm('Etes-vous sûr de vouloir supprimer cet extrait ?'));"
 								th:text="supp"></a></td>
 							 <td sec:authorize="hasRole('ROLE_ADMIN')"><a
 								th:href="@{/consulationExtraitMariage(numExtMariage=${extraitM.numExtMariage},motCle=${motCle}, operation=modif, page=${page})}"
