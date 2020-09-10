@@ -162,7 +162,7 @@
 								th:text="modif"></a></td>
 						</tr>
 					</table>
-					<div class="container" >
+					<div class="container" th:if="${pages.length>2}">
 						<ul class="nav nav-pills">
 							<li th:each="p,status:${pages}"    class="${active:status.index==0}" ><a
 								th:href="@{/consultationEmployes(motCle=${motCle},page=${status.index})}"
