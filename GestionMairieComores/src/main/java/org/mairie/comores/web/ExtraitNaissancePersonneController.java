@@ -128,6 +128,7 @@ public class ExtraitNaissancePersonneController {
 			UpdateExtraitNaissance(extraitNaissancePersonne, user);
 		} else {
 			// date de creation de l'extrait de naissance
+		extraitNaissancePersonne.setNumExtrait(0L);
 			extraitNaissancePersonne.setDateCreation(new Date());
 			// utilisateur qui a créée l'extrait de naissance
 			extraitNaissancePersonne.setUser(user);

@@ -6,10 +6,7 @@ import java.io.FileInputStream;
 import javax.servlet.ServletContext;
 
 import org.mairie.comores.entities.ExtraitMariagePersonne;
-import org.mairie.comores.entities.ExtraitNaissancePersonne;
-import org.mairie.comores.metier.ExtraitMariagePersonneImpl;
 import org.mairie.comores.metier.IExtraitMariagePersonne;
-import org.mairie.comores.metier.IExtraitNaissancePersonne;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;

@@ -35,13 +35,18 @@
 	         </ul>
             </li>
              <li><a th:href="@{/}">Extrait décès</a></li>
-             <li><a th:href="@{/}">Autorisation enfants mineurs</a></li>
+             <li><a class="dropdown-toggle" data-toggle="dropdown" href="#">Aut. Parentale de mineur<span class="caret"></span></a>
+	           <ul class="dropdown-menu">
+	          <li><a th:href="@{/PDFExportAutorisationParental}">Autorisation parentale</a></li>
+	          <li><a th:href="@{/PDFExportAttestationParental}">Autorisation p.sortie du territoire</a></li>
+	         </ul>
+            </li>
+             
              <li><a th:href="@{/gestionUtilisateur}">Gestion utilisateur</a></li>
              <li><a class="dropdown-toggle" data-toggle="dropdown" href="#">Statistique <span class="caret"></span></a>
 	           <ul class="dropdown-menu">
-	          <li><a href="#">Nombre de N./Mois</a></li>
-	          <li><a href="#">Nombre de N./AN</a></li>
-	          <li><a href="#">Repartition Homme/Femme</a></li>
+	          <li><a th:href="@{/histogrammeBarreParMois}">Nombre de N./Mois</a></li>
+	          <li><a th:href="@{/histogrammeBarreParAn}">Nombre de N./AN</a></li>
 	         </ul>
             </li>
              <li class="marge">
