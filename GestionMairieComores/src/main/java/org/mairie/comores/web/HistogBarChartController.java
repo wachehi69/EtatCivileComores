@@ -73,8 +73,6 @@ public class HistogBarChartController {
 			  collecteDonneeStatiqueParMois(listeExtaitN, mois, nombreNaissanceGarcon, nombreNaissanceFille, genreGarcon,
 					genreFille, month, calendar, nbNaissanceGarcon, nbNaissanceFille, i);
 			  
-			   //System.out.println("nombre de naissance  " + genreFille[i] + " pour le mois de " + month[i] + " est :   " + nombreNaissanceFille[i]);
-			   //System.out.println("nombre de naissance  " + genreGarcon[i] + "  pour le mois de " + month[i] + " est : " + nombreNaissanceGarcon[i]);
 				 
 			   dataset.addValue(nombreNaissanceGarcon[i], genreGarcon[i], month[i]);
 			   dataset.addValue(nombreNaissanceFille[i],   genreFille[i], month[i]);
@@ -122,9 +120,6 @@ public class HistogBarChartController {
 			  collecteDonneeStatiqueParAn(listeExtaitN, annee, nombreNaissanceGarcon, nombreNaissanceFille, genreGarcon,
 					genreFille, tabannee, calendar, nbNaissanceGarcon, nbNaissanceFille, i);
 			  
-			   //System.out.println("nombre de naissance  " + genreFille[i] + " pour année "   + tabannee[i] + " est :   " + nombreNaissanceFille[i]);
-			   //System.out.println("nombre de naissance  " + genreGarcon[i] + "  pour année " + tabannee[i] + " est : " + nombreNaissanceGarcon[i]);
-				 
 			   dataset.addValue(nombreNaissanceGarcon[i], genreGarcon[i], tabannee[i]);
 			   dataset.addValue(nombreNaissanceFille[i],  genreFille[i],  tabannee[i]);
 			  }
@@ -137,8 +132,7 @@ public class HistogBarChartController {
 	    
 	    
 	}
-
-
+      
 	private void collecteDonneeStatiqueParAn(List<ExtraitNaissancePersonne> listeExtaitN, String[] annee,
 			int[] nombreNaissanceGarcon, int[] nombreNaissanceFille, String[] genreGarcon, String[] genreFille,
 			String[] tabannee, Calendar calendar, int nbNaissanceGarcon, int nbNaissanceFille, int i) {
@@ -151,16 +145,12 @@ public class HistogBarChartController {
 			   calendar.setTime(dteMois);
 			 // on va extraire la date et le mois 
 			   int  dteyear  = calendar.get(Calendar.YEAR);
-			   int dtemonth = calendar.get((Calendar.MONTH)) + 1;
+			   //int dtemonth = calendar.get((Calendar.MONTH)) + 1;
 			   String civilite = extraiN.getNomDuSexe();
 			   
-			      System.out.println("Année encour sur annee[i] est " + annee[i]);
-			      System.out.println("Année encour sur dteyear est  "  + dteyear);
-			      System.out.println();
 			      
 			      //On va convertir un int en string
 			      String dteyearStr = String.valueOf(dteyear);
-
 			      
 			      if(civilite.equalsIgnoreCase("feminin") ) {
 			    	  if(annee[i].equals(dteyearStr)){
