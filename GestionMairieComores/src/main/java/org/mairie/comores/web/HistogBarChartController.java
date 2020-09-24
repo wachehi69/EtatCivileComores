@@ -147,7 +147,6 @@ public class HistogBarChartController {
 			   int  dteyear  = calendar.get(Calendar.YEAR);
 			   //int dtemonth = calendar.get((Calendar.MONTH)) + 1;
 			   String civilite = extraiN.getNomDuSexe();
-			   
 			      
 			      //On va convertir un int en string
 			      String dteyearStr = String.valueOf(dteyear);
