@@ -7,8 +7,8 @@ import org.springframework.data.domain.Page;
 
 public interface IExtraitDecesPersonne {
 	
-	public ExtraitDecesPersonne  saveExtraitNaissance(ExtraitDecesPersonne extraitDeces) ;
-	public ExtraitDecesPersonne getExtraitNaissance(Long numExtraitDeces);
+	public ExtraitDecesPersonne  saveExtraitDeces(ExtraitDecesPersonne extraitDeces) ;
+	public ExtraitDecesPersonne getExtraitDeces(Long numExtraitDeces);
 	public void updateExtraitDeces(ExtraitDecesPersonne extraitDeces);
 	public void deleteExtraitDeces(Long numExtraitDeces);
 	public Page<ExtraitDecesPersonne> listeParPageExtraitDeces(String nom, int page, int size);

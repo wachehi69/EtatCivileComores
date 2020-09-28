@@ -19,12 +19,12 @@ public class ExtraitDecesPersonneImpl implements IExtraitDecesPersonne{
 	private ExtraitDecesPersonneRepository  extraitDecesPersonneRepository;
 
 	@Override
-	public ExtraitDecesPersonne saveExtraitNaissance(ExtraitDecesPersonne extraitDeces) {
+	public ExtraitDecesPersonne saveExtraitDeces(ExtraitDecesPersonne extraitDeces) {
 		return extraitDecesPersonneRepository.save(extraitDeces);
 	}
 
 	@Override
-	public ExtraitDecesPersonne getExtraitNaissance(Long numExtraitDeces) {
+	public ExtraitDecesPersonne getExtraitDeces(Long numExtraitDeces) {
 		Optional<ExtraitDecesPersonne> extrait = extraitDecesPersonneRepository.findById(numExtraitDeces);
 		if (extrait.get() == null)
 			throw new RuntimeException("numero extrait invalide");
@@ -39,12 +39,12 @@ public class ExtraitDecesPersonneImpl implements IExtraitDecesPersonne{
 	@Override
 	public void deleteExtraitDeces(Long numExtraitDeces) {
 		
-		ExtraitDecesPersonne extraitDe = getExtraitNaissance(numExtraitDeces);
+		ExtraitDecesPersonne extraitDe = getExtraitDeces(numExtraitDeces);
 		if (extraitDe == null)
 			throw new RuntimeException("numero extrait de décès est invalide");
 		extraitDecesPersonneRepository.delete(extraitDe);
 		
-	}
+	}  
 
 	@Override
 	public Page<ExtraitDecesPersonne> listeParPageExtraitDeces(String nom, int page, int size) {

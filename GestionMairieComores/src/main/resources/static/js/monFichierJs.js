@@ -58,6 +58,10 @@ $(document).ready(function() {
 		$('#infIscMar01').slideToggle(500);
 	});
 	
+	$('#infDecs1').click(function() {
+		$('#infDecs01').slideToggle(500);
+	});
+	
 	$("a.disabled").css({'pointer-events':'none', 'cursor':'default'});
 
 });

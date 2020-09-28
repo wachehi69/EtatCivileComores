@@ -94,7 +94,7 @@ public class ExtraitMariagePersonneController {
 		} catch (Exception e) {
 			model.addAttribute("exception", e);
 		}
-		ChargerExtraitMariage(model, numExtMariage, motCle, page, size);
+		ChargerExtraitMariage(model, motCle, page, size);
 		return "extraitMariagePersonne";
 	}
 	
@@ -490,7 +490,7 @@ public class ExtraitMariagePersonneController {
 	 * @param size
 	 */
 
-	private void ChargerExtraitMariage(Model model, Long numExtMariage, String motCle, int page, int size) {
+	private void ChargerExtraitMariage(Model model, String motCle, int page, int size) {
 		
 		try {
 			Page<ExtraitMariagePersonne> listExtraitPage = extraitMariagePersonneImpl.listeExtraitMariageParNom(motCle,
@@ -499,7 +499,7 @@ public class ExtraitMariagePersonneController {
 			int[] pages = new int[listExtraitPage.getTotalPages()];
 			model.addAttribute("pages", pages);
 			model.addAttribute("page", page);
-			model.addAttribute("numExtMariage ", numExtMariage);
+			//model.addAttribute("numExtMariage ", numExtMariage);
             model.addAttribute("motCle", motCle);
 		} catch (Exception e) {
 			model.addAttribute("exception", e);
