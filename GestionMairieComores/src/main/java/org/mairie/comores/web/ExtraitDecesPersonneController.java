@@ -14,11 +14,9 @@ import java.util.Date;
 import javax.validation.Valid;
 
 import org.mairie.comores.entities.ExtraitDecesPersonne;
-import org.mairie.comores.entities.ExtraitNaissancePersonne;
 import org.mairie.comores.entities.Users;
 import org.mairie.comores.metier.IEmployeMetier;
 import org.mairie.comores.metier.IExtraitDecesPersonne;
-import org.mairie.comores.metier.IExtraitNaissancePersonne;
 import org.mairie.comores.metier.UserMetierImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -54,12 +52,12 @@ public class ExtraitDecesPersonneController {
 	@Autowired
 	private UserMetierImpl userMetierImpl;
 
-	String nomFichierSource = "c:\\extraitNaissance\\extraitNaissace.pdf";
+	String nomFichierSource = "c:\\extraitDeces\\extraitDeces.pdf";
 	Paragraph paragraph;
 	Phrase phrase;
 	Path source;
 	Path destination;
-	String NomExtrait = "EXTRAIT D'ACTE DE NAISSANCE";
+	String NomExtrait = "EXTRAIT D'ACTE DE DECES";
 
 	@RequestMapping("/extraitDeces")
 	private String index(ExtraitDecesPersonne extraitDPersonne, Model model) {
@@ -130,9 +128,8 @@ public class ExtraitDecesPersonneController {
 			UpdateExtraitDeces(extraitDecesPersonne, user);
 		} else {
 			// date de creation de l'extrait de naissance
-		    //extraitDecesPersonne.setNumExtrait(0L);
 			extraitDecesPersonne.setDateCreation(new Date());
-			// utilisateur qui a créée l'extrait de naissance
+			// utilisateur qui a créée l'extrait de décès
 			extraitDecesPersonne.setUser(user);
 			extraitDecesPersonneImpl.saveExtraitDeces(extraitDecesPersonne);
 	}
@@ -165,14 +162,14 @@ public class ExtraitDecesPersonneController {
 
 	
 
-	/*@RequestMapping("/generationExtraitNaissace")
-	private String creationExtraitNaissance(Long numExtrait, Model model, String motCle, int page) {
+	@RequestMapping("/generationExtraitDeces")
+	private String creationExtraitNaissance(Long numExtraitDeces, Model model, String motCle, int page) {
 
 		Document document = new Document(PageSize.A4);
 
-		ExtraitNaissancePersonne extraitNPersonne = extraitNaissancePersonneImpl.getExtraitNaissance(numExtrait);
-		 Creation du repertoir extrait 
-		Path repertoir = Paths.get("c:\\extraitNaissance\\");
+		ExtraitDecesPersonne extraitDPersonne = extraitDecesPersonneImpl.getExtraitDeces(numExtraitDeces);
+		// Creation du repertoir extrait de décès
+		Path repertoir = Paths.get("c:\\extraitDeces\\");
 		try {
 			Files.createDirectories(repertoir);
 		} catch (IOException e1) {
@@ -183,7 +180,7 @@ public class ExtraitDecesPersonneController {
 
 		try (FileOutputStream fileoutp = new FileOutputStream(fichier)) {
 
-			 creation du fichier extrait de naissance 
+			 //creation du fichier extrait de naissance 
 			if (!fichier.exists())
 				fichier.createNewFile(); // creation du fichier s'il n'existe
 											// pas
@@ -191,7 +188,7 @@ public class ExtraitDecesPersonneController {
 			// Création d'une instance de fichier PDF
 			PdfWriter.getInstance(document, new FileOutputStream(fichier));
 			System.out.print("Le fichier est créee : " + fichier.getAbsolutePath());
-			 ouverture du fichier en ecriture 
+			 //ouverture du fichier en ecriture 
 			document.open();
 			com.lowagie.text.Font fonte = FontFactory.getFont("timesroman", BaseFont.TIMES_ROMAN, 8);
 			com.lowagie.text.Font fonte1 = FontFactory.getFont("timesroman", BaseFont.TIMES_ROMAN, 6);
@@ -201,7 +198,7 @@ public class ExtraitDecesPersonneController {
 			// com.lowagie.text.Font fonte4 =
 			// FontFactory.getFont("timesroman",BaseFont.TIMES_ROMAN, 16);
 
-			 l'entete de l'extrait de naissance 
+			 //l'entete de l'extrait de naissance 
 			document.add(new Paragraph("UNION DES COMORES", fonte));
 			document.add(new Paragraph("Unité- Solidarité-Développement", fonte));
 			document.add(new Paragraph("MINISTERE DE L'INTERIEUR", fonte));
@@ -212,7 +209,7 @@ public class ExtraitDecesPersonneController {
 			paragraph.setLeading(5f); // espacement entre deux lignes
 			document.add(paragraph);
 
-			 inserer l'image 
+			 //inserer l'image 
 			Image image = Image.getInstance("mairie.png");
 
 			// image.setAbsolutePosition(220f, 550f);
@@ -221,167 +218,91 @@ public class ExtraitDecesPersonneController {
 			document.add(new Paragraph("VILLE DE MUTSAMUDU", fonte));
 			document.add(new Paragraph("         service état civil", fonte1));
 
-			 Affichage de la date systeme 
-
+			 //Affichage de la date systeme 
 			DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-			String dat = dateFormat.format(extraitNPersonne.getDateCreation());
+			String dat = dateFormat.format(extraitDPersonne.getDateCreation());
 			Font fonteDatesys = fonte2;
 			fonteDatesys.setStyle(Font.BOLD);
-			paragraph = new Paragraph("Acte N°: " + extraitNPersonne.getNumExtrait() + " Du " + dat, fonteDatesys);
+			paragraph = new Paragraph("Acte N°: " + extraitDPersonne.getNumExtraitDeces() + " Du " + dat, fonteDatesys);
 			// paragraph = new Paragraph( dat, fonteDatesys);
 			paragraph.setAlignment(Element.ALIGN_CENTER);
 
 			document.add(paragraph);
 
-			paragraph = new Paragraph("Registre N°: " + extraitNPersonne.getNumRegistre());
+			paragraph = new Paragraph("Registre N°: " + extraitDPersonne.getNumRegistre());
 			paragraph.setAlignment(Element.ALIGN_CENTER);
 			paragraph.setFont(fonte2);
 			document.add(paragraph);
 
-			 contenu de l'extrait de naissance 
+			//contenu de l'extrait de naissance 
 			paragraph = new Paragraph(
-					"Naissance de  : ".concat(extraitNPersonne.getNom()) + "  " + extraitNPersonne.getPrenom());
+					"Décès de  : ".concat(extraitDPersonne.getNom()) + "  " + extraitDPersonne.getPrenom());
 			paragraph.setAlignment(Element.ALIGN_CENTER);
 			paragraph.setFont(fonte2);
 			document.add(paragraph);
 
 			phrase = new Phrase("Le   ");
-			phrase.add(new Chunk("                                   " + extraitNPersonne.getDateJoursetMoisNaissance(),
+			phrase.add(new Chunk("                                   " + extraitDPersonne.getDateJoursetMoisDeces(),
 					fonte2));
 			document.add(phrase);
 
 			document.add(new Paragraph(""));
 
 			phrase = new Phrase("et l'an :   ");
-			phrase.add(new Chunk("                            " + extraitNPersonne.getDateAnneedeNaissance(), fonte2));
+			phrase.add(new Chunk("                            " + extraitDPersonne.getDateAnneedeDeces(), fonte2));
 			document.add(phrase);
 
 			document.add(new Paragraph(""));
 
-			if (extraitNPersonne.getMinuteNaissance().isEmpty()) {
-				phrase = new Phrase("à : ");
-				phrase.add(new Chunk(
-						"                                     " + extraitNPersonne.getHeureNaissance() + "  heures  ",
-						fonte2));
-				document.add(phrase);
-
-			} else {
-
-				phrase = new Phrase("à : ");
-				phrase.add(new Chunk("                                     " + extraitNPersonne.getHeureNaissance()
-						+ "  heures  " + extraitNPersonne.getMinuteNaissance() + "  minutes", fonte2));
-				document.add(phrase);
-			}
-
+			
 			document.add(new Paragraph(""));
 
-			if (extraitNPersonne.getNomDuSexe().equalsIgnoreCase("masculin")) {
-				phrase = new Phrase("Est né  à: ");
-				phrase.add(new Chunk("                          " + extraitNPersonne.getCommuneNaissance(), fonte2));
+			if (extraitDPersonne.getNomDuSexe().equalsIgnoreCase("masculin")) {
+				phrase = new Phrase("Est décédé  à: ");
+				phrase.add(new Chunk("                   " + extraitDPersonne.getLieuDeDeces(), fonte2));
 				document.add(phrase);
 			} else {
-				phrase = new Phrase("Est née  à:  ");
-				phrase.add(new Chunk("                       " + extraitNPersonne.getCommuneNaissance(), fonte2));
+				phrase = new Phrase("Est décédée  à:  ");
+				phrase.add(new Chunk("                    " + extraitDPersonne.getLieuDeDeces(), fonte2));
 				document.add(phrase);
 			}
 
 			document.add(new Paragraph(""));
 
 			phrase = new Phrase("Dans la commune de : ");
-			phrase.add(new Chunk("     " + extraitNPersonne.getCommuneNaissance(), fonte2));
+			phrase.add(new Chunk("     " + extraitDPersonne.getCommuneDuDeces(), fonte2));
 			document.add(phrase);
 
 			document.add(new Paragraph(""));
+			
+			phrase = new Phrase("Nom et prenom:          ");
+			phrase.add(new Chunk("      ".concat(extraitDPersonne.getNom()) + "  " + extraitDPersonne.getPrenom()));
+			document.add(phrase);
+			
+			document.add(new Paragraph(""));
 
 			phrase = new Phrase("De sexe : ");
-			phrase.add(new Chunk("                          " + extraitNPersonne.getNomDuSexe(), fonte2));
+			phrase.add(new Chunk("                          " + extraitDPersonne.getNomDuSexe(), fonte2));
 			document.add(phrase);
 
 			document.add(new Paragraph(""));
 
 			phrase = new Phrase("Fils de : ");
-			phrase.add(new Chunk("                             " + extraitNPersonne.getNomDuPere().toUpperCase() + " "
-					+ extraitNPersonne.getPrenomDuPere(), fonte2));
+			phrase.add(new Chunk("                             " + extraitDPersonne.getNomDuPere().toUpperCase() + " "
+					+ extraitDPersonne.getPrenomDuPere(), fonte2));
 			document.add(phrase);
 
-			document.add(new Paragraph(""));
-
-			phrase = new Phrase("Né  : ");
-			phrase.add(
-					new Chunk("                                  " + extraitNPersonne.getDateJoursetMoisNaissancePere()
-							+ "  " + extraitNPersonne.getDateAnneedeNaissancePere()));
-			document.add(phrase);
-
-			document.add(new Paragraph(""));
-
-			if (extraitNPersonne.getMinuteNaissancePere().isEmpty()) {
-				phrase = new Phrase("à : ");
-				phrase.add(new Chunk("                                     " + extraitNPersonne.getHeureNaissancePere()
-						+ "  heures  "));
-				document.add(phrase);
-
-			} else {
-
-				phrase = new Phrase("à : ");
-				phrase.add(new Chunk("                                     " + extraitNPersonne.getHeureNaissancePere()
-						+ "  heures  " + extraitNPersonne.getMinuteNaissancePere() + "  minutes"));
-				document.add(phrase);
-			}
-			document.add(new Paragraph(""));
-
-			phrase = new Phrase("Demeurant à: ");
-			phrase.add(new Chunk("                   " + extraitNPersonne.getCommuneNaissancePere()));
-			document.add(phrase);
-
-			document.add(new Paragraph(""));
-
-			phrase = new Phrase("Profession : ");
-			phrase.add(new Chunk("                      " + extraitNPersonne.getProfessionPere() + "      "
-					+ "               Domicilié  à : " + extraitNPersonne.getCommuneNaissancePere()));
-			document.add(phrase);
 
 			document.add(new Paragraph(""));
 
 			phrase = new Phrase("Et de :");
-			phrase.add(new Chunk("                               " + extraitNPersonne.getNomDuMere().toUpperCase() + " "
-					+ extraitNPersonne.getPrenomDuMere()));
+			phrase.add(new Chunk("                               " + extraitDPersonne.getNomDuMere().toUpperCase() + " "
+					+ extraitDPersonne.getPrenomDuMere()));
 			document.add(phrase);
+
 
 			document.add(new Paragraph(""));
 
-			phrase = new Phrase("Née : ");
-			phrase.add(new Chunk("                                " + extraitNPersonne.getDateJoursetMoisNaissanceMere()
-					+ "  " + extraitNPersonne.getDateAnneedeNaissanceMere()));
-			document.add(phrase);
-
-			document.add(new Paragraph(""));
-
-			if (extraitNPersonne.getMinuteNaissanceMere().isEmpty()) {
-				phrase = new Phrase("à : ");
-				phrase.add(new Chunk("                                     " + extraitNPersonne.getHeureNaissanceMere()
-						+ "  heures  "));
-				document.add(phrase);
-
-			} else {
-
-				phrase = new Phrase("à : ");
-				phrase.add(new Chunk("                                     " + extraitNPersonne.getHeureNaissanceMere()
-						+ "  heures  " + extraitNPersonne.getMinuteNaissanceMere() + "  minutes"));
-				document.add(phrase);
-			}
-
-			document.add(new Paragraph(""));
-
-			phrase = new Phrase("à : ");
-			phrase.add(new Chunk("                                    " + extraitNPersonne.getCommuneNaissanceMere()));
-			document.add(phrase);
-
-			document.add(new Paragraph(""));
-
-			phrase = new Phrase("Profession : ");
-			phrase.add(new Chunk("                     " + extraitNPersonne.getProfessionMere() + "  "
-					+ "                 Domicilié  à : " + "" + extraitNPersonne.getCommuneNaissanceMere()));
-			document.add(phrase);
 
 			document.add(new Paragraph(""));
 			phrase = new Phrase("Dressé le : ");
@@ -390,18 +311,18 @@ public class ExtraitDecesPersonneController {
 
 			document.add(new Paragraph(" "));
 			phrase = new Phrase("Déclaration faite par: ");
-			phrase.add(new Chunk(" " + extraitNPersonne.getDeclarationFaitePar()));
+			phrase.add(new Chunk(" " + extraitDPersonne.getDeclarationFaitePar()));
 			document.add(phrase);
-			// document.add(new Paragraph(" "));
+			document.add(new Paragraph(" "));
 			phrase = new Phrase("Déclaration reçue par nous: ");
-			phrase.add(new Chunk(" " + extraitNPersonne.getDeclarationRecueParnous()));
+			phrase.add(new Chunk(" " + extraitDPersonne.getDeclarationRecueParnous()));
 			document.add(phrase);
 
 			document.add(new Paragraph(" "));
 
 			document.add(new Paragraph("MENTIONS MARGINALES", fonte2));
 
-			 pied de page 
+			// pied de page 
 			document.add(new Paragraph("       "));
 			document.add(new Paragraph("       "));
 			paragraph = new Paragraph("Pour extrait  certifié conforme aux registres");
@@ -411,7 +332,7 @@ public class ExtraitDecesPersonneController {
 
 			document.add(new Paragraph("       "));
 			paragraph = new Paragraph(
-					extraitNPersonne.getCommuneNaissance() + ", le :  " + dateFormat.format(new Date()));
+					extraitDPersonne.getCommuneDuDeces() + ", le :  " + dateFormat.format(new Date()));
 			paragraph.setAlignment(Element.ALIGN_RIGHT);
 			paragraph.setFont(fonte);
 			document.add(paragraph);
@@ -431,54 +352,49 @@ public class ExtraitDecesPersonneController {
 			paragraph.setFont(fonteDatesys);
 			document.add(paragraph);
 			
-			 * Image image1 = Image.getInstance("/images/cachetcomores.png");
-			 * document.add(image1);
+			 //* Image image1 = Image.getInstance("/images/cachetcomores.png");
+			 //* document.add(image1);
 			 
 
 			document.close(); // fermeture avant de copier le fichier
 
 			
-			 * creation du repertoire de stockage des extraits de naissances et
-			 * instanciation de fichier
+			 // creation du repertoire de stockage des extraits de naissances et
+			 // instanciation de fichier
 			 
-			Path dossierRepertoir = Paths.get("c:\\RepertoirExtraitNaissance");
+			Path dossierRepertoir = Paths.get("c:\\RepertoirExtraitDeces");
 			// pour creer un repertoire s'il existe pas
 			if (!Files.exists(dossierRepertoir)) {
 				Files.createDirectory(dossierRepertoir);
 			} else {
-				System.out.println("Le dossier RepertoirExtrait existe");
+				System.out.println("Le dossier RepertoirExtraitDeces existe");
 			}
 
 			File source = new File(nomFichierSource);
 			// le nom de fichier extrait de naissance fini aura le nom suivant
-			String nomFichierDest = "Ext_" + extraitNPersonne.getNom() + extraitNPersonne.getPrenom() + "_"
-					+ extraitNPersonne.getNumExtrait() + ".pdf";
+			String nomFichierDest = "Ext_" + extraitDPersonne.getNom() + extraitDPersonne.getPrenom() + "_"
+					+ extraitDPersonne.getNumExtraitDeces() + ".pdf";
 
 			nomFichierDest = nomFichierDest.replaceAll(" ", ""); // renvoie une
 																	// copie du
 																	// String
 
-			// Le repertoire de stockage des extraits de naissances et nom final
+			// Le repertoire de stockage des extraits de décès et nom final
 			// de l'extrait
-			File destina = new File("c:\\RepertoirExtraitNaissance\\" + nomFichierDest);
-			// copie le fichier source créée vers le repertoire RepertoirExtrait
+			File destina = new File("c:\\RepertoirExtraitDeces\\" + nomFichierDest);
+			// copie le fichier source créée vers le repertoire RepertoirExtraitDeces
 			copyFile(source, destina);
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
-		return "redirect:/consulationExtraitNaissance?motCle=" + motCle + "&page=" + page;
+		return "redirect:/consulationExtraitDeces?motCle=" + motCle + "&page=" + page;
 	}
 
 	
-	*//**
-	 * Cette methode permet de copier un fichier d'un repertoir à un autre
-	 * 
-	 * @param source
-	 * @param destina
-	 * @return
-	 *//*
+	
+	
 
 	public static boolean copyFile(File source, File destina) {
 
@@ -512,16 +428,15 @@ public class ExtraitDecesPersonneController {
 
 		return true; // Résultat OK
 	}
-*/
 	
 	
-	/* * Cette methode permet de charger les extraits de décès
-	 * 
-	 * @param model
-	 * @param motCle
-	 * @param page
-	 * @param size
-	 **/
+   /**
+    *  Cette methode permet de charger les extraits de décès
+    * @param model
+    * @param motCle
+    * @param page
+    * @param size
+    */
 	private void ChargerExtraitDeces(Model model, String motCle, int page, int size) {
 		try {
 
