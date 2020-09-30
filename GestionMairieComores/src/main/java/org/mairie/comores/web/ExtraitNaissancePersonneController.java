@@ -425,7 +425,7 @@ public class ExtraitNaissancePersonneController {
 
 			File source = new File(nomFichierSource);
 			// le nom de fichier extrait de naissance fini aura le nom suivant
-			String nomFichierDest = "Ext_" + extraitNPersonne.getNom() + extraitNPersonne.getPrenom() + "_"
+			String nomFichierDest = "Ext_Nais_" + extraitNPersonne.getNom() + extraitNPersonne.getPrenom() + "_"
 					+ extraitNPersonne.getNumExtrait() + ".pdf";
 
 			nomFichierDest = nomFichierDest.replaceAll(" ", ""); // renvoie une

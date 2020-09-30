@@ -242,14 +242,14 @@ public class ExtraitDecesPersonneController {
 			document.add(paragraph);
 
 			phrase = new Phrase("Le   ");
-			phrase.add(new Chunk("                                   " + extraitDPersonne.getDateJoursetMoisDeces(),
-					fonte2));
+			phrase.add(new Chunk("                                   " + extraitDPersonne.getDateJoursetMoisDeces()
+					));
 			document.add(phrase);
 
 			document.add(new Paragraph(""));
 
 			phrase = new Phrase("et l'an :   ");
-			phrase.add(new Chunk("                            " + extraitDPersonne.getDateAnneedeDeces(), fonte2));
+			phrase.add(new Chunk("                            " + extraitDPersonne.getDateAnneedeDeces()));
 			document.add(phrase);
 
 			document.add(new Paragraph(""));
@@ -258,19 +258,19 @@ public class ExtraitDecesPersonneController {
 			document.add(new Paragraph(""));
 
 			if (extraitDPersonne.getNomDuSexe().equalsIgnoreCase("masculin")) {
-				phrase = new Phrase("Est décédé  à: ");
-				phrase.add(new Chunk("                   " + extraitDPersonne.getLieuDeDeces(), fonte2));
+				phrase = new Phrase("Est décédé à: ");
+				phrase.add(new Chunk("                   " + extraitDPersonne.getLieuDeDeces()));
 				document.add(phrase);
 			} else {
-				phrase = new Phrase("Est décédée  à:  ");
-				phrase.add(new Chunk("                    " + extraitDPersonne.getLieuDeDeces(), fonte2));
+				phrase = new Phrase("Est décédée à: ");
+				phrase.add(new Chunk("                 " + extraitDPersonne.getLieuDeDeces()));
 				document.add(phrase);
 			}
 
 			document.add(new Paragraph(""));
 
 			phrase = new Phrase("Dans la commune de : ");
-			phrase.add(new Chunk("     " + extraitDPersonne.getCommuneDuDeces(), fonte2));
+			phrase.add(new Chunk("     " + extraitDPersonne.getCommuneDuDeces()));
 			document.add(phrase);
 
 			document.add(new Paragraph(""));
@@ -282,14 +282,14 @@ public class ExtraitDecesPersonneController {
 			document.add(new Paragraph(""));
 
 			phrase = new Phrase("De sexe : ");
-			phrase.add(new Chunk("                          " + extraitDPersonne.getNomDuSexe(), fonte2));
+			phrase.add(new Chunk("                          " + extraitDPersonne.getNomDuSexe()));
 			document.add(phrase);
 
 			document.add(new Paragraph(""));
 
 			phrase = new Phrase("Fils de : ");
-			phrase.add(new Chunk("                             " + extraitDPersonne.getNomDuPere().toUpperCase() + " "
-					+ extraitDPersonne.getPrenomDuPere(), fonte2));
+			phrase.add(new Chunk("                            " + extraitDPersonne.getNomDuPere().toUpperCase() + " "
+					+ extraitDPersonne.getPrenomDuPere()));
 			document.add(phrase);
 
 
@@ -372,7 +372,7 @@ public class ExtraitDecesPersonneController {
 
 			File source = new File(nomFichierSource);
 			// le nom de fichier extrait de naissance fini aura le nom suivant
-			String nomFichierDest = "Ext_" + extraitDPersonne.getNom() + extraitDPersonne.getPrenom() + "_"
+			String nomFichierDest = "Ext_Dec_" + extraitDPersonne.getNom() + extraitDPersonne.getPrenom() + "_"
 					+ extraitDPersonne.getNumExtraitDeces() + ".pdf";
 
 			nomFichierDest = nomFichierDest.replaceAll(" ", ""); // renvoie une
