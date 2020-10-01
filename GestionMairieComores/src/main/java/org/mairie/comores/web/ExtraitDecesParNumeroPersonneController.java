@@ -1,6 +1,6 @@
 package org.mairie.comores.web;
 
-import java.io.File;   
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -41,7 +41,7 @@ import com.lowagie.text.pdf.BaseFont;
 import com.lowagie.text.pdf.PdfWriter;
 
 @Controller
-public class ExtraitDecesPersonneController {
+public class ExtraitDecesParNumeroPersonneController {
 
 	@Autowired
 	private IExtraitDecesPersonne extraitDecesPersonneImpl;
@@ -59,7 +59,7 @@ public class ExtraitDecesPersonneController {
 	Path destination;
 	String NomExtrait = "EXTRAIT D'ACTE DE DECES";
 
-	@RequestMapping("/extraitDeces")
+	@RequestMapping("/extraitDecesParNumeroExtrait")
 	private String index(ExtraitDecesPersonne extraitDPersonne, Model model) {
 		try {
 			// Recuperer l'utilisateur connecté
@@ -67,19 +67,35 @@ public class ExtraitDecesPersonneController {
 			EmployeController.dateDujours(model);
 		} catch (Exception e) {
 		}
-		return "extraitDecesPersonne";
+		return "extraitDecesPersonneParNumeroExtrait";
 	}
 
-	@GetMapping("/consulationExtraitDeces")
-	public String showForm(Model model, String motCle, ExtraitDecesPersonne extraitDecesPersonne, String operation,
-			Long numExtraitDeces, 
+	@GetMapping("/consulationExtraitDecesParNumero")
+	public String showForm(Model model,  ExtraitDecesPersonne extraitDecesPersonne, String operation,
+			Long numExtraitDeces, String numExtraitDecestext,
 			@RequestParam(name = "page", defaultValue = "0") int page,
 			@RequestParam(name = "size", defaultValue = "5") int size) {
+		
+		  if(null != numExtraitDecestext){
+			 try {
+				// Recuperer l'utilisateur connecté
+				EmployeController.ChargerUserConnection(model, userMetierImpl, employeMetierImpl);
+				EmployeController.dateDujours(model);
+				// on veut tester si numExtMariage est un chiffre
+				numExtraitDeces = Long.valueOf(numExtraitDecestext);
+
+					} catch (NumberFormatException nfe) {
+						model.addAttribute("message", "Veuillez donnez un nombre !!!!");
+						return "extraitNaissancePersonneParNumExtrait";
+					}
+				}
+			  
 		try {
 			// Recuperer l'utilisateur connecté
 			EmployeController.ChargerUserConnection(model, userMetierImpl, employeMetierImpl);
 			EmployeController.dateDujours(model);
-
+			numExtraitDeces = Long.parseLong(numExtraitDecestext);
+			
 			if (operation.equals("modif")) {
 				ExtraitDecesPersonne extraitP = extraitDecesPersonneImpl.getExtraitDeces(numExtraitDeces);
 				model.addAttribute("extraitDecesPersonne", extraitP);
@@ -90,14 +106,14 @@ public class ExtraitDecesPersonneController {
 		} catch (Exception e) {
 			model.addAttribute("exception", e);
 		}
-		ChargerExtraitDeces(model, motCle, page, size);
-		return "extraitDecesPersonne";
+		ChargerExtraitDecesParnumero(model, numExtraitDeces, page, size);
+		return "extraitDecesPersonneParNumeroExtrait";
 	}
 
 
-	@RequestMapping(value = "/saveExtraitDeces", method = RequestMethod.POST)
+	@RequestMapping(value = "/saveExtraitDecesParNumeroExtrait", method = RequestMethod.POST)
 	public String enregistrer(@Valid ExtraitDecesPersonne extraitDecesPersonne, Errors errors, Model model,
-			String operation, String motCle, String action, 
+			String operation, Long numExtraitDeces, String action, 
 			@RequestParam(name = "page", defaultValue = "0") int page,
 			@RequestParam(name = "size", defaultValue = "5") int size) {
 
@@ -111,13 +127,13 @@ public class ExtraitDecesPersonneController {
 		}
 
 		if (null != action && action.equalsIgnoreCase("annuler")) {
-			return "redirect:/consulationExtraitDeces?motCle=" + motCle + "&page=" + page;
+			return "redirect:/consulationExtraitDecesParNumero?motCle=" + numExtraitDeces + "&numExtraitDeces=" + page;
 		}
 
 		if (errors.hasErrors()) {
-			Page<ExtraitDecesPersonne> listExtraitPage = extraitDecesPersonneImpl.listeParPageExtraitDeces(motCle, page, size);
+			Page<ExtraitDecesPersonne> listExtraitPage = extraitDecesPersonneImpl.listeParPageExtraitParNumExtraitDeces(numExtraitDeces, page, size);
 			model.addAttribute("listextraitPage", listExtraitPage.getContent());
-			model.addAttribute("motCle", motCle);
+			model.addAttribute("numExtraitDeces", numExtraitDeces);
 			model.addAttribute("operation", "modif");
 			model.addAttribute("etat", "modif");
 
@@ -134,7 +150,7 @@ public class ExtraitDecesPersonneController {
 			extraitDecesPersonneImpl.saveExtraitDeces(extraitDecesPersonne);
 	}
 
-		return "redirect:/consulationExtraitDeces?motCle=" + motCle + "&page=" + page;
+		return "redirect:/consulationExtraitDecesParNumero?numExtraitDeces=" + numExtraitDeces + "&page=" + page;
 
 	}
 	
@@ -147,7 +163,7 @@ public class ExtraitDecesPersonneController {
 	 * @return
 	 */
 
-	@RequestMapping("/suppressionExtraitDeces")
+	@RequestMapping("/suppressionExtraitDecesParNumeroExtrait")
 	private String supprimerExtraitDeces(Long numExtraitDeces, Model model, String motCle, int page) {
 		try {
 			// Recuperer l'utilisateur connecté
@@ -162,7 +178,7 @@ public class ExtraitDecesPersonneController {
 
 	
 
-	@RequestMapping("/generationExtraitDeces")
+	@RequestMapping("/generationExtraitDecesParNumero")
 	private String creationExtraitNaissance(Long numExtraitDeces, Model model, String motCle, int page) {
 
 		Document document = new Document(PageSize.A4);
@@ -389,7 +405,7 @@ public class ExtraitDecesPersonneController {
 			e.printStackTrace();
 		}
 
-		return "redirect:/consulationExtraitDeces?motCle=" + motCle + "&page=" + page;
+		return "redirect:/consulationExtraitDecesParNumero?motCle=" + motCle + "&page=" + page;
 	}
 
 	
@@ -437,16 +453,15 @@ public class ExtraitDecesPersonneController {
     * @param page
     * @param size
     */
-	private void ChargerExtraitDeces(Model model, String motCle, int page, int size) {
+	private void ChargerExtraitDecesParnumero(Model model, Long numExtraitDeces, int page, int size) {
 		try {
 
-			Page<ExtraitDecesPersonne> listExtraitPage = extraitDecesPersonneImpl.listeParPageExtraitDeces(motCle,
-					page, size);
+			Page<ExtraitDecesPersonne> listExtraitPage = extraitDecesPersonneImpl.listeParPageExtraitParNumExtraitDeces(numExtraitDeces, page, size);
 			model.addAttribute("listextraitPage", listExtraitPage.getContent());
 			int[] pages = new int[listExtraitPage.getTotalPages()];
 			model.addAttribute("pages", pages);
 			model.addAttribute("page", page);
-			model.addAttribute("motCle", motCle);
+			model.addAttribute("numExtraitDeces", numExtraitDeces);
 
 		} catch (Exception e) {
 			model.addAttribute("exception", e);

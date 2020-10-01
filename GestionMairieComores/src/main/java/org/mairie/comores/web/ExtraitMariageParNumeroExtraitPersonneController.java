@@ -76,7 +76,8 @@ public class ExtraitMariageParNumeroExtraitPersonneController {
 
 	@GetMapping("/consulationParNumeroExtraitMariage")
 	public String showFormnumero(Model model, ExtraitMariagePersonne extraitMariage, String operation,
-			Long numExtMariage, String numExtMariagetext, @RequestParam(name = "page", defaultValue = "0") int page,
+			Long numExtMariage, String numExtMariagetext, 
+			@RequestParam(name = "page", defaultValue = "0") int page,
 			@RequestParam(name = "size", defaultValue = "5") int size) {
 
 		if (null != numExtMariagetext) {
