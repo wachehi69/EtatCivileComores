@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<meta charset="utf-8">
+<title>Gestion de l'état civil comorienne</title>
+<link rel="stylesheet" type="text/css"
+	href="../static/bootstrap-3.3.7-dist/Assets/css/bootstrap.min.css"
+	th:href="@{/bootstrap-3.3.7-dist/Assets/css/bootstrap.min.css}" />
+
+<link rel="stylesheet" type="text/css"
+	href="../static/bootstrap-3.3.7-dist/Assets/css/myStyle.css"
+	th:href="@{/bootstrap-3.3.7-dist/Assets/css/myStyle.css}" />
+	
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+  <header >
+     <div style="background: #F0F8FF;" class="navbar navbar-default" >
+        <div class="container-fluid">
+          <ul class="nav navbar-nav pagination">
+           <li><a href="#">Tableau de bord</a></li>
+               <li class="active"><a th:href="@{/employes}">Employe</a></li>
+              <li><a class="dropdown-toggle" data-toggle="dropdown" href="#">Extrait naissance <span class="caret"></span></a>
+	           <ul class="dropdown-menu">
+	          <li><a th:href="@{/extraitNaissance}">Recherche par nom</a></li>
+	          <li><a th:href="@{/extraitNaissanceParNumeroExtrait}">Recherche par num extrait</a></li>
+	         </ul>
+            </li>
+            <li><a class="dropdown-toggle" data-toggle="dropdown" href="#">Extrait de mariage <span class="caret"></span></a>
+	           <ul class="dropdown-menu">
+	          <li><a th:href="@{/extraitMariage}">Recherche par nom</a></li>
+	          <li><a th:href="@{/consulationMariage}">Recherche par num extrait</a></li>
+	         </ul>
+            </li>
+             <li><a class="dropdown-toggle" data-toggle="dropdown" href="#">Extrait de décès <span class="caret"></span></a>
+	           <ul class="dropdown-menu">
+	          <li><a th:href="@{/extraitDeces}">Recherche par nom</a></li>
+	          <li><a th:href="@{/extraitDecesParNumeroExtrait}">Recherche par num extrait</a></li>
+	         </ul>
+            </li>
+             <li><a class="dropdown-toggle" data-toggle="dropdown" href="#">Aut. Parentale de mineur<span class="caret"></span></a>
+	           <ul class="dropdown-menu">
+	          <li><a th:href="@{/PDFExportAutorisationParental}">Autorisation parentale</a></li>
+	          <li><a th:href="@{/PDFExportAttestationParental}">Autorisation p.sortie du territoire</a></li>
+	           <li><a th:href="@{/certficatResidence}">Certificat de residence</a></li>
+	         </ul>
+            </li>
+             
+             <li sec:authorize="hasRole('ROLE_ADMIN')"><a  th:href="@{/gestionUtilisateur}">Gestion utilisateur</a></li>
+             <li><a class="dropdown-toggle" data-toggle="dropdown" href="#">Statistique <span class="caret"></span></a>
+	           <ul class="dropdown-menu">
+	          <li><a th:href="@{/histogrammeBarreParMois}">Nombre de N./Mois</a></li>
+	          <li><a th:href="@{/histogrammeBarreParAn}">Nombre de N./AN</a></li>
+	         </ul>
+            </li>
+             <li class="marge">
+                  	<label class="nav navbar-nav navbar h3"> Système Informatique de Gestion D'état Civil (SIGEC)</label>
+             </li>
+          </ul>
+          
+       <ul class="nav navbar-nav navbar-right">
+         <!-- <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Connecter</a></li> -->
+        <li>
+           <a th:href="@{/login?logout}"><span class="glyphicon glyphicon-log-out"></span>Déconnecter</a>
+       </li>
+      </ul>
+     
+      <div>
+        <ul class="nav navbar-nav navbar-right pagination">
+	        <li>Bonjour : <label class="seperationtitres" th:text="${empl.nomDuSexe}"></label></li>
+	        <li ><label class="seperationtitres" th:text="${empl.nomemp}"></label> </li>
+	        <li><label   th:text="${empl.prenemp}"></label></li><br>
+	        <li>Date du jour: <label class="seperationtitres" th:text="${datejours}"></label></li>
+      </ul> 
+      </div> 
+         </div>
+     </div> 
+  
+  </header>
+  <section layout:fragment="content"> </section>
+	  <footer>
+	     <div class="navbar-fixed-bottom">
+	     <small>Abdoul Madjid ali wachehi</small><br>
+	      <small>@54 rue de tackrouna nantes</small>
+	     </div>
+	  </footer>
+
+</body>
+</html>

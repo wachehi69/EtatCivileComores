@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec="http://www.thymeleaf.org/extras-extras-springsecurity5"
+	layout:decorator=~{template1}>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css"
+	href="../static/bootstrap-3.3.7-dist/Assets/css/bootstrap.min.css"
+	th:href="@{/bootstrap-3.3.7-dist/Assets/css/bootstrap.min.css}" />
+
+<link rel="stylesheet" type="text/css"
+	href="../static/bootstrap-3.3.7-dist/Assets/css/myStyle.css"
+	th:href="@{/bootstrap-3.3.7-dist/Assets/css/myStyle.css}" />
+
+<script type="text/javascript" src="/js/jquery-3.5.1.js"></script>
+<script type="text/javascript" src="/js/monFichierJs.js"></script>
+
+
+</head>
+<body>
+	<div layout:fragment="content">
+		<div class="text-center">
+			<h3 th:text="#{gestionextraimariage.text}"></h3>
+		</div>
+		<div class="col-md-6">
+			<div class="panel panel-primary">
+				<div class="panel-heading"
+					th:text="#{consultationextraitmariage.titre}"></div>
+				<div class="panel-body">
+					<form th:action="@{/consulationExtraitMariage}" method="get">
+						<label th:text="#{label.nommari.consult}"></label> <input
+							type="text" name="motCle" th:value="${motCle}" />
+						<button type="submit" class="btn btn-primary">Ok</button>
+						<div class="text-danger pull-right h4" th:if="${exception}"
+							th:text="${exception.message}"></div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-6">
+			<div class="panel panel-primary" th:if="${listextraitPage}">
+				<div class="panel-heading" th:text="#{ajout.mariage.titre}"></div>
+				<div class="panel-body">
+					<div class="container">
+						<form class="form-inline" th:action="@{/saveExtraitMariage}"
+							th:object="${extraitMariagePersonne}" method="post">
+							
+							<fieldset>
+								<legend id="infIscMar1" class="pointer">0- Informations d'inscription de mariage :</legend>
+								<div style="display: none" id="infIscMar01">
+									<div>
+										<input type="hidden"  name="motCle"           th:value="${motCle}" /> 
+										<input type="hidden"  name="operation"        th:value="${operation}" />
+										<input type="hidden"  name="numExtMariage"    th:value="${extraitMariagePersonne.numExtMariage}"/>
+										<input type="hidden"  name="page"             th:value="${page}" />
+									</div>
+								   	<div>
+										<div class="form-group">
+											<label for="dateJoursetMoisIscriptionMariage"
+												th:text="#{label.datejoursetmoisinscriptionmariage.extrait.ajout}">
+											</label>
+											<div>
+												<input type="text" class="form-control"
+													name="dateJoursetMoisIscriptionMariage"
+													placeholder="Entrer le jour et le mois d'inscription de mariage"
+													th:field="*{dateJoursetMoisIscriptionMariage}" />
+												<p class="alert alert-danger"
+													th:if="${#fields.hasErrors('dateJoursetMoisIscriptionMariage')}"
+													th:errors="*{dateJoursetMoisIscriptionMariage}"></p>
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="dateAnneedeInscriptionMariage"
+											th:text="#{label.dateanneeiscriptionmariage.extrait.ajout}">
+										</label>
+										<div>
+											<input type="text" class="form-control"
+												name="dateAnneedeInscriptionMariage"
+												placeholder="Entrer l'année d'inscription du mariage"
+												th:field="*{dateAnneedeInscriptionMariage}" />
+											<p class="alert alert-danger"
+												th:if="${#fields.hasErrors('dateAnneedeInscriptionMariage')}"
+												th:errors="*{dateAnneedeInscriptionMariage}"></p>
+										</div>
+									</div>
+									<div>
+										<div class="form-group">
+											<label for="heureInscriptionMariage"
+												th:text="#{label.heureinscriptionmariage.extrait.ajout}"></label>
+											<div>
+												<input type="text" class="form-control"
+													name="heureInscriptionMariage"
+													placeholder="Entrer heure d'inscription de mariage"
+													th:field="*{heureInscriptionMariage}" />
+												<p class="alert alert-danger"
+													th:if="${#fields.hasErrors('heureInscriptionMariage')}"
+													th:errors="*{heureInscriptionMariage}"></p>
+											</div>
+										</div>
+										<div>
+											<div class="form-group">
+												<label for="minuteInscriptionMariage"
+													th:text="#{label.minuteinscriptionmariage.extrait.ajout}"></label>
+												<div>
+													<input type="text" class="form-control"
+														name="minuteInscriptionMariage"
+														placeholder="Entrer les minutes"
+														th:field="*{minuteInscriptionMariage}" />
+													<p class="alert alert-danger"
+														th:if="${#fields.hasErrors('minuteInscriptionMariage')}"
+														th:errors="*{minuteInscriptionMariage}"></p>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="communeInscriptionMariage"
+											th:text="#{label.communeinscriptionmariage.extrait.ajout}"></label>
+										<div>
+											<input type="text" class="form-control"
+												name="communeInscriptionMariage"
+												placeholder="Entrer commune d'inscription du mariage"
+												th:field="*{communeInscriptionMariage}" />
+											<p class="alert alert-danger"
+												th:if="${#fields.hasErrors('communeInscriptionMariage')}"
+												th:errors="*{communeInscriptionMariage}"></p>
+										</div>
+									</div>
+								<div>	
+									<div class="form-group">
+										<label for="ileInscriptionMariage"
+											th:text="#{label.ileinscriptionmari.extrait.ajout}"></label>
+										  <div> 
+											<input type="text" class="form-control"
+												name="ileInscriptionMariage"
+												placeholder="Entrer 'île d'inscription du mariage"
+												th:field="*{ileInscriptionMariage}" />
+											<p class="alert alert-danger"
+												th:if="${#fields.hasErrors('ileInscriptionMariage')}"
+												th:errors="*{ileInscriptionMariage}"></p>
+										</div>
+									</div>
+									</div>
+									<div class="form-group">
+						                <label for="dateCelebration" 
+						                           th:text="#{label.datecelebrationariage.extrait.ajout}"></label>
+						              <div>           
+						                <div class="input-group.date">
+						                    <input type="text" class="form-control" 
+						                     name="dateCelebration"
+						                     placeholder="JJ/MM/AAAA"
+						                     id="dateCelebration"  th:field="*{dateCelebration}"/>
+						                     <p class="alert alert-danger"
+												th:if="${#fields.hasErrors('dateCelebration')}"
+												th:errors="*{dateCelebration}"></p>
+						                     
+						                    <!-- <div class="input-group-append">
+						                        <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+						                    </div> -->
+								</div>
+							</div>
+							  </div>
+							  </div>
+							</fieldset>
+							<fieldset>
+								<legend id="infMar1" class="pointer">1- Informations de
+									mariage pour le mari:</legend>
+
+								<div style="display: none" id="infMar01">
+									<div class="form-group">
+										<label for="numRegistre"
+											th:text="#{label.numregistre.extraitMariage.ajout}"></label>
+										<div>
+											<input type="text" class="form-control" name="numRegistre"
+												placeholder="Entrer le numero du registre"
+												th:field="*{numRegistre}" />
+											<p class="alert alert-danger"
+												th:if="${#fields.hasErrors('numRegistre')}"
+												th:errors="*{numRegistre}"></p>
+										</div>
+									</div>
+									<div>
+										<div class="form-group">
+									<label for="nomMari" th:text="#{label.nommari.extrait.ajout}">
+									</label>
+									<div>
+										<input type="text" class="form-control" name="nomMari"
+											placeholder="Entrer le nom" th:field="*{nomMari}" />
+										<p class="alert alert-danger" th:if="${#fields.hasErrors('nomMari')}"
+											th:errors="*{nomMari}"></p>
+									</div>
+								</div>
+										
+									</div>
+									<div>
+										<div class="form-group">
+											<label for="prenomMari"
+												th:text="#{label.prenommari.extrait.ajout}"></label>
+											<div>
+												<input type="text" class="form-control" name="prenomMari"
+													placeholder="Entrer pr&eacute;nom" th:field="*{prenomMari}" />
+												<p class="alert alert-danger"
+													th:if="${#fields.hasErrors('prenomMari')}"
+													th:errors="*{prenomMari}"></p>
+											</div>
+										</div>
+									</div>
+									<div>
+										<div class="form-group">
+											<label for="dateJoursetMoisNaissanceMari"
+												th:text="#{label.datejoursetmoisnaissancemari.extrait.ajout}">
+											</label>
+											<div>
+												<input type="text" class="form-control"
+													name="dateJoursetMoisNaissanceMari"
+													placeholder="Entrer le jour et le mois de naissance"
+													th:field="*{dateJoursetMoisNaissanceMari}" />
+												<p class="alert alert-danger"
+													th:if="${#fields.hasErrors('dateJoursetMoisNaissanceMari')}"
+													th:errors="*{dateJoursetMoisNaissanceMari}"></p>
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="dateAnneedeNaissanceMari"
+											th:text="#{label.dateanneedenaissancemari.extrait.ajout}">
+										</label>
+										<div>
+											<input type="text" class="form-control"
+												name="dateAnneedeNaissanceMari"
+												placeholder="Entrer l'année de naissance"
+												th:field="*{dateAnneedeNaissanceMari}" />
+											<p class="alert alert-danger"
+												th:if="${#fields.hasErrors('dateAnneedeNaissanceMari')}"
+												th:errors="*{dateAnneedeNaissanceMari}"></p>
+										</div>
+									</div>
+						           <div>
+									<div class="form-group">
+										<label for="communeNaissanceMari"
+											th:text="#{label.communenaissancemari.extrait.ajout}"></label>
+										<div>
+											<input type="text" class="form-control"
+												name="communeNaissanceMari"
+												placeholder="Entrer commune de naissance"
+												th:field="*{communeNaissanceMari}" />
+											<p class="alert alert-danger"
+												th:if="${#fields.hasErrors('communeNaissanceMari')}"
+												th:errors="*{communeNaissanceMari}"></p>
+										</div>
+									</div>
+									</div>
+								<div>	
+									<div class="form-group">
+										<label for="professionMari"
+											th:text="#{label.professionmari.extrait.ajout}"></label>
+										  <div> 
+											<input type="text" class="form-control"
+												name="professionMari"
+												placeholder="Entrer la profession du mari"
+												th:field="*{professionMari}" />
+											<p class="alert alert-danger"
+												th:if="${#fields.hasErrors('professionMari')}"
+												th:errors="*{professionMari}"></p>
+										</div>
+									</div>
+									</div>
+									<div>
+									<div class="form-group">
+										<label for="adressMari"
+											th:text="#{label.adressemari.extrait.ajout}"></label>
+										<div>
+											<input type="text" class="form-control"
+												name="adressMari"
+												placeholder="Entrer l'adresse du mari"
+												th:field="*{adressMari}" />
+											<p class="alert alert-danger"
+												th:if="${#fields.hasErrors('adressMari')}"
+												th:errors="*{adressMari}"></p>
+									  </div>	
+									</div>
+								 </div>
+								</div>
+							</fieldset>
+							<fieldset>
+								<legend id="infMar2" class="pointer">2- Informations de
+									mariage pour la mariée:</legend>
+
+								<div style="display: none" id="infMar02">
+									<div>
+										<div class="form-group">
+											<label for="nomMarie"
+												th:text="#{label.nommarie.extrait.ajout}"> </label>
+											<div>
+												<input type="text" class="form-control" name="nomMarie"
+													placeholder="Entrer le nom" th:field="*{nomMarie}" />
+												<p class="alert alert-danger"
+													th:if="${#fields.hasErrors('nomMarie')}"
+													th:errors="*{nomMarie}"></p>
+											</div>
+										</div>
+									</div>
+									<div>
+										<div class="form-group">
+											<label for="prenomMarie"
+												th:text="#{label.prenommari.extrait.ajout}"></label>
+											<div>
+												<input type="text" class="form-control" name="prenomMarie"
+													placeholder="Entrer pr&eacute;nom" th:field="*{prenomMarie}" />
+												<p class="alert alert-danger"
+													th:if="${#fields.hasErrors('prenomMarie')}"
+													th:errors="*{prenomMarie}"></p>
+											</div>
+										</div>
+									</div>
+									<div>
+										<div class="form-group">
+											<label for="dateJoursetMoisNaissanceMarie"
+												th:text="#{label.datejoursetmoisnaissancemari.extrait.ajout}">
+											</label>
+											<div>
+												<input type="text" class="form-control"
+													name="dateJoursetMoisNaissanceMarie"
+													placeholder="Entrer le jour et le mois de naissance"
+													th:field="*{dateJoursetMoisNaissanceMarie}" />
+												<p class="alert alert-danger"
+													th:if="${#fields.hasErrors('dateJoursetMoisNaissanceMarie')}"
+													th:errors="*{dateJoursetMoisNaissanceMarie}"></p>
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="dateAnneedeNaissanceMarie"
+											th:text="#{label.dateanneedenaissancemari.extrait.ajout}">
+										</label>
+										<div>
+											<input type="text" class="form-control"
+												name="dateAnneedeNaissanceMarie"
+												placeholder="Entrer l'année de naissance"
+												th:field="*{dateAnneedeNaissanceMarie}" />
+											<p class="alert alert-danger"
+												th:if="${#fields.hasErrors('dateAnneedeNaissanceMarie')}"
+												th:errors="*{dateAnneedeNaissanceMarie}"></p>
+										</div>
+									</div>
+									<div>									
+									<div class="form-group">
+										<label for="communeNaissanceMarie"
+											th:text="#{label.communenaissancemari.extrait.ajout}"></label>
+										<div>
+											<input type="text" class="form-control"
+												name="communeNaissanceMarie"
+												placeholder="Entrer commune de naissance"
+												th:field="*{communeNaissanceMarie}" />
+											<p class="alert alert-danger"
+												th:if="${#fields.hasErrors('communeNaissanceMarie')}"
+												th:errors="*{communeNaissanceMarie}"></p>
+										</div>
+									</div>
+									</div>
+									<div>
+									<div class="form-group">
+										<label for="professionMarie"
+											th:text="#{label.professionmari.extrait.ajout}"></label>
+										<div>
+											<input type="text" class="form-control"
+												name="professionMarie"
+												placeholder="Entrer commune de naissance"
+												th:field="*{professionMarie}" />
+											<p class="alert alert-danger"
+												th:if="${#fields.hasErrors('professionMarie')}"
+												th:errors="*{professionMarie}"></p>
+										</div>
+									</div>
+									</div>
+									<div>
+									<div class="form-group">
+										<label for="adressMarie"
+											th:text="#{label.adressemari.extrait.ajout}"></label>
+										<div>
+												<input type="text" class="form-control"
+												name="adressMarie"
+												placeholder="Entrer l'adresse du mari"
+												th:field="*{adressMarie}" />
+											<p class="alert alert-danger"
+												th:if="${#fields.hasErrors('adressMarie')}"
+												th:errors="*{adressMarie}"></p>
+										
+									</div>
+								 </div>
+								</div>
+								</div>
+							</fieldset>
+							<fieldset>
+								<legend id="infPereMari2" class="pointer">3- Informations
+									du père de Mari :</legend>
+								<div style="display: none" id="infPereMari02">
+									<div class="form-group">
+										<label for="nomDuPereMari"
+											th:text="#{label.nomduperemari.extrait.ajout}"> </label>
+										<div>
+											<input type="text" class="form-control" name="nomDuPereMari"
+												placeholder="Entrer le nom du père"
+												th:field="*{nomDuPereMari}" />
+											<p class="alert alert-danger"
+												th:if="${#fields.hasErrors('nomDuPereMari')}"
+												th:errors="*{nomDuPereMari}"></p>
+										</div>
+									</div>
+									<div>
+									<div class="form-group">
+										<label for="prenomDuPereMari"
+											th:text="#{label.prenomduperemari.extrait.ajout}"> </label>
+										<div>
+											<input type="text" class="form-control" name="prenomDuPereMari"
+												placeholder="Entrer le nom du père"
+												th:field="*{prenomDuPereMari}" />
+											<p class="alert alert-danger"
+												th:if="${#fields.hasErrors('prenomDuPereMari')}"
+												th:errors="*{prenomDuPereMari}"></p>
+										</div>
+									</div>
+									</div>
+									
+								</div>
+							</fieldset>
+							<fieldset>
+								<legend id="infPereMarie2" class="pointer">4- Informations
+									du père de la Mariée :</legend>
+								<div style="display: none" id="infPereMarie02">
+									<div class="form-group">
+										<label for="nomDuPereMarie"
+											th:text="#{label.nomduperemari.extrait.ajout}"> </label>
+										<div>
+											<input type="text" class="form-control" name="nomDuPereMarie"
+												placeholder="Entrer le nom du père"
+												th:field="*{nomDuPereMarie}" />
+											<p class="alert alert-danger"
+												th:if="${#fields.hasErrors('nomDuPereMarie')}"
+												th:errors="*{nomDuPereMarie}"></p>
+										</div>
+									</div>
+									<div>
+										<div class="form-group">
+											<label for="prenomDuPereMarie"
+												th:text="#{label.prenomduperemari.extrait.ajout}"></label>
+											<div>
+												<input type="text" class="form-control"
+													name="prenomDuPereMarie"
+													placeholder="Entrer pr&eacute;nom du père"
+													th:field="*{prenomDuPereMarie}" />
+												<p class="alert alert-danger"
+													th:if="${#fields.hasErrors('prenomDuPereMarie')}"
+													th:errors="*{prenomDuPereMarie}"></p>
+											</div>
+										</div>
+									</div>
+								</div>
+							</fieldset>
+							<fieldset>
+								<legend id="infMeremari3" class="pointer">5- Informations
+									pour la mère du mari :</legend>
+								<div style="display: none" id="infMeremari03">
+									<div class="form-group">
+										<label for="nomDuMereMari"
+											th:text="#{label.nomdumeremari.extrait.ajout}"> </label>
+										<div>
+											<input type="text" class="form-control" name="nomDuMereMari"
+												placeholder="Entrer le nom du mère"
+												th:field="*{nomDuMereMari}" />
+											<p class="alert alert-danger"
+												th:if="${#fields.hasErrors('nomDuMereMari')}"
+												th:errors="*{nomDuMereMari}"></p>
+										</div>
+									</div>
+									<div>
+										<div class="form-group">
+											<label for="prenomDuMereMari"
+												th:text="#{label.prenomdumere.extrait.ajout}"></label>
+											<div>
+												<input type="text" class="form-control"
+													name="prenomDuMereMari"
+													placeholder="Entrer pr&eacute;nom du mère"
+													th:field="*{prenomDuMereMari}" />
+												<p class="alert alert-danger"
+													th:if="${#fields.hasErrors('prenomDuMereMari')}"
+													th:errors="*{prenomDuMereMari}"></p>
+											</div>
+										</div>
+									</div>
+								</div>
+							</fieldset>
+						    <fieldset>
+								<legend id="infMeremarie3" class="pointer">6- Informations
+									pour la mère de la marié :</legend>
+								<div style="display: none" id="infMeremarie03">
+									<div class="form-group">
+										<label for="nomDuMereMarie"
+											th:text="#{label.nomdumeremari.extrait.ajout}"> </label>
+										<div>
+											<input type="text" class="form-control" name="nomDuMereMarie"
+												placeholder="Entrer le nom du mère"
+												th:field="*{nomDuMereMarie}" />
+											<p class="alert alert-danger"
+												th:if="${#fields.hasErrors('nomDuMereMarie')}"
+												th:errors="*{nomDuMereMarie}"></p>
+										</div>
+									</div>
+									<div>
+										<div class="form-group">
+											<label for="prenomDuMereMarie"
+												th:text="#{label.prenomdumere.extrait.ajout}"></label>
+											<div>
+												<input type="text" class="form-control"
+													name="prenomDuMereMarie"
+													placeholder="Entrer pr&eacute;nom du mère"
+													th:field="*{prenomDuMereMarie}" />
+												<p class="alert alert-danger"
+													th:if="${#fields.hasErrors('prenomDuMereMarie')}"
+													th:errors="*{prenomDuMereMarie}"></p>
+											</div>
+										</div>
+									</div>
+									</div>
+							</fieldset>
+						    <fieldset>
+								<legend id="infMarTem2" class="pointer">7- Informations
+									pour le temoin du mari:</legend>
+
+								<div style="display: none" id="infMarTem02">
+									<div>
+										<div class="form-group">
+											<label for="nomTemoinMari"
+												th:text="#{label.nomtemoin.extrait.ajout}"> </label>
+											<div>
+												<input type="text" class="form-control" name="nomTemoinMari"
+													placeholder="Entrer le nom du témoin" th:field="*{nomTemoinMari}" />
+												<p class="alert alert-danger"
+													th:if="${#fields.hasErrors('nomTemoinMari')}"
+													th:errors="*{nomTemoinMari}"></p>
+											</div>
+										</div>
+									</div>
+									<div>
+										<div class="form-group">
+											<label for="prenomTemoinMari"
+												th:text="#{label.prenommari.extrait.ajout}"></label>
+											<div>
+												<input type="text" class="form-control"
+													name="prenomTemoinMari" placeholder="Entrer pr&eacute;nom"
+													th:field="*{prenomTemoinMari}" />
+												<p class="alert alert-danger"
+													th:if="${#fields.hasErrors('prenomTemoinMari')}"
+													th:errors="*{prenomTemoinMari}"></p>
+											</div>
+										</div>
+									</div>
+									<div>
+										<div class="form-group">
+											<label for="ageTemoinMari"
+												th:text="#{label.agetemoinmari.extrait.ajout}">
+											</label>
+											<div>
+												<input type="text" class="form-control"
+													name="ageTemoinMari"
+													placeholder="Entrer l'âge du témoin de la marié"
+													th:field="*{ageTemoinMari}" />
+												<p class="alert alert-danger"
+													th:if="${#fields.hasErrors('ageTemoinMari')}"
+													th:errors="*{ageTemoinMari}"></p>
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="professionTemoinMari"
+											th:text="#{label.professiondutemoin.extrait.ajout}"></label>
+										<div>
+											<input type="text" class="form-control"
+												name="professionTemoinMari"
+												placeholder="Entrer la profession du témoin"
+												th:field="*{professionTemoinMari}" />
+											<p class="alert alert-danger"
+												th:if="${#fields.hasErrors('professionTemoinMari')}"
+												th:errors="*{professionTemoinMari}"></p>
+										</div>
+									</div>
+									<div>
+										<div class="form-group">
+											<label for="adresseTemoinMari"
+												th:text="#{label.adresseTemoindumere.extrait.ajout}"></label>
+											<div>
+												<input type="text" class="form-control"
+													name="adresseTemoinMari"
+													placeholder="Entrer l'adresse du témoin"
+													th:field="*{adresseTemoinMari}" />
+												<p class="alert alert-danger"
+													th:if="${#fields.hasErrors('adresseTemoinMari')}"
+													th:errors="*{adresseTemoinMari}"></p>
+											</div>
+										</div>
+									</div>
+								</div>
+							</fieldset>
+						    <fieldset>
+								<legend id="infMarTemMarie2" class="pointer">8- Informations
+									pour le temoin de la marié:</legend>
+
+								<div style="display: none" id="infMarTemMarie02">
+									<div>
+										<div class="form-group">
+											<label for="nomTemoinMarie"
+												th:text="#{label.nomtemoin.extrait.ajout}"> </label>
+											<div>
+												<input type="text" class="form-control" name="nomTemoinMarie"
+													placeholder="Entrer le nom du témoin" th:field="*{nomTemoinMarie}" />
+												<p class="alert alert-danger"
+													th:if="${#fields.hasErrors('nomTemoinMarie')}"
+													th:errors="*{nomTemoinMarie}"></p>
+											</div>
+										</div>
+									</div>
+									<div>
+										<div class="form-group">
+											<label for="prenomTemoinMarie"
+												th:text="#{label.prenommari.extrait.ajout}"></label>
+											<div>
+												<input type="text" class="form-control"
+													name="prenomTemoinMarie" placeholder="Entrer pr&eacute;nom"
+													th:field="*{prenomTemoinMarie}" />
+												<p class="alert alert-danger"
+													th:if="${#fields.hasErrors('prenomTemoinMarie')}"
+													th:errors="*{prenomTemoinMarie}"></p>
+											</div>
+										</div>
+									</div>
+									<div>
+										<div class="form-group">
+											<label for="ageTemoinMarie"
+												th:text="#{label.agetemoinmari.extrait.ajout}">
+											</label>
+											<div>
+												<input type="text" class="form-control"
+													name="ageTemoinMarie"
+													placeholder="Entrer l'âge du témoin de la marié"
+													th:field="*{ageTemoinMarie}" />
+												<p class="alert alert-danger"
+													th:if="${#fields.hasErrors('ageTemoinMarie')}"
+													th:errors="*{ageTemoinMarie}"></p>
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="professionTemoinMarie"
+											th:text="#{label.professiondutemoin.extrait.ajout}"></label>
+										<div>
+											<input type="text" class="form-control"
+												name="professionTemoinMarie"
+												placeholder="Entrer la profession du témoin"
+												th:field="*{professionTemoinMarie}" />
+											<p class="alert alert-danger"
+												th:if="${#fields.hasErrors('professionTemoinMarie')}"
+												th:errors="*{professionTemoinMarie}"></p>
+										</div>
+									</div>
+									<div>
+										<div class="form-group">
+											<label for="adresseTemoinMarie"
+												th:text="#{label.adresseTemoindumere.extrait.ajout}"></label>
+											<div>
+												<input type="text" class="form-control"
+													name="adresseTemoinMarie"
+													placeholder="Entrer l'adresse du témoin"
+													th:field="*{adresseTemoinMarie}" />
+												<p class="alert alert-danger"
+													th:if="${#fields.hasErrors('adresseTemoinMarie')}"
+													th:errors="*{adresseTemoinMarie}"></p>
+											</div>
+										</div>
+									</div>
+								</div>
+							</fieldset>
+							<fieldset>
+							<legend id="infDeclaMariage1" class="pointer">9- Déclarations :</legend>
+							<div style="display: none" id="infDeclaMariage01">
+								<div>
+									<div class="form-group">
+										<div>
+											<label for="declarationFaitePar"
+												th:text="#{label.declarationfaitepar.extrait.ajout}"></label>
+										</div>
+										<textarea name="declarationFaitePar" rows="4" cols="80"
+											class="form-control"
+											placeholder="Entrer la déclaration"
+											th:field="*{declarationFaitePar}"></textarea>
+											<p class="alert alert-danger"
+													th:if="${#fields.hasErrors('declarationFaitePar')}"
+													th:errors="*{declarationFaitePar}"></p>
+									</div>
+								</div>
+								<div>
+									<div class="form-group">
+										<div>
+											<label for="declarationRecueParnous"
+												th:text="#{label.declarationrecueparnous.extrait.ajout}"></label>
+										</div>
+										<textarea name="declarationRecueParnous" rows="4" cols="80"
+											class="form-control"
+											placeholder="Entrer la déclaration reçue par nous"
+											th:field="*{declarationRecueParnous}"></textarea>
+											<p class="alert alert-danger"
+													th:if="${#fields.hasErrors('declarationRecueParnous')}"
+													th:errors="*{declarationRecueParnous}"></p>
+									</div>
+								</div>
+							</div>
+						</fieldset>
+
+							<div>
+						        <button   th:if="${etat}"      type="submit"      class="btn btn-primary">Modifier</button>
+						        <button   th:if="${etat}"      type="submit"      name="action"  th:value="annuler"  class="btn btn-primary">Annuler</button>
+						      
+	                            <button  th:unless="${etat}"  type="submit"      class="btn btn-primary">Création</button>
+	                            <button  th:unless="${etat}"  type="reset"       class="btn btn-primary">reset</button>
+
+						   </div>
+							
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-6"></div>
+		<div class="col-md-6">
+			<div class="panel panel-primary"  th:if="${listextraitPage}">
+				<div class="panel-heading"
+					th:text="#{information.extraitmariage.titre}"></div>
+				<div class="panel-body">
+				<table class="table table-striped table-condensed table-hover">
+						<tr class="info">
+						    <th th:text="#{information.extraitmariage.numextrait}"></th>
+							<th th:text="#{information.extraitmariage.nomMari}"></th>
+							<th th:text="#{information.extraitmariage.nomMarie}"></th>
+							<th th:text="#{information.extrait.datecreation}"></th>
+							<th th:text="#{information.extraitmariage.datemodification}"></th>
+							<th th:text="#{information.extraitmariage.nomutilisateur}"></th>
+							<th th:text="#{information.supp}"  sec:authorize="hasRole('ROLE_ADMIN')"></th>
+							<th th:text="#{information.modif}" sec:authorize="hasRole('ROLE_ADMIN')"></th>
+							<th th:text="#{information.edit}"></th>
+							<th th:text="#{information.export}"></th>
+						</tr>
+						<tr th:each="extraitM:${listextraitPage}">
+						    <td th:text="${extraitM.numExtMariage}" />
+							<td th:text="${extraitM.nomMari}" /> 
+							<td th:text="${extraitM.nomMarie}" />
+							<td	th:text="${#dates.format(extraitM.dateCreation,'dd-MM-yyyy')}" /> 
+							<td	th:text="${#dates.format(extraitM.dateModification,'dd-MM-yyyy')}" />
+							<td th:text="${extraitM.user.employe}" />
+							<td sec:authorize="hasRole('ROLE_ADMIN')"><a
+								th:href="@{/suppressionExtraitMariage(numExtMariage=${extraitM.numExtMariage},motCle=${motCle},page=${page})}" onclick="return(confirm('Etes-vous sûr de vouloir supprimer cet extrait ?'));"
+								th:text="supp"></a></td>
+							 <td sec:authorize="hasRole('ROLE_ADMIN')"><a
+								th:href="@{/consulationExtraitMariage(numExtMariage=${extraitM.numExtMariage},motCle=${motCle}, operation=modif, page=${page})}"
+								th:text="modif"></a></td> 
+								<td><a
+								th:href="@{/generationExtraitMariage(numExtMariage=${extraitM.numExtMariage},motCle=${motCle}, page=${page})}"
+								th:text="générer"></a></td> 
+								<td><a
+								th:href="@{/PDFExportExtraitMariage(numExtMariage=${extraitM.numExtMariage})}"
+								th:text="editer"></a></td>
+ 						</tr>
+					</table>
+					
+						<div class="container" th:if="${pages.length>1}">
+							<ul class="nav nav-pills">
+								<li th:each="p,status:${pages}"><a
+								th:href="@{/consulationExtraitMariage(motCle=${motCle},page=${status.index})}"
+								th:text="${status.index}"></a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+	
+	
+</body>
+</html>

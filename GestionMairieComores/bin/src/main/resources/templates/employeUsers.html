@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec="http://www.thymeleaf.org/extras-extras-springsecurity5"
+	layout:decorator=~{template1}>
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css"
+	href="../static/bootstrap-3.3.7-dist/Assets/css/bootstrap.min.css"
+	th:href="@{/bootstrap-3.3.7-dist/Assets/css/bootstrap.min.css}" />
+
+<link rel="stylesheet" type="text/css" href="../static/css/myStyle.css"
+	th:href="@{/css/myStyle.css}" />
+</head>
+<body>
+  <div layout:fragment="content">
+  <div class="text-center">
+		<h3 th:text="#{gestionutilisateur.text}"></h3>
+	</div>
+	<div class="col-md-6">
+			 <div class="panel panel-primary">
+				<div class="panel-heading" th:text="#{consultationutilisateur.titre}"></div>
+				<div class="panel-body">
+					<form th:action="@{/consulationUtilisateur}"    method="get">
+						<label th:text="#{label.nom.utilisateur.consult}"></label> <input type="text" name="motCle"
+							th:value="${motCle}" />
+						<button type="submit" class="btn btn-primary">Ok</button>
+						<div class="text-danger pull-right h4" th:if="${exception}" th:text="${exception.message}"></div>
+					</form>
+				</div>
+			</div>
+		</div>
+	    <div class="col-md-6">
+	       <div class="panel panel-primary"  th:if=${listUserEmpl}>
+              <div class="panel-heading">Création d'un nouveau utilisateur</div>     	      
+	           <div class="panel-body">
+	             <div class="container">
+	             
+	           
+	              <form class="form-inline" th:action="@{/creationNouveauUtilisateur}" th:object="${employeUsers}" method="post">
+	                  
+	                    <fieldset>    
+	                           <legend>Informations personnelles :</legend>   
+	                          
+	                             <input type="hidden"   name="motCle"     th:value="${motCle}" />
+	                             <input type="hidden"   name="etat"       th:value= "${etat}"/>
+	                          	 <input type="hidden"   name="operation"  th:value="${operation}" />  
+	                          	                            
+	                            	<div class="form-group">
+								    <div>
+								      <input 	type="radio"  name="nomDuSexe"       th:value="Monsieur" 	 th:field="*{nomDuSexe}"  checked="checked" /> 
+								      <label for="nomDuSexe" th:text="#{label.monsieur.employe.ajout}"></label> 
+								      <input type="radio" name="nomDuSexe"        th:value="Madame"       th:field="*{nomDuSexe}"/>
+								      <label for="nomDuSexe" th:text="#{label.madame.employe.ajout}"></label>
+								        <p class="alert alert-danger" th:if="${#fields.hasErrors('nomDuSexe')}" th:errors="*{nomDuSexe}"></p>
+								     </div>
+								 </div>
+								<div> 
+	                            <div class="form-group">  
+								      <label  for="nomemp" th:text="#{label.nom.employe.ajout}"> </label>
+								     <div>
+									    <input type="text" class="form-control" name="nomemp" placeholder="Entrer le nom" th:field="*{nomemp}" />
+									    <p class="alert alert-danger" th:if="${#fields.hasErrors('nomemp')}" th:errors="*{nomemp}"></p>
+									</div>
+								</div>
+								</div>
+								<div class="form-group">
+									<label for="prenemp" th:text="#{label.prenom.employe.ajout}"></label>
+									 <div>
+									   <input type="text" class="form-control" name="prenemp" placeholder="Entrer pr&eacute;nom" th:field="*{prenemp}"  />
+									   <p class="alert alert-danger" th:if="${#fields.hasErrors('prenemp')}" th:errors="*{prenemp}"></p> 
+									 </div>
+								</div>
+						</fieldset>   
+						  <fieldset>
+						        <legend>Informations d'identification :</legend>
+							<div>	
+								<div class="form-group">
+								   <div>
+									<label for="username" th:text="#{label.username.employe.ajout}"></label>
+									    <label th:if="${etat}"  th:text="${employeUsers.username}"></label>
+									    <input th:if="${etat}"  type="hidden" class="form-control" name="username"  th:field="*{username}"/>
+									 </div>   
+									 <div  th:unless="${etat}">
+									   <input type="text" class="form-control" name="username" placeholder="Entrer votre username" th:field="*{username}"  />
+									   <p class="alert alert-danger" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></p> 
+									 </div>
+								</div>	
+								</div>
+								<div>	
+								<div class="form-group">
+									<label for="password" th:text="#{label.password.employe.ajout}"></label>
+									 <div>
+									   <input type="text" class="form-control" name="password" placeholder="Entrer votre password" th:field="*{password}"  />
+									   <p class="alert alert-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p> 
+									 </div>
+								</div>	
+							</div>
+						</fieldset>
+						<fieldset>
+						         <legend>Informations roles:</legend>  
+								<div class="form-group">
+								    <div>
+								      <input 	type="checkbox"  name="admin"       th:value="ADMIN" 	 th:field="*{roles}"  checked="checked" /> 
+								      <label for="admin" th:text="#{label.admin.employe.ajout}"></label> 
+								      
+								      <input type="checkbox" name="user"        th:value="USER"       th:field="*{roles}"/>
+								      <label for="user" th:text="#{label.user.employe.ajout}"></label>
+								        <p class="alert alert-danger" th:if="${#fields.hasErrors('roles')}" th:errors="*{roles}"></p>
+								     </div>
+								 </div>
+						 </fieldset>
+						 <fieldset>
+						              <legend>Activation</legend>
+						 
+					              <input 	type="checkbox"  name="active"    	 th:field="*{active}"  checked="checked" /> 
+								      <label for="active" th:text="#{label.active.employe.ajout}"></label> 
+								      
+						 </fieldset>
+						   <div style="color:red"   th:text="${#httpServletRequest.getParameter('error')}"></div>
+						   <div>
+						      <button   th:if="${etat}"      type="submit"      class="btn btn-primary">Modifier</button>
+						      <button   th:if="${etat}"      type="submit"      name="action"  th:value="annuler"  class="btn btn-primary">Annuler</button>
+						      
+	                            <button  th:unless="${etat}"  type="submit"      class="btn btn-primary">Création</button>
+	                            <button  th:unless="${etat}"  type="reset"       class="btn btn-primary">reset</button>
+	                       </div>
+	               </form>
+	             
+	             </div>
+	           </div>
+	      </div>
+	    </div>
+	    <div class="col-md-6">
+	    </div>
+	    <div class="col-md-6">
+	       <div class="panel panel-primary" th:if=${listUserEmpl}>
+	         <div class="panel-heading">Affichage des utilisateurs</div>
+	         <div class="panel-body">
+	         <table class="table table-striped table-condensed table-hover">
+	         <tr class="info">
+							<th>Civilité</th>
+							<th>Nom</th>
+							<th>Prénom</th>
+							<th>User</th>
+							<th>Mot de passe</th>
+							<th>Role </th>
+							<th>Active</th>
+							<th>Supp</th>
+							<th>Modif</th>
+						</tr>
+						
+				<tr th:each="user:${listUserEmpl}">
+				    <td th:text="${user.nomDuSexe}"></td>
+				    <td th:text="${user.nomemp}"></td>
+				    <td th:text="${user.prenemp}"></td>
+				    <td th:text="${user.username}"></td>
+				    <td th:text="${user.password}"></td>
+				    <td th:text="${user.roles}"></td>
+				    <td th:text="${user.active}"></td>
+				    <td> <a th:href="@{/suppressionUsers(username=${user.username},motCle=${motCle})}" onclick="return(confirm('Etes-vous sûr de vouloir supprimer cet utilisateur ?'));"
+								th:text="supp"></a></td>
+							<td><a
+								th:href="@{/consulationUtilisateur(username=${user.username},motCle=${motCle},operation=modif)}"
+								th:text="modif"></a></td>
+				    
+				</tr>
+	         </table>
+	         
+	         </div>
+	       </div>
+	    </div>
+	    
+	
+  </div>
+</body>
+</html>

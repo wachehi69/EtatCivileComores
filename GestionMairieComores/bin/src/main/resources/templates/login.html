@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8" />
+<title>Authentification</title>
+<link rel="stylesheet" type="text/css"
+	href="../static/bootstrap-3.3.7-dist/Assets/css/bootstrap.min.css"
+	th:href="@{/bootstrap-3.3.7-dist/Assets/css/bootstrap.min.css}" />
+
+<link rel="stylesheet" type="text/css"
+	href="../static/bootstrap-3.3.7-dist/Assets/css/myStyle.css"
+	th:href="@{/bootstrap-3.3.7-dist/Assets/css/myStyle.css}" />
+
+</head>
+<body>
+	<div class="col-md-4  col-md-offset-3 spacer40">
+		<div class="panel panel-primary">
+			<div class="panel-heading" th:text="#{login.titre}"></div>
+			<div class="panel-body">
+
+				<div th:if="${param.error}"
+					class="text-danger"  th:text="#{login.password.Incorrect.error}"></div>
+					
+				<form  th:action="@{/login}" method="post">
+					<div>
+						<label>Username</label> <input type="text" name="username" />
+					</div>
+					<div>
+						<label>Password</label> <input type="password" name="password" />
+					</div>
+					<button type="submit">login</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

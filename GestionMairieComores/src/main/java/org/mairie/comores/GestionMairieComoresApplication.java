@@ -10,11 +10,15 @@ import java.util.Optional;
 import java.util.Set;
 
 import org.mairie.comores.dao.EmployeRepository;
+import org.mairie.comores.dao.ExtraitNaissancePersonneRepository;
 import org.mairie.comores.dao.UserRepository;
 import org.mairie.comores.entities.Employe;
 import org.mairie.comores.entities.EmployeUsers;
+import org.mairie.comores.entities.ExtraitNaissancePersonne;
 import org.mairie.comores.entities.Roles;
 import org.mairie.comores.entities.Users;
+import org.mairie.comores.metier.IEmployeMetier;
+import org.mairie.comores.metier.UserMetierImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -29,6 +33,10 @@ public class GestionMairieComoresApplication implements CommandLineRunner {
 
 	@Autowired
 	private UserRepository userRepository;
+	
+	@Autowired
+	private ExtraitNaissancePersonneRepository extraitNaissanceRepository;
+	
 
 	List<EmployeUsers> listEmplUsers = new ArrayList<EmployeUsers>();
 
@@ -40,10 +48,12 @@ public class GestionMairieComoresApplication implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 		
           
-	/*	SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
-		try {
+	/*	try {
+			// Ajouter un employé en base
 			AjoutEmploye(dateFormat);
+			// affichage des employés
 			getAffichageEmploye();
 
 		} catch (Exception e) {
@@ -52,41 +62,113 @@ public class GestionMairieComoresApplication implements CommandLineRunner {
 		}
 
 		// creation des users
-		AjoutUsers();
-
-		// afficher tous employes qui sont utilisateurs
-
+		ajoutUsers();
+		//initialiser le premier extrait de naissance
+		initialisationExtraitNaissance();
+		// afficher tous employes qui sont utilisateurs  */
+		
 		try {
-
-			List<Employe> listEmpl = userRepository.listeUsersEmployeParNom("%" + "abdoul " + "%");
-			List<Users> listUsers = userRepository.listeEmployeUsesParNom("%" + "abdoul" + "%");
-
-			List<EmployeUsers> listEmpUsers = getAffichageEmployesUsers(listEmpl, listUsers);
-			listEmpUsers.forEach(System.out::println);
-			
-			System.out.println("***************************");
-			
-			for (EmployeUsers employeUsers : listEmpUsers) {
-				
-				System.out.print(employeUsers.getNomDuSexe() + " ");
-				System.out.print(employeUsers.getNomemp() + " ");
-				System.out.print(employeUsers.getPrenemp() + " ");
-				System.out.print(employeUsers.getUsername() + " ");
-				System.out.print(employeUsers.getPassword()+ " ");
-				
-				for (Roles role :employeUsers.getRoles() ) {
-					System.out.print(role.getRole() + " ");
-				}
-				System.out.println();
-				
-			}
-
+			affichageUtilisateur();
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
-		}*/
+		}
 
 	}
 
+	/**
+	 * Methode qui permet d'afficher tous les employés qui sont utilisateurs
+	 */
+	public void affichageUtilisateur() {
+		List<Employe> listEmpl = userRepository.listeUsersEmployeParNom("%" + "abdoul " + "%");
+		List<Users> listUsers = userRepository.listeEmployeUsesParNom("%" + "abdoul" + "%");
+
+		List<EmployeUsers> listEmpUsers = getAffichageEmployesUsers(listEmpl, listUsers);
+		listEmpUsers.forEach(System.out::println);
+		
+		System.out.println("***************************");
+		
+		for (EmployeUsers employeUsers : listEmpUsers) {
+			
+			System.out.print(employeUsers.getNomDuSexe() + " ");
+			System.out.print(employeUsers.getNomemp() + " ");
+			System.out.print(employeUsers.getPrenemp() + " ");
+			System.out.print(employeUsers.getUsername() + " ");
+			System.out.print(employeUsers.getPassword()+ " ");
+			
+			for (Roles role :employeUsers.getRoles() ) {
+				System.out.print(role.getRole() + " ");
+			}
+			System.out.println();
+			
+		}
+	}
+
+	/**
+	 * Cette methode permet d'initialiser un extrait de naissance
+	 */
+	public void initialisationExtraitNaissance() {
+		// Creation d'un extrait de naissance
+		   ExtraitNaissancePersonne extrait = new ExtraitNaissancePersonne();
+		//Creation de l'utilisateur   
+		   Users user = new Users();
+		   user.setUsername("wachehi");
+		   user.setPassword("9703d4cc78b774db9346c3d3231af9ac");
+		   
+		// creation d'un objet role
+			Roles role1 = new Roles("USER");
+			Roles role2 = new Roles("ADMIN");
+			Set<Roles> roles = new HashSet<>();
+			roles.add(role1);
+			roles.add(role2);
+		    user.setRoles(roles);
+		 // creation d'un objet employe 
+			Optional<Employe> emp = employeRepository.findById(1L);
+		    user.setEmploye(emp.get());
+		    user.setActive(true);
+		    
+		   // appel de la methode Ajout extrait de naissance  
+			AjoutExtraitNaissance(extrait,user);
+	}
+	
+	 /**
+	  * Methode qui permet de d'initialiser un extrait de naissance
+	  * @param extrait
+	  * @param user
+	  */
+	public void AjoutExtraitNaissance(ExtraitNaissancePersonne extrait, Users user) {
+		   extrait.setNomDuSexe("Monsieur");
+		   extrait.setNom("Abdoul Madjid");
+		   extrait.setPrenom("Ali");
+		   extrait.setDateJoursetMoisNaissance("premier mai");
+		   extrait.setDateAnneedeNaissance("mil neut cent soixante neuf");
+		   extrait.setHeureNaissance("vingt une");
+		   extrait.setMinuteNaissance("trente");
+		   extrait.setCommuneNaissance("Mutsamudu");
+		   extrait.setNomDuPere("Haladi");
+		   extrait.setPrenomDuPere("Abdoul Madjid");
+		   extrait.setDateJoursetMoisNaissancePere("trente juin");
+		   extrait.setDateAnneedeNaissancePere("mil neuf cent quarante huite");
+		   extrait.setHeureNaissancePere("vingt");
+		   extrait.setMinuteNaissancePere("quarate");
+		   extrait.setCommuneNaissancePere("Mutsamudu");
+		   extrait.setProfessionPere("Commerçant");
+		   extrait.setNomDuMere("Fatima");
+		   extrait.setPrenomDuMere("Houmadi");
+		   extrait.setDateJoursetMoisNaissanceMere("premier octobre");
+		   extrait.setDateAnneedeNaissanceMere("mil neuf cent cinquante un");
+		   extrait.setHeureNaissanceMere("onze");
+		   extrait.setMinuteNaissanceMere("trente");
+		   extrait.setCommuneNaissanceMere("Mutsamudu");
+		   extrait.setProfessionMere("Mère au foyer");
+		   extrait.setDeclarationFaitePar("Declaration fait par Michelle boudra ");
+		   extrait.setDeclarationRecueParnous("Declaration reçu par nous");
+		   extrait.setNumRegistre("1");
+		   extrait.setDateCreation(new Date());
+		   extrait.setUser(user);
+		   extraitNaissanceRepository.save(extrait);	
+		
+	}
+	
 	/**
 	 * 
 	 */
@@ -147,7 +229,7 @@ public class GestionMairieComoresApplication implements CommandLineRunner {
 		Date date2 = null;
 		Date date3 = null;
 		date1 = dateFormat.parse("15/04/1981");
-		date2 = dateFormat.parse("18/03/88");
+		date2 = dateFormat.parse("20/04/1978");
 		date3 = dateFormat.parse("01/05/1987");
 		Employe emp1 = employeRepository.save(new Employe("Monsieur", "Abdoul Madjid", "Ali", "wachehi@gmail.com",
 				"Secretaire", date1, new Date(), 12000));
@@ -156,9 +238,9 @@ public class GestionMairieComoresApplication implements CommandLineRunner {
 		Employe emp3 = employeRepository.save(new Employe("Madame", "Mohamed farouk", "yaya", "farouk@gmail.com",
 				"Comptable", date3, new Date(), 15000));
 		Employe emp4 = employeRepository.save(new Employe("Monsieur", "Abdoul Madjid", "Seimour", "seimour@gmail.com",
-				"Informaticien", date3, new Date(), 18000));
+			"Informaticien", date3, new Date(), 18000));
 		Employe emp5 = employeRepository.save(new Employe("Madame", "Mohamed bacar", "lili", "lili@gmail.com",
-				"intandant", date2, new Date(), 15000));
+			"intandant", date2, new Date(), 15000));
 		Employe emp6 = employeRepository.save(
 				new Employe("Monsieur", "bacar", "lili", "lili@gmail.com", "responsable", date2, new Date(), 15000));
 		
@@ -176,7 +258,7 @@ public class GestionMairieComoresApplication implements CommandLineRunner {
 	/**
 	 * cette methode permet creer un nouveau users
 	 */
-	private void AjoutUsers() {
+	private void ajoutUsers() {
 		// creation d'un objet employe 1
 		Employe emp1 = new Employe();
 		emp1.setIdempl(1L);
@@ -212,5 +294,6 @@ public class GestionMairieComoresApplication implements CommandLineRunner {
 		Users user3 = userRepository.save(new Users("zahiya", "25d55ad283aa400af464c76d713c07ad", true, roles4, emp3));
 
 	}
+	
 
 }

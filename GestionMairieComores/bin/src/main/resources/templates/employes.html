@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    xmlns:sec="http://www.thymeleaf.org/extras-extras-springsecurity5"
+	layout:decorator=~{template1}>
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css"
+	href="../static/bootstrap-3.3.7-dist/Assets/css/bootstrap.min.css"
+	th:href="@{/bootstrap-3.3.7-dist/Assets/css/bootstrap.min.css}" />
+
+<link rel="stylesheet" type="text/css" href="../static/css/myStyle.css"
+	th:href="@{/css/myStyle.css}" />
+	<script type="text/javascript" src="/js/monFichierJs.js"></script>
+</head>
+<body>
+	<div layout:fragment="content">
+		<div class="text-center">
+			<h3 th:text="#{welcome.text}"></h3>
+		</div>
+		<div class="col-md-6">
+			 <div class="panel panel-primary">
+				<div class="panel-heading" th:text="#{consultation.titre}"></div>
+				<div class="panel-body">
+					<form th:action="@{/consultationEmployes}" method="get">
+						<label th:text="#{label.nom.employe.consult}"></label> <input type="text" name="motCle"
+							th:value="${motCle}" />
+						<button type="submit" class="btn btn-primary">Ok</button>
+						<div class="text-danger pull-right h4" th:if="${exception}" th:text="${exception.message}"></div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-6">
+			<div class="panel panel-primary" th:if="${listeEmployes}" sec:authorize="hasRole('ROLE_ADMIN')">
+				<div class="panel-heading" th:text="#{ajout.titre}"></div>
+				<div class="panel-body">
+					<div class="container">
+						<form class="form-inline" action="/" th:action="@{/saveEmployes}" th:object="${employe}"  method="post">
+							<div>
+							    <input type="hidden"  name="etat"           th:value="${etat}" />
+							    <input type="hidden"  name="operation"      th:value="${operation}" />
+							    <input type="hidden"  name="idempl"         th:value="${employe.idempl}" />
+								<input type="hidden"  name="page"           th:value="${page}" />
+								<input type="hidden"  name="motCle"         th:value="${motCle}" /> 
+								<input type="hidden"  name="page"           th:value="${page}" />
+								<div class="form-group">
+								    <div>
+								      <input 	type="radio"  name="nomDuSexe"       th:value="Monsieur" 	 th:field="*{nomDuSexe}"  checked="checked" /> 
+								      <label for="nomDuSexe" th:text="#{label.monsieur.employe.ajout}"></label> 
+								      <input type="radio" name="nomDuSexe"        th:value="Madame"       th:field="*{nomDuSexe}"/>
+								      <label for="nomDuSexe" th:text="#{label.madame.employe.ajout}"></label>
+								        <p class="alert alert-danger" th:if="${#fields.hasErrors('nomDuSexe')}" th:errors="*{nomDuSexe}"></p>
+								     </div>
+								 </div>
+							</div>
+							     <div class="form-group">  
+								      <label  for="nomemp" th:text="#{label.nom.employe.ajout}"> </label>
+								     <div>
+									    <input type="text" class="form-control" name="nomemp" placeholder="Entrer le nom" th:field="*{nomemp}" />
+									    <p class="alert alert-danger" th:if="${#fields.hasErrors('nomemp')}" th:errors="*{nomemp}"></p>
+									</div>
+								</div>
+							   <div>
+								<div class="form-group"> 
+									<label for="prenemp" th:text="#{label.prenom.employe.ajout}"></label>
+									 <div>
+									   <input type="text" class="form-control" name="prenemp" placeholder="Entrer pr&eacute;nom" th:field="*{prenemp}" />
+									   <p class="alert alert-danger" th:if="${#fields.hasErrors('prenemp')}" th:errors="*{prenemp}"></p>
+									 </div>
+								</div>	
+							</div>
+								
+							    <div class="form-group">
+									<label for="mail" th:text="#{label.mail.employe.ajout}"></label>
+								   <div>
+									  <input type="email" class="form-control" name="mail" placeholder="Entrer l'email"   th:field="*{mail}" />
+									   <p class="alert alert-danger" th:if="${#fields.hasErrors('mail')}" th:errors="*{mail}"></p>
+									   <p class="alert alert-danger" th:if="${exceptionMail}" th:text="${exceptionMail}"></p>
+								    </div>
+								    
+								</div>	
+							<div>
+								<div class="form-group">
+									<label for="fonction" th:text="#{label.fonction.employe.ajout}"></label>
+									  <div>
+									    <input type="text" class="form-control" name="fonction" placeholder="Entrer la fonction" th:field="*{fonction}" />
+									    <p class="alert alert-danger" th:if="${#fields.hasErrors('fonction')}" th:errors="*{fonction}"></p>
+									  </div>  
+							    </div>
+							 </div>
+							 
+							      <div class="form-group">
+								    <label for="dateNaissance" th:text="#{label.datenaissance.employe.ajout}"></label>
+								    <div>
+									    <input type="text" class="form-control" name="dateNaissance" placeholder="JJ/MM/AAAA" 	th:field="*{dateNaissance}" />
+									    <p class="alert alert-danger" th:if="${#fields.hasErrors('dateNaissance')}"  th:errors="*{dateNaissance}"></p>
+									</div>
+								 </div>
+							  <div>	 
+								 <div class="form-group">
+									  <label for="dateRecrutement" th:text="#{label.daterecrutement.employe.ajout}"></label>
+									  <div>
+									     <input type="text" class="form-control" name="dateRecrutement" 	placeholder="JJ/MM/AAAA" th:field="*{dateRecrutement}" />
+									     <p  class="alert alert-danger" th:if="${#fields.hasErrors('dateRecrutement')}" th:errors="*{dateRecrutement}"></p>
+									</div>
+							      </div>
+							  </div>
+							<div class="form-group">
+								    <label for="salaire" th:text="#{label.salaire.employe.ajout}"></label>
+								   <div> 
+									 <input type="text" class="form-control" name="salaire" placeholder="Entrer le salaire" th:field="*{salaire}" />
+									 <p  class="text-danger" th:if="${#fields.hasErrors('salaire')}" th:errors="*{salaire}"></p>
+									    <button th:if="${etat}"     type="submit"      class="btn btn-primary">Modifier</button>
+									    <button th:if="${etat}"     type="submit"      name="action"  th:value="annuler"  class="btn btn-primary" >Annuler</button>
+									    
+								  	    <button th:unless="${etat}"       type="submit"      class="btn btn-primary">Enregistrer</button>
+							      		<button th:unless="${etat}"       type="reset"       class="btn btn-primary">Reset</button>
+								   </div>
+							</div>
+							
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		 <div class="col-md-6">
+			
+ </div>
+ 		<div class="col-md-6">
+			<div class="panel panel-primary" th:if="${listeEmployes}">
+				<div class="panel-heading" th:text="#{information.titre}"></div>
+				<div class="panel-body">
+					<table class="table table-striped table-condensed table-hover">
+						<tr class="info">
+							<th th:text="#{information.sexe}"></th>
+							<th th:text="#{information.nom}"></th>
+							<th th:text="#{information.prenom}"></th>
+							<th th:text="#{information.mail}"></th>
+							<th th:text="#{information.fonction}"></th>
+							<th th:text="#{information.datenaissance}"></th>
+							<th th:text="#{information.daterecrutement}"></th>
+							<th th:text="#{information.salaire}"></th>
+							<th th:text="#{information.supp}"  sec:authorize="hasRole('ROLE_ADMIN')"></th>
+							<th th:text="#{information.modif}" sec:authorize="hasRole('ROLE_ADMIN')"></th>
+						</tr>
+						<tr th:each="employe: ${listeEmployes}">
+							<td th:text="${employe.nomDuSexe}" />
+							<td th:text="${employe.nomemp}" />
+							<td th:text="${employe.prenemp}" />
+							<td th:text="${employe.mail}" />
+							<td th:text="${employe.fonction}" />
+							<td	th:text="${#dates.format(employe.dateNaissance,  'dd-MM-yyyy')}" />
+							<td	th:text="${#dates.format(employe.dateRecrutement,'dd-MM-yyyy')}" />
+							<td th:text="${employe.salaire}" />
+							<td sec:authorize="hasRole('ROLE_ADMIN')"><a
+								th:href="@{/suppressionEmploye(idempl=${employe.idempl},motCle=${motCle},page=${page})}" onclick="return(confirm('Etes-vous sûr de vouloir supprimer cet employé ?'));"
+								th:text="supp"></a></td>
+							<td sec:authorize="hasRole('ROLE_ADMIN')"><a
+								th:href="@{/consultationEmployes(idempl=${employe.idempl},motCle=${motCle},operation=modif,page=${page})}"
+								th:text="modif"></a></td>
+						</tr>
+					</table>
+					<div class="container" th:if="${pages.length>2}">
+						<ul class="nav nav-pills">
+							<li th:each="p,status:${pages}"    class="${active:status.index==0}" ><a
+								th:href="@{/consultationEmployes(motCle=${motCle},page=${status.index})}"
+								th:text="${status.index}" ></a></li>
+						</ul>
+					</div>
+					
+				
+				</div>
+			</div>
+		</div>
+
+
+	</div>
+</body>
+</html>

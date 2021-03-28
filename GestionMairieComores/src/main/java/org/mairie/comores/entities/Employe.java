@@ -31,7 +31,7 @@ public class Employe implements Serializable {
 	@NotNull
 	@Size(min=3,max=25, message="le prenom doit être entre 3 et 25 caracteres")
 	private String prenemp;
-	//@NotEmpty(message="l'email ne doit être vide")
+	@NotEmpty(message="l'email ne doit être vide")
 	@Email(regexp="^(.+)@(.+)$", message="email invalide")
 	private String mail;
 	@NotEmpty(message="la fonction ne doit pas être vide")
@@ -40,7 +40,7 @@ public class Employe implements Serializable {
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	@NotNull(message="la date de naissance doit être renseignée")
 	private Date dateNaissance;
-	@Past(message="la date de recrutement doit être anterieure")
+	//@Past(message="la date de recrutement doit être anterieure")
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	@NotNull(message="la date de recrutement doit être renseignée")
 	private Date dateRecrutement;
