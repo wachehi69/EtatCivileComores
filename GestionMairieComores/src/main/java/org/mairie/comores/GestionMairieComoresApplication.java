@@ -10,10 +10,12 @@ import java.util.Optional;
 import java.util.Set;
 
 import org.mairie.comores.dao.EmployeRepository;
+import org.mairie.comores.dao.ExtraitDecesPersonneRepository;
 import org.mairie.comores.dao.ExtraitNaissancePersonneRepository;
 import org.mairie.comores.dao.UserRepository;
 import org.mairie.comores.entities.Employe;
 import org.mairie.comores.entities.EmployeUsers;
+import org.mairie.comores.entities.ExtraitDecesPersonne;
 import org.mairie.comores.entities.ExtraitNaissancePersonne;
 import org.mairie.comores.entities.Roles;
 import org.mairie.comores.entities.Users;
@@ -36,6 +38,10 @@ public class GestionMairieComoresApplication implements CommandLineRunner {
 	
 	@Autowired
 	private ExtraitNaissancePersonneRepository extraitNaissanceRepository;
+	
+	@Autowired
+	private ExtraitDecesPersonneRepository  extraitDecesPersonneRepository;
+	
 	
 
 	List<EmployeUsers> listEmplUsers = new ArrayList<EmployeUsers>();
@@ -65,7 +71,9 @@ public class GestionMairieComoresApplication implements CommandLineRunner {
 		ajoutUsers();
 		//initialiser le premier extrait de naissance
 		initialisationExtraitNaissance();
-		// afficher tous employes qui sont utilisateurs  */
+		// afficher tous employes qui sont utilisateurs  
+		//initialisation de l'extrait de decès
+		initialisationExtraitDeces();*/
 		
 		try {
 			affichageUtilisateur();
@@ -130,7 +138,64 @@ public class GestionMairieComoresApplication implements CommandLineRunner {
 			AjoutExtraitNaissance(extrait,user);
 	}
 	
-	 /**
+	
+	/**
+	 * Cette methode permet d'initialiser un extrait de naissance
+	 */
+	public void initialisationExtraitDeces() {
+		// Creation d'un extrait de naissance
+		   ExtraitDecesPersonne extraitDeces = new ExtraitDecesPersonne();
+		//Creation de l'utilisateur   
+		   Users user = new Users();
+		   user.setUsername("wachehi");
+		   user.setPassword("9703d4cc78b774db9346c3d3231af9ac");
+		   
+		// creation d'un objet role
+			Roles role1 = new Roles("USER");
+			Roles role2 = new Roles("ADMIN");
+			Set<Roles> roles = new HashSet<>();
+			roles.add(role1);
+			roles.add(role2);
+		    user.setRoles(roles);
+		 // creation d'un objet employe 
+			Optional<Employe> emp = employeRepository.findById(1L);
+		    user.setEmploye(emp.get());
+		    user.setActive(true);
+		    
+		   // appel de la methode Ajout extrait de deces 
+			AjoutExtraitDeces(extraitDeces,user);
+	}
+	
+	 public void AjoutExtraitDeces(ExtraitDecesPersonne extraitDeces, Users user) {
+		
+		   extraitDeces.setNomDuSexe("Monsieur");
+		   extraitDeces.setNom("Bacar");
+		   extraitDeces.setPrenom("wali");
+		   extraitDeces.setDateJoursetMoisDeces("le trois avril");
+		   extraitDeces.setDateAnneedeDeces("mil neuf quatre vingt un");
+		   extraitDeces.setLieuDeDeces("Mutsamudu");
+		   extraitDeces.setCommuneDuDeces("Musamudu");
+		   
+		   extraitDeces.setDateJoursetMoisNaissance("premier mai");
+		   extraitDeces.setDateAnneedeNaissance("mil neut cent soixante un");
+		   extraitDeces.setHeureNaissance("vingt une");
+		   extraitDeces.setMinuteNaissance("trente");
+		   extraitDeces.setCommuneNaissance("Mutsamudu");
+		   extraitDeces.setNomDuPere("Marouani");
+		   extraitDeces.setPrenomDuPere("wali");
+		   extraitDeces.setNomDuMere("zaitoune");
+		   extraitDeces.setPrenomDuMere("Salim");
+		   
+		   extraitDeces.setDeclarationFaitePar("Declaration fait par Michelle boudra ");
+		   extraitDeces.setDeclarationRecueParnous("Declaration reçu par nous");
+		   extraitDeces.setNumRegistre("1");
+		   extraitDeces.setDateCreation(new Date());
+		   extraitDeces.setUser(user);
+		   extraitDecesPersonneRepository.save(extraitDeces);	
+		
+	}
+
+	/**
 	  * Methode qui permet de d'initialiser un extrait de naissance
 	  * @param extrait
 	  * @param user

@@ -249,7 +249,7 @@ public class ExtraitNaissancePersonneController {
 
 			document.add(new Paragraph(""));
 
-			if (extraitNPersonne.getNomDuSexe().equalsIgnoreCase("masculin")) {
+			if (extraitNPersonne.getNomDuSexe().equalsIgnoreCase("monsieur")) {
 				phrase = new Phrase("Est né  à: ");
 				phrase.add(new Chunk("                          " + extraitNPersonne.getCommuneNaissance(), fonte2));
 				document.add(phrase);

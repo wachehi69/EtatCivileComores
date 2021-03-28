@@ -257,7 +257,7 @@ public class ExtraitDecesPersonneController {
 			
 			document.add(new Paragraph(""));
 
-			if (extraitDPersonne.getNomDuSexe().equalsIgnoreCase("masculin")) {
+			if (extraitDPersonne.getNomDuSexe().equalsIgnoreCase("monsieur")) {
 				phrase = new Phrase("Est décédé à: ");
 				phrase.add(new Chunk("                   " + extraitDPersonne.getLieuDeDeces()));
 				document.add(phrase);
