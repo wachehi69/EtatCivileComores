@@ -21,6 +21,7 @@ public class GestionMairieComoresApplicationTests {
 		assertThat(somme).isNotNull();
 		assertThat(somme).isEqualTo(2);
 		assertThat(somme).isEqualTo(3);
+		assertThat(somme).isEqualTo(4);
 	}
 	
 	@Test
