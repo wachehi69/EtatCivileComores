@@ -28,6 +28,7 @@ public class GestionMairieComoresApplicationTests {
 		int somme = 2 + 1;
 		assertThat(somme).isNotNull();
 		assertThat(somme).isEqualTo(3);
+		assertThat(somme).isEqualTo(4);
 		
 		
 	}
