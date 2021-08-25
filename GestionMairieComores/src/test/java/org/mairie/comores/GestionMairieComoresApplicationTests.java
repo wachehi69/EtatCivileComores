@@ -11,7 +11,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest
 public class GestionMairieComoresApplicationTests {
 
-	// test1
+	// test1 //test2
 @Test
 	public void contextLoads() {
 	}
