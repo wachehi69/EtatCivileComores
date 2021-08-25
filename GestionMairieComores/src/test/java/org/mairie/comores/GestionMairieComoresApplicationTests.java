@@ -15,25 +15,6 @@ public class GestionMairieComoresApplicationTests {
 	public void contextLoads() {
 	}
 	
-	@Test
-	 public void asserThanOnePlusOneIsTwo() {
-		int somme = 1 + 1;
-		assertThat(somme).isNotNull();
-		assertThat(somme).isEqualTo(2);
-		
-		
-	}
-	
-	@Test
-	 public void asserThanOnePlusTwoIsThree() {
-		int somme = 2 + 1;
-		assertThat(somme).isNotNull();
-		assertThat(somme).isEqualTo(3);
-		
-		
-		
-		
-	}
-	
+
 
 }
