@@ -1,6 +1,6 @@
 package org.mairie.comores;
 
-import static org.assertj.core.api.Assertions.assertThat;
+//import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,28 +11,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest
 public class GestionMairieComoresApplicationTests {
 
+	// test1 //test2
 @Test
 	public void contextLoads() {
 	}
-	
-	@Test
-	 public void asserThanOnePlusOneIsTwo() {
-		int somme = 1 + 1;
-		assertThat(somme).isNotNull();
-		assertThat(somme).isEqualTo(2);
-		
-	}
-	
-	@Test
-	 public void asserThanOnePlusTwoIsThree() {
-		int somme = 2 + 1;
-		assertThat(somme).isNotNull();
-		assertThat(somme).isEqualTo(3);
-		
-		
-		
-		
-	}
-	
 
 }
