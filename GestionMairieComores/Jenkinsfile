@@ -1,14 +1,16 @@
-pipeline {
-    agent any 
-    tools {
-        maven 'Maven3.8.2'
+pipeline{
+agent any 
+stages{
+  stage('Build') { 
+    steps{
+    sh '/var/jenkins_home/tools/hudson.tasks.Maven_MavenInstallation/Maven3.8.2/bin/mvn  clean install' 
     }
-    stages{
-        stage('Get maven version') { 
-            steps {
-                sh 'mvn --version'
-            }
-        }
+  }
+  stage('Test') { 
+    steps{
+    sh '/var/jenkins_home/tools/hudson.tasks.Maven_MavenInstallation/Maven3.8.2/bin/mvn  test' 
+      }
+    }
            
-    }
+  }
 }
